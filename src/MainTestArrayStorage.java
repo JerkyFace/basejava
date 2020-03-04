@@ -17,9 +17,14 @@ public class MainTestArrayStorage {
         r5.uuid = "uuid5";
         Resume r6 = new Resume();
         r6.uuid = "uuid6";
-
-        r6 = null;
-        r3 = null;
+        Resume r7 = new Resume();
+        r7.uuid = "uuid7";
+        Resume r8 = new Resume();
+        r8.uuid = "uuid8";
+        Resume r9 = new Resume();
+        r9.uuid = "uuid9";
+        Resume r10 = new Resume();
+        r10.uuid = "uuid10";
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
@@ -27,10 +32,10 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r4);
         ARRAY_STORAGE.save(r5);
         ARRAY_STORAGE.save(r6);
-
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
-        ARRAY_STORAGE.save(r4);
+        ARRAY_STORAGE.save(r7);
+        ARRAY_STORAGE.save(r8);
+        ARRAY_STORAGE.save(r9);
+        ARRAY_STORAGE.save(r10);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.uuid));
         System.out.println("Size: " + ARRAY_STORAGE.size());
@@ -38,7 +43,7 @@ public class MainTestArrayStorage {
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r2.uuid);
+        ARRAY_STORAGE.delete(r4.uuid);
         printAll();
         ARRAY_STORAGE.clear();
         printAll();

@@ -2,7 +2,7 @@
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[100];
+    Resume[] storage = new Resume[10000];
 
     void clear() {
         int size = this.size();
@@ -10,22 +10,25 @@ public class ArrayStorage {
             storage[i] = null;
     }
 
-    // todo: get rid of for loop
+    /**
+     * Pushes resume object to the non-null part of storage array
+     * 
+     * @param resume
+     */
     void save(Resume resume) {
-        if (resume == null) {
+        if (resume == null)
             System.out.println("Cannot save empty object");
-        } else if (get(resume.uuid) == null) {
-            for (int i = this.size(); i < storage.length; i++) {
-                if (storage[i] == null) {
-                    storage[i] = resume;
-                    break;
-                }
-            }
-        } else {
+        else if (get(resume.uuid) == null)
+            storage[this.size()] = resume;
+        else
             System.out.println("resume " + resume.uuid + " already exist");
-        }
     }
 
+    /**
+     * 
+     * @param uuid
+     * @return found Resume object or null
+     */
     Resume get(String uuid) {
         int size = this.size();
         for (int i = 0; i < size; i++) {
@@ -35,12 +38,18 @@ public class ArrayStorage {
         return null;
     }
 
-    // todo: debug. Method doubles last element
+    /**
+     * Nullifies found storage element, shifts array one position left starting form
+     * deleted element
+     * 
+     * @param uuid
+     */
     void delete(String uuid) {
+        int size = this.size();
         for (int i = 0; i < this.size(); i++) {
             if (storage[i].uuid == uuid) {
                 storage[i] = null;
-                for (int j = i; j < this.size() - i; j++) {
+                for (int j = i; j < size; j++) {
                     storage[j] = storage[j + 1];
                 }
                 break;
@@ -49,7 +58,7 @@ public class ArrayStorage {
     }
 
     /**
-     * @return array, contains only Resumes in storage (without null)
+     * @return array, contains only resumes in storage (without null)
      */
     Resume[] getAll() {
         Resume[] tempArray = new Resume[this.size()];
@@ -59,6 +68,11 @@ public class ArrayStorage {
         return tempArray;
     }
 
+    /**
+     * Counts object within storage array until meets null
+     * 
+     * @return the size of non-null part of the storage array
+     */
     int size() {
         int size = 0;
         for (int i = 0; i < storage.length; i++) {
