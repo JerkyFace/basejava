@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    Resume[] storage = new Resume[20];
     private int size = 0;
 
     public void clear() {
@@ -22,6 +22,7 @@ public class ArrayStorage {
             System.out.println("Resume not found.");
         } else {
             storage[updateResumeIndex] = resume;
+            System.out.println("Resume with uuid " + resume.getUuid() + " successfully updated.");
         }
     }
 
@@ -35,11 +36,11 @@ public class ArrayStorage {
             System.out.println("Cannot save empty object");
         } else if (size == storage.length) {
             System.out.println("The storage is full");
-        } else if (get(resume.getUuid()) == null) {
+        } else if (get(resume.getUuid(), false) == null) {
             storage[size] = resume;
             size++;
         } else {
-            System.out.println("resume " + resume.getUuid() + " already exist");
+            System.out.println("resume with uuid " + resume.getUuid() + " already exists");
         }
     }
 
@@ -47,12 +48,13 @@ public class ArrayStorage {
      * @param uuid
      * @return found Resume object or null
      */
-    public Resume get(String uuid) {
+    public Resume get(String uuid, boolean isLogged) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
             }
         }
+        System.out.print(isLogged ? "\nResume not found.\n" : "");
         return null;
     }
 
@@ -66,11 +68,11 @@ public class ArrayStorage {
         boolean isPresent = false;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
+                isPresent = true;
                 for (int j = i; j < size - 1; j++) {
                     storage[j] = storage[j + 1];
                 }
                 size--;
-                isPresent = true;
                 // prevents doubling of last element when array is full
                 storage[size] = null;
                 break;

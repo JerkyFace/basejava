@@ -3,6 +3,7 @@ package test;
 import model.Resume;
 import storage.ArrayStorage;
 
+
 /**
  * Test for your ArrayStorage implementation
  */
@@ -10,40 +11,29 @@ public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
-        Resume r4 = new Resume("uuid4");
-        Resume r5 = new Resume("uuid5");
-        Resume r6 = new Resume("uuid6");
-        Resume r7 = new Resume("uuid7");
-        Resume r8 = new Resume("uuid8");
-        Resume r9 = new Resume("uuid9");
-        Resume r10 = new Resume("uuid10");
 
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
-        ARRAY_STORAGE.save(r4);
-        ARRAY_STORAGE.save(r5);
-        ARRAY_STORAGE.save(r6);
-        ARRAY_STORAGE.save(r7);
-        ARRAY_STORAGE.save(r8);
-        ARRAY_STORAGE.save(r9);
-        ARRAY_STORAGE.save(r10);
-
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
-
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        for (int i = 1; i <= 20; i++) {
+            ARRAY_STORAGE.save(new Resume("uuid" + i));
+        }
 
         printAll();
-        ARRAY_STORAGE.delete(r4.getUuid());
+        System.out.println(ARRAY_STORAGE.get("uuid1", true));
+        ARRAY_STORAGE.get("000", true);
+        ARRAY_STORAGE.delete("5555");
+        ARRAY_STORAGE.update(new Resume("6666"));
+        ARRAY_STORAGE.update(new Resume("uuid5"));
         printAll();
-        ARRAY_STORAGE.clear();
+        ARRAY_STORAGE.delete("uuid20");
+        System.out.println(ARRAY_STORAGE.size());
         printAll();
-
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+        ARRAY_STORAGE.delete("uuid1");
+        System.out.println(ARRAY_STORAGE.size());
+        printAll();
+        ARRAY_STORAGE.save(new Resume("uuid1"));
+        ARRAY_STORAGE.save(new Resume("uuid20"));
+        printAll();
+        System.out.println(ARRAY_STORAGE.size());
+        ARRAY_STORAGE.save(new Resume("uuid21"));
     }
 
     static void printAll() {
@@ -51,5 +41,6 @@ public class MainTestArrayStorage {
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
         }
+        System.out.println();
     }
 }
