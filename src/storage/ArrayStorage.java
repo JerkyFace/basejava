@@ -9,7 +9,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, 0, size() - 1, null);
+        Arrays.fill(storage, 0, size(), null);
         size = 0;
     }
 
@@ -51,9 +51,8 @@ public class ArrayStorage {
         if (findResumeIndex == -1) {
             System.out.print(isLogged ? "\nResume not found.\n" : "");
             return null;
-        } else {
-            return storage[findResumeIndex];
         }
+        return storage[findResumeIndex];
     }
 
     /**
@@ -63,20 +62,18 @@ public class ArrayStorage {
      * @param uuid
      */
     public void delete(String uuid) {
-        boolean isPresent = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                isPresent = true;
-                if (size - 1 - i >= 0) {
-                    System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
-                }
-                size--;
-                // prevents doubling of last element when array is full
-                storage[size] = null;
-                break;
+        Resume findResume = new Resume(uuid);
+        int findResumeIndex = indexOf(findResume);
+        if (findResumeIndex == -1) {
+            System.out.println("\nThere is no such resume\n");
+        } else {
+            if (size() - 1 - findResumeIndex >= 0) {
+                System.arraycopy(storage, findResumeIndex + 1,
+                        storage, findResumeIndex, size() - 1 - findResumeIndex);
             }
+            size--;
+            storage[size] = null;
         }
-        System.out.print(isPresent ? "" : "\nThere is no such resume\n");
     }
 
     /**
