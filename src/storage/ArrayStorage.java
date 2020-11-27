@@ -9,7 +9,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, 0, size(), null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -31,13 +31,16 @@ public class ArrayStorage {
     public void save(Resume resume) {
         if (resume == null) {
             System.out.println("Cannot save empty object");
-        } else if (size == storage.length) {
-            System.out.println("The storage is full");
-        } else if (get(resume.getUuid(), false) == null) {
-            storage[size] = resume;
-            size++;
         } else {
-            System.out.println("resume with uuid " + resume.getUuid() + " already exists");
+            int findResumeIndex = indexOf(resume);
+            if (size == storage.length) {
+                System.out.println("The storage is full");
+            } else if (findResumeIndex == -1) {
+                storage[size] = resume;
+                size++;
+            } else {
+                System.out.println("resume with uuid " + resume.getUuid() + " already exists");
+            }
         }
     }
 
@@ -45,11 +48,11 @@ public class ArrayStorage {
      * @param uuid
      * @return found Resume object or null
      */
-    public Resume get(String uuid, boolean isLogged) {
+    public Resume get(String uuid) {
         Resume findResume = new Resume(uuid);
         int findResumeIndex = indexOf(findResume);
         if (findResumeIndex == -1) {
-            System.out.print(isLogged ? "\nResume not found.\n" : "");
+            System.out.print("\nResume not found.\n");
             return null;
         }
         return storage[findResumeIndex];
@@ -66,15 +69,14 @@ public class ArrayStorage {
         int findResumeIndex = indexOf(findResume);
         if (findResumeIndex == -1) {
             System.out.println("\nThere is no such resume\n");
-        } else {
-            if (size() - 1 - findResumeIndex >= 0) {
-                System.arraycopy(storage, findResumeIndex + 1,
-                        storage, findResumeIndex, size() - 1 - findResumeIndex);
-            }
+        } else if (size - 1 - findResumeIndex >= 0) {
+            System.arraycopy(storage, findResumeIndex + 1,
+                    storage, findResumeIndex, size - 1 - findResumeIndex);
             size--;
             storage[size] = null;
         }
     }
+
 
     /**
      * @return array, contains only resumes in storage (without null)

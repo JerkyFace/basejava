@@ -17,8 +17,8 @@ public class MainTestArrayStorage {
         }
 
         printAll();
-        System.out.println(ARRAY_STORAGE.get("uuid1", true));
-        ARRAY_STORAGE.get("000", true);
+        System.out.println(ARRAY_STORAGE.get("uuid1"));
+        ARRAY_STORAGE.get("000");
         ARRAY_STORAGE.delete("5555");
         ARRAY_STORAGE.update(new Resume("6666"));
         ARRAY_STORAGE.update(new Resume("uuid5"));
