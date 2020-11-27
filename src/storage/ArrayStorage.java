@@ -4,15 +4,12 @@ import model.Resume;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
 public class ArrayStorage {
-    Resume[] storage = new Resume[20];
+    private final Resume[] storage = new Resume[20];
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size() - 1, null);
         size = 0;
     }
 
@@ -49,13 +46,14 @@ public class ArrayStorage {
      * @return found Resume object or null
      */
     public Resume get(String uuid, boolean isLogged) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        Resume findResume = new Resume(uuid);
+        int findResumeIndex = indexOf(findResume);
+        if (findResumeIndex == -1) {
+            System.out.print(isLogged ? "\nResume not found.\n" : "");
+            return null;
+        } else {
+            return storage[findResumeIndex];
         }
-        System.out.print(isLogged ? "\nResume not found.\n" : "");
-        return null;
     }
 
     /**
@@ -69,8 +67,8 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 isPresent = true;
-                for (int j = i; j < size - 1; j++) {
-                    storage[j] = storage[j + 1];
+                if (size - 1 - i >= 0) {
+                    System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
                 }
                 size--;
                 // prevents doubling of last element when array is full

@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Initial resume class
- */
 public class Resume {
 
     private final String uuid;
