@@ -1,39 +1,25 @@
 package test;
 
 import model.Resume;
-import storage.ArrayStorage;
+import storage.SortedArrayStorage;
 
 
 /**
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 9; i++) {
             ARRAY_STORAGE.save(new Resume("uuid" + i));
         }
 
         printAll();
-        System.out.println(ARRAY_STORAGE.get("uuid1"));
-        ARRAY_STORAGE.get("000");
-        ARRAY_STORAGE.delete("5555");
-        ARRAY_STORAGE.update(new Resume("6666"));
-        ARRAY_STORAGE.update(new Resume("uuid5"));
+        System.out.println(ARRAY_STORAGE.get("uuid2"));
+        System.out.println(ARRAY_STORAGE.get("uuid11"));
+        ARRAY_STORAGE.delete("uuid2");
         printAll();
-        ARRAY_STORAGE.delete("uuid20");
-        System.out.println(ARRAY_STORAGE.size());
-        printAll();
-        ARRAY_STORAGE.delete("uuid1");
-        System.out.println(ARRAY_STORAGE.size());
-        printAll();
-        ARRAY_STORAGE.save(new Resume("uuid1"));
-        ARRAY_STORAGE.save(new Resume("uuid20"));
-        printAll();
-        System.out.println(ARRAY_STORAGE.size());
-        ARRAY_STORAGE.save(new Resume("uuid21"));
     }
 
     static void printAll() {
@@ -41,6 +27,5 @@ public class MainTestArrayStorage {
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
         }
-        System.out.println();
     }
 }

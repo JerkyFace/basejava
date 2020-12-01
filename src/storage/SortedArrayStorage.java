@@ -2,8 +2,11 @@ package storage;
 
 import model.Resume;
 
-public class ArrayStorage extends AbstractArrayStorage {
+import java.util.Arrays;
 
+public class SortedArrayStorage extends AbstractArrayStorage {
+
+    @Override
     public void save(Resume resume) {
         if (resume == null) {
             System.out.println("Cannot save empty object");
@@ -11,22 +14,18 @@ public class ArrayStorage extends AbstractArrayStorage {
             int findResumeIndex = indexOf(resume);
             if (size >= STORAGE_LIMIT) {
                 System.out.println("The storage is full");
-            } else if (findResumeIndex == -1) {
-                storage[size] = resume;
-                size++;
-            } else {
+            } else if (findResumeIndex >= 0) {
                 System.out.println("resume with uuid " + resume.getUuid() + " already exists");
+            } else {
+                findResumeIndex = Math.abs(findResumeIndex + 1);
+                storage[findResumeIndex] = resume;
+                size++;
             }
         }
     }
 
     @Override
-    protected int indexOf(Resume resume) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                return i;
-            }
-        }
-        return -1;
+    protected int indexOf(Resume findResume) {
+        return Arrays.binarySearch(storage, 0, size, findResume);
     }
 }
