@@ -18,6 +18,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
                 System.out.println("resume with uuid " + resume.getUuid() + " already exists");
             } else {
                 findResumeIndex = Math.abs(findResumeIndex + 1);
+                for (int i = size; i > findResumeIndex; i--) {
+                    storage[i] = storage[i - 1].copy();
+                }
                 storage[findResumeIndex] = resume;
                 size++;
             }

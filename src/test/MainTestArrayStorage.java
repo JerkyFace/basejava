@@ -11,15 +11,15 @@ public class MainTestArrayStorage {
     static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 100; i >= 1; i--) {
             ARRAY_STORAGE.save(new Resume("uuid" + i));
         }
 
         printAll();
+        System.out.println("---");
         System.out.println(ARRAY_STORAGE.get("uuid2"));
-        System.out.println(ARRAY_STORAGE.get("uuid11"));
-        ARRAY_STORAGE.delete("uuid2");
         printAll();
+        System.out.println(ARRAY_STORAGE.size());
     }
 
     static void printAll() {

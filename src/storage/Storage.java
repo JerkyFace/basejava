@@ -3,6 +3,7 @@ package storage;
 import model.Resume;
 
 public interface Storage {
+
     void clear();
 
     void update(Resume resume);
