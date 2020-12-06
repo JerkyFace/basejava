@@ -20,6 +20,8 @@ public class MainTestArrayStorage {
         System.out.println(ARRAY_STORAGE.get("uuid2"));
         printAll();
         System.out.println(ARRAY_STORAGE.size());
+        ARRAY_STORAGE.delete("uuid30");
+        printAll();
     }
 
     static void printAll() {

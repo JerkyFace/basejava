@@ -16,11 +16,11 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void update(Resume resume) {
-        int updateResumeIndex = indexOf(resume.getUuid());
-        if (updateResumeIndex < 0) {
+        int index = indexOf(resume.getUuid());
+        if (index < 0) {
             System.out.print("\nResume with uuid '" + resume.getUuid() + "' not found.\n");
         } else {
-            storage[updateResumeIndex] = resume;
+            storage[index] = resume;
             System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
         }
     }
@@ -29,13 +29,13 @@ public abstract class AbstractArrayStorage implements Storage {
         if (resume == null) {
             System.out.println("Cannot save empty object");
         } else {
-            int findResumeIndex = indexOf(resume.getUuid());
+            int index = indexOf(resume.getUuid());
             if (size >= STORAGE_LIMIT) {
-                System.out.println("The storage is full");
-            } else if (findResumeIndex >= 0) {
+                System.out.println("Unable to add resume with uuid '" + resume.getUuid() + "'. The storage is full");
+            } else if (index >= 0) {
                 System.out.println("resume with uuid '" + resume.getUuid() + "' already exists");
             } else {
-                addResume(resume, findResumeIndex);
+                addResume(resume, index);
                 size++;
             }
         }
@@ -47,23 +47,22 @@ public abstract class AbstractArrayStorage implements Storage {
 
 
     public Resume get(String uuid) {
-        int findResumeIndex = indexOf(uuid);
-        if (findResumeIndex < 0) {
+        int index = indexOf(uuid);
+        if (index < 0) {
             System.out.print("\nResume with uuid '" + uuid + "' not found.\n");
             return null;
         }
-        return storage[findResumeIndex];
+        return storage[index];
     }
 
     public void delete(String uuid) {
-        int findResumeIndex = indexOf(uuid);
-        if (findResumeIndex < 0) {
+        int index = indexOf(uuid);
+        if (index < 0) {
             System.out.print("\nResume with uuid '" + uuid + "' not found.\n");
-        } else if (size - 1 - findResumeIndex >= 0) {
-            System.arraycopy(storage, findResumeIndex + 1,
-                    storage, findResumeIndex, size - 1 - findResumeIndex);
+        } else {
+            shiftResume(index);
+            storage[size - 1] = null;
             size--;
-            storage[size] = null;
         }
     }
 
@@ -74,4 +73,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract int indexOf(String uuid);
 
     protected abstract void addResume(Resume resume, int index);
+
+    protected abstract void shiftResume(int index);
 }
