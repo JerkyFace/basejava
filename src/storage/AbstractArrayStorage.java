@@ -22,10 +22,10 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = indexOf(resume.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
-            System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
         }
+        storage[index] = resume;
+        System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
+
     }
 
     public void save(Resume resume) {
@@ -39,10 +39,9 @@ public abstract class AbstractArrayStorage implements Storage {
                         .concat("'. The storage is full."), resume.getUuid());
             } else if (index >= 0) {
                 throw new ExistStorageException(resume.getUuid());
-            } else {
-                addResume(resume, index);
-                size++;
             }
+            addResume(resume, index);
+            size++;
         }
     }
 
@@ -63,11 +62,11 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = indexOf(uuid);
         if (index < 0) {
             throw new ExistStorageException(uuid);
-        } else {
-            shiftResume(index);
-            storage[size - 1] = null;
-            size--;
         }
+        shiftResume(index);
+        storage[size - 1] = null;
+        size--;
+
     }
 
     public Resume[] getAll() {
