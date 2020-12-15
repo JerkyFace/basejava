@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractArrayStorageTest {
-    private static final int INITIAL_AMOUNT_OF_RESUMES = 10;
+abstract class AbstractArrayStorageTest {
+    private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
     private final Storage storage;
 
@@ -34,19 +34,27 @@ class AbstractArrayStorageTest {
 
     @Test
     void update() {
-        Resume updatedResume = new Resume("uuid5");
+        Resume updatedResume = new Resume("uuid2");
         storage.update(updatedResume);
-        assertSame(storage.get("uuid5"), updatedResume);
+        assertSame(updatedResume, storage.get("uuid2"));
+    }
+
+    @Test
+    void updateThrowsNotExistStorageException() {
         assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("non existent resume")));
     }
 
     @Test
     void save() {
-        Resume resume = new Resume("uuid11");
+        Resume resume = new Resume("uuid4");
         storage.save(resume);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES + 1, storage.size());
-        assertSame(resume, storage.get("uuid11"));
-        assertThrows(ExistStorageException.class, () -> storage.save(resume));
+        assertSame(storage.get("uuid4"), resume);
+    }
+
+    @Test
+    void saveThrowsExistStorageException() {
+        assertThrows(ExistStorageException.class, () -> storage.save(new Resume("uuid2")));
     }
 
     @Test
@@ -77,6 +85,10 @@ class AbstractArrayStorageTest {
             assertEquals(storage.get("uuid".concat(String.valueOf(i))),
                     new Resume("uuid".concat(String.valueOf(i))));
         }
+    }
+
+    @Test
+    void getThrowsNotExistStorageException() {
         assertThrows(NotExistStorageException.class, () -> storage.get("non existent resume"));
     }
 
@@ -85,18 +97,20 @@ class AbstractArrayStorageTest {
         String uuid = "uuid1";
         storage.delete(uuid);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES - 1, storage.size());
-        assertThrows(NotExistStorageException.class, () -> {
-            storage.get(uuid);
-            storage.get("non existent resume");
-        });
+        assertThrows(NotExistStorageException.class, () -> storage.get(uuid));
+    }
+
+    @Test
+    void deleteThrowsNotExistStorageException() {
+        assertThrows(NotExistStorageException.class, () -> storage.get("non existent resume"));
     }
 
     @Test
     void getAll() {
         Resume[] resumes = storage.getAll();
-        assertEquals(10, resumes.length);
+        assertEquals(3, resumes.length);
         for (Resume resume : resumes) {
-            assertSame(resume, storage.get(resume.getUuid()));
+            assertSame(storage.get(resume.getUuid()), resume);
         }
     }
 }
