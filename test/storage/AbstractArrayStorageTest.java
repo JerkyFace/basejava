@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractArrayStorageTest {
-    private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
+    private static final int INITIAL_AMOUNT_OF_RESUMES = 2;
+
+    private static final String UUID1 = "uuid1";
+    private static final String UUID2 = "uuid2";
+    private static final String UUID3 = "uuid3";
 
     private final Storage storage;
 
@@ -34,10 +38,9 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void update() {
-        String uuid = "uuid2";
-        Resume updatedResume = new Resume(uuid);
+        Resume updatedResume = new Resume(UUID2);
         storage.update(updatedResume);
-        assertSame(updatedResume, storage.get(uuid));
+        assertSame(updatedResume, storage.get(UUID2));
     }
 
     @Test
@@ -47,20 +50,19 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void save() {
-        String uuid = "uuid4";
-        Resume resume = new Resume(uuid);
+        Resume resume = new Resume(UUID3);
         storage.save(resume);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES + 1, storage.size());
-        assertSame(resume, storage.get(uuid));
+        assertSame(resume, storage.get(UUID3));
     }
 
     @Test
     void saveThrowsExistStorageException() {
-        assertThrows(ExistStorageException.class, () -> storage.save(new Resume("uuid2")));
+        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(UUID2)));
     }
 
     @Test
-    void fullFillStorageAndSave() {
+    void storageOverflow() {
         try {
             for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume("uuid" + i));
@@ -79,8 +81,7 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void get() {
-        String uuid = "uuid1";
-        assertEquals(storage.get(uuid), new Resume(uuid));
+        assertEquals(storage.get(UUID1), new Resume(UUID1));
     }
 
     @Test
@@ -90,10 +91,9 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void delete() {
-        String uuid = "uuid1";
-        storage.delete(uuid);
+        storage.delete(UUID1);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES - 1, storage.size());
-        assertThrows(NotExistStorageException.class, () -> storage.get(uuid));
+        assertThrows(NotExistStorageException.class, () -> storage.get(UUID1));
     }
 
     @Test
@@ -103,8 +103,8 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void getAll() {
-        Resume[] resumes = storage.getAll();
-        assertEquals(3, resumes.length);
+        assertEquals(2, storage.getAll().length);
+        Resume[] resumes = {new Resume(UUID1), new Resume(UUID2)};
         assertArrayEquals(storage.getAll(), resumes);
     }
 }
