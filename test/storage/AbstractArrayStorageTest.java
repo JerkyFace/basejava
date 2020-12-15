@@ -22,7 +22,7 @@ abstract class AbstractArrayStorageTest {
     public void setUp() {
         storage.clear();
         for (int i = 1; i <= INITIAL_AMOUNT_OF_RESUMES; i++) {
-            storage.save(new Resume("uuid".concat(String.valueOf(i))));
+            storage.save(new Resume("uuid" + i));
         }
     }
 
@@ -34,9 +34,10 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void update() {
-        Resume updatedResume = new Resume("uuid2");
+        String uuid = "uuid2";
+        Resume updatedResume = new Resume(uuid);
         storage.update(updatedResume);
-        assertSame(updatedResume, storage.get("uuid2"));
+        assertSame(updatedResume, storage.get(uuid));
     }
 
     @Test
@@ -46,10 +47,11 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void save() {
-        Resume resume = new Resume("uuid4");
+        String uuid = "uuid4";
+        Resume resume = new Resume(uuid);
         storage.save(resume);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES + 1, storage.size());
-        assertSame(storage.get("uuid4"), resume);
+        assertSame(resume, storage.get(uuid));
     }
 
     @Test
@@ -58,20 +60,16 @@ abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    void saveIntoFullStorage() {
-        int storageLimit = 100;
+    void fullFillStorageAndSave() {
         try {
-            for (int i = storage.size() + 1; i <= storageLimit; i++) {
-                storage.save(new Resume("uuid".concat(String.valueOf(i))));
+            for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+                storage.save(new Resume("uuid" + i));
             }
         } catch (StorageException e) {
             fail("Exception should not be thrown.");
         }
 
-        Exception exception = assertThrows(StorageException.class, () -> storage.save(new Resume("odd resume")));
-
-        String expectedExceptionMessage = "Unable to add resume with uuid 'odd resume'. The storage is full.";
-        assertTrue(exception.getMessage().contains(expectedExceptionMessage));
+        assertThrows(StorageException.class, () -> storage.save(new Resume("odd resume")));
     }
 
     @Test
@@ -81,10 +79,8 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void get() {
-        for (int i = 1; i <= storage.size(); i++) {
-            assertEquals(storage.get("uuid".concat(String.valueOf(i))),
-                    new Resume("uuid".concat(String.valueOf(i))));
-        }
+        String uuid = "uuid1";
+        assertEquals(storage.get(uuid), new Resume(uuid));
     }
 
     @Test
@@ -109,8 +105,6 @@ abstract class AbstractArrayStorageTest {
     void getAll() {
         Resume[] resumes = storage.getAll();
         assertEquals(3, resumes.length);
-        for (Resume resume : resumes) {
-            assertSame(storage.get(resume.getUuid()), resume);
-        }
+        assertArrayEquals(storage.getAll(), resumes);
     }
 }
