@@ -6,10 +6,14 @@ import exception.StorageException;
 import model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import storage.arraybased.AbstractArrayStorage;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-abstract class AbstractArrayStorageTest {
+public abstract class AbstractArrayStorageTest {
     private static final int INITIAL_AMOUNT_OF_RESUMES = 2;
 
     private static final String UUID1 = "uuid1";
@@ -63,15 +67,17 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void storageOverflow() {
-        try {
-            for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume("uuid" + i));
+        if (storage.getClass().isArray()) {
+            try {
+                for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+                    storage.save(new Resume("uuid" + i));
+                }
+            } catch (StorageException e) {
+                fail("Exception should not be thrown.");
             }
-        } catch (StorageException e) {
-            fail("Exception should not be thrown.");
-        }
 
-        assertThrows(StorageException.class, () -> storage.save(new Resume("odd resume")));
+            assertThrows(StorageException.class, () -> storage.save(new Resume("odd resume")));
+        }
     }
 
     @Test

@@ -1,4 +1,4 @@
-package storage;
+package storage.arraybased;
 
 import model.Resume;
 

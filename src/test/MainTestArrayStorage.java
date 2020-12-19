@@ -1,7 +1,7 @@
 package test;
 
 import model.Resume;
-import storage.SortedArrayStorage;
+import storage.arraybased.SortedArrayStorage;
 
 
 /**

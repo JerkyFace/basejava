@@ -1,14 +1,15 @@
-package storage;
+package storage.arraybased;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
+import storage.AbstractStorage;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 100;
+public abstract class AbstractArrayStorage extends AbstractStorage {
+    public static final int STORAGE_LIMIT = 100;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -18,21 +19,18 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void update(Resume resume) {
-        int index = indexOf(resume.getUuid());
+    public void update(Resume resume, int index) {
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
         }
         storage[index] = resume;
         System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
-
     }
 
-    public void save(Resume resume) {
+    public void save(Resume resume, int index) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
         } else {
-            int index = indexOf(resume.getUuid());
             if (size >= STORAGE_LIMIT) {
                 throw new StorageException("Unable to add resume with uuid '"
                         .concat(resume.getUuid())
@@ -50,30 +48,23 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
 
-    public Resume get(String uuid) {
-        int index = indexOf(uuid);
+    public Resume get(int index) {
         if (index < 0) {
-            throw new NotExistStorageException(uuid);
+            throw new NotExistStorageException("There is no such resume");
         }
         return storage[index];
     }
 
-    public void delete(String uuid) {
-        int index = indexOf(uuid);
-        if (index < 0) {
-            throw new ExistStorageException(uuid);
-        }
+
+    public void delete(int index) {
         shiftResume(index);
         storage[size - 1] = null;
         size--;
-
     }
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
-
-    protected abstract int indexOf(String uuid);
 
     protected abstract void addResume(Resume resume, int index);
 
