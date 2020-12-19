@@ -1,7 +1,6 @@
 package storage.arraybased;
 
 import exception.ExistStorageException;
-import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
@@ -20,9 +19,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public void update(Resume resume, int index) {
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
         storage[index] = resume;
         System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
     }
@@ -49,9 +45,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     public Resume get(int index) {
-        if (index < 0) {
-            throw new NotExistStorageException("There is no such resume");
-        }
         return storage[index];
     }
 

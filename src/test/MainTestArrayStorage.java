@@ -1,7 +1,9 @@
 package test;
 
 import model.Resume;
+import storage.Storage;
 import storage.arraybased.SortedArrayStorage;
+import storage.listbased.ListStorage;
 
 
 /**
@@ -10,18 +12,9 @@ import storage.arraybased.SortedArrayStorage;
 public class MainTestArrayStorage {
     static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
-    public static void main(String[] args) {
-        for (int i = 100; i >= 1; i--) {
-            ARRAY_STORAGE.save(new Resume("uuid" + i));
-        }
 
-        printAll();
-        System.out.println("---");
-        System.out.println(ARRAY_STORAGE.get("uuid2"));
-        printAll();
-        System.out.println(ARRAY_STORAGE.size());
-        ARRAY_STORAGE.delete("uuid30");
-        printAll();
+    public static void main(String[] args) {
+
     }
 
     static void printAll() {

@@ -1,12 +1,13 @@
 package storage;
 
+import exception.NotExistStorageException;
 import model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        update(resume, indexOf(resume.getUuid()));
+        update(resume, getIfPresent(resume.getUuid()));
     }
 
     @Override
@@ -16,12 +17,20 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        return get(indexOf(uuid));
+        return get(getIfPresent(uuid));
     }
 
     @Override
     public void delete(String uuid) {
-        delete(indexOf(uuid));
+        delete(getIfPresent(uuid));
+    }
+
+    private int getIfPresent(String uuid) {
+        int index = indexOf(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+        return index;
     }
 
     protected abstract int indexOf(String uuid);

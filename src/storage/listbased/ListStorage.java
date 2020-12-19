@@ -1,7 +1,6 @@
 package storage.listbased;
 
 import exception.ExistStorageException;
-import exception.NotExistStorageException;
 import model.Resume;
 import storage.AbstractStorage;
 
@@ -24,9 +23,6 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void update(Resume resume, int index) {
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
         storage.set(index, resume);
     }
 
@@ -40,9 +36,6 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume get(int index) {
-        if (index < 0) {
-            throw new NotExistStorageException("There is no such resume");
-        }
         return storage.get(index);
     }
 
