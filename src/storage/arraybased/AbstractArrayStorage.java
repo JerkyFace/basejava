@@ -1,6 +1,5 @@
 package storage.arraybased;
 
-import exception.ExistStorageException;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
@@ -26,28 +25,22 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void save(Resume resume, int index) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
-        } else {
-            if (size >= STORAGE_LIMIT) {
-                throw new StorageException("Unable to add resume with uuid '"
-                        .concat(resume.getUuid())
-                        .concat("'. The storage is full."), resume.getUuid());
-            } else if (index >= 0) {
-                throw new ExistStorageException(resume.getUuid());
-            }
-            addResume(resume, index);
-            size++;
+        } else if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Unable to add resume with uuid '"
+                    .concat(resume.getUuid())
+                    .concat("'. The storage is full."), resume.getUuid());
         }
+        addResume(resume, index);
+        size++;
     }
 
     public int size() {
         return size;
     }
 
-
     public Resume get(int index) {
         return storage[index];
     }
-
 
     public void delete(int index) {
         shiftResume(index);

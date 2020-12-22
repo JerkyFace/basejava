@@ -1,6 +1,5 @@
 package storage.listbased;
 
-import exception.ExistStorageException;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
@@ -31,8 +30,6 @@ public class ListStorage extends AbstractStorage {
     public void save(Resume resume, int index) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
-        } else if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
         }
         storage.add(resume);
     }

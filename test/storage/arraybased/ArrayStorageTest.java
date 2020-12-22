@@ -1,6 +1,4 @@
-package storage;
-
-import storage.arraybased.ArrayStorage;
+package storage.arraybased;
 
 class ArrayStorageTest extends AbstractArrayStorageTest {
 

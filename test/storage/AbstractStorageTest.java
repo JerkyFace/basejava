@@ -2,27 +2,23 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
-import exception.StorageException;
 import model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import storage.arraybased.AbstractArrayStorage;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public abstract class AbstractArrayStorageTest {
+public class AbstractStorageTest {
+
     private static final int INITIAL_AMOUNT_OF_RESUMES = 2;
 
     private static final String UUID1 = "uuid1";
     private static final String UUID2 = "uuid2";
     private static final String UUID3 = "uuid3";
 
-    private final Storage storage;
+    protected final Storage storage;
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -66,28 +62,13 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    void storageOverflow() {
-        if (storage.getClass().isArray()) {
-            try {
-                for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                    storage.save(new Resume("uuid" + i));
-                }
-            } catch (StorageException e) {
-                fail("Exception should not be thrown.");
-            }
-
-            assertThrows(StorageException.class, () -> storage.save(new Resume("odd resume")));
-        }
-    }
-
-    @Test
     void size() {
         assertEquals(INITIAL_AMOUNT_OF_RESUMES, storage.size());
     }
 
     @Test
     void get() {
-        assertEquals(storage.get(UUID1), new Resume(UUID1));
+        assertEquals(new Resume(UUID1), storage.get(UUID1));
     }
 
     @Test
@@ -111,6 +92,6 @@ public abstract class AbstractArrayStorageTest {
     void getAll() {
         assertEquals(2, storage.getAll().length);
         Resume[] resumes = {new Resume(UUID1), new Resume(UUID2)};
-        assertArrayEquals(storage.getAll(), resumes);
+        assertArrayEquals(resumes, storage.getAll());
     }
 }

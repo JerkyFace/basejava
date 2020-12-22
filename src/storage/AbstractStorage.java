@@ -1,5 +1,6 @@
 package storage;
 
+import exception.ExistStorageException;
 import exception.NotExistStorageException;
 import model.Resume;
 
@@ -12,6 +13,10 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
+        int index = indexOf(resume.getUuid());
+        if (index > 0) {
+            throw new ExistStorageException(resume.getUuid());
+        }
         save(resume, indexOf(resume.getUuid()));
     }
 

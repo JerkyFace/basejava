@@ -1,8 +1,8 @@
 package storage.listbased;
 
-import storage.AbstractArrayStorageTest;
+import storage.AbstractStorageTest;
 
-class ListStorageTest extends AbstractArrayStorageTest {
+class ListStorageTest extends AbstractStorageTest {
 
     public ListStorageTest() {
         super(new ListStorage());
