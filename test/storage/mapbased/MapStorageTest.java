@@ -1,8 +1,8 @@
 package storage.mapbased;
 
-import storage.arraybased.AbstractArrayStorageTest;
+import storage.AbstractStorageTest;
 
-class MapStorageTest extends AbstractArrayStorageTest {
+class MapStorageTest extends AbstractStorageTest {
 
     public MapStorageTest() {
         super(new MapStorage());

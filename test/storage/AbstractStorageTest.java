@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AbstractStorageTest {
+public abstract class AbstractStorageTest {
 
     private static final int INITIAL_AMOUNT_OF_RESUMES = 2;
 

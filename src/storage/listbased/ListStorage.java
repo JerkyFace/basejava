@@ -12,7 +12,12 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected int indexOf(String uuid) {
+    protected boolean isPresent(Object object) {
+        return (int) object >= 0;
+    }
+
+    @Override
+    protected Object indexOf(String uuid) {
         return storage.indexOf(new Resume(uuid));
     }
 
@@ -22,12 +27,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void update(Resume resume, int index) {
-        storage.set(index, resume);
+    public void update(Resume resume, Object index) {
+        storage.set((int) index, resume);
     }
 
     @Override
-    public void save(Resume resume, int index) {
+    public void save(Resume resume, Object index) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
         }
@@ -35,12 +40,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(int index) {
-        return storage.get(index);
+    public Resume get(Object index) {
+        return storage.get((int) index);
     }
 
     @Override
-    protected void delete(int index) {
+    protected void delete(Object index) {
         storage.remove(get(index));
     }
 

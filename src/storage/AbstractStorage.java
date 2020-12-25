@@ -2,6 +2,7 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
+import exception.StorageException;
 import model.Resume;
 
 public abstract class AbstractStorage implements Storage {
@@ -13,8 +14,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        int index = indexOf(resume.getUuid());
-        if (index > 0) {
+        Object index = indexOf(resume.getUuid());
+        if (isPresent(index)) {
             throw new ExistStorageException(resume.getUuid());
         }
         save(resume, indexOf(resume.getUuid()));
@@ -30,21 +31,37 @@ public abstract class AbstractStorage implements Storage {
         delete(getIfPresent(uuid));
     }
 
-    private int getIfPresent(String uuid) {
-        int index = indexOf(uuid);
-        if (index < 0) {
+    private Object getIfPresent(String uuid) {
+        Object index = indexOf(uuid);
+        if (!isPresent(index)) {
             throw new NotExistStorageException(uuid);
         }
         return index;
     }
 
-    protected abstract int indexOf(String uuid);
 
-    protected abstract void update(Resume resume, int index);
+    protected int castObjectToInt(Object object) {
+        if (object == null) {
+            throw new StorageException("Could not get index of resume.", null);
+        }
+        int result = -1;
+        try {
+            result = (int) object;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
-    protected abstract void save(Resume resume, int index);
+    protected abstract boolean isPresent(Object object);
 
-    protected abstract Resume get(int index);
+    protected abstract Object indexOf(String uuid);
 
-    protected abstract void delete(int index);
+    protected abstract void update(Resume resume, Object index);
+
+    protected abstract void save(Resume resume, Object index);
+
+    protected abstract Resume get(Object index);
+
+    protected abstract void delete(Object index);
 }

@@ -12,30 +12,36 @@ public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected int indexOf(String uuid) {
-        return 0;
+    protected boolean isPresent(Object object) {
+        return storage.get(object) != null;
     }
 
     @Override
-    protected void update(Resume resume, int index) {
-
+    protected Object indexOf(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected void save(Resume resume, int index) {
+    protected void update(Resume resume, Object index) {
+        save(resume, index);
+    }
+
+    @Override
+    protected void save(Resume resume, Object index) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
         }
+        storage.put((String) index, resume);
     }
 
     @Override
-    protected Resume get(int index) {
-        return null;
+    protected Resume get(Object index) {
+        return storage.get(index);
     }
 
     @Override
-    protected void delete(int index) {
-
+    protected void delete(Object index) {
+        storage.remove(index);
     }
 
     @Override
