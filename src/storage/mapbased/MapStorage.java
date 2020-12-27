@@ -1,6 +1,5 @@
 package storage.mapbased;
 
-import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
 
@@ -17,7 +16,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object indexOf(String uuid) {
+    protected String getKey(String uuid) {
         return uuid;
     }
 
@@ -28,9 +27,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void save(Resume resume, Object index) {
-        if (resume == null) {
-            throw new StorageException("Cannot save empty resume", null);
-        }
         storage.put((String) index, resume);
     }
 

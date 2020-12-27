@@ -9,16 +9,22 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
+        if (resume == null) {
+            throw new StorageException("Cannot save empty resume", null);
+        }
         update(resume, getIfPresent(resume.getUuid()));
     }
 
     @Override
     public void save(Resume resume) {
-        Object index = indexOf(resume.getUuid());
-        if (isPresent(index)) {
+        if (resume == null) {
+            throw new StorageException("Cannot save empty resume", null);
+        }
+        Object key = getKey(resume.getUuid());
+        if (isPresent(key)) {
             throw new ExistStorageException(resume.getUuid());
         }
-        save(resume, indexOf(resume.getUuid()));
+        save(resume, getKey(resume.getUuid()));
     }
 
     @Override
@@ -32,36 +38,22 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getIfPresent(String uuid) {
-        Object index = indexOf(uuid);
-        if (!isPresent(index)) {
+        Object key = getKey(uuid);
+        if (!isPresent(key)) {
             throw new NotExistStorageException(uuid);
         }
-        return index;
+        return key;
     }
 
+    protected abstract boolean isPresent(Object resume);
 
-    protected int castObjectToInt(Object object) {
-        if (object == null) {
-            throw new StorageException("Could not get index of resume.", null);
-        }
-        int result = -1;
-        try {
-            result = (int) object;
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+    protected abstract Object getKey(String uuid);
 
-    protected abstract boolean isPresent(Object object);
+    protected abstract void update(Resume resume, Object key);
 
-    protected abstract Object indexOf(String uuid);
+    protected abstract void save(Resume resume, Object key);
 
-    protected abstract void update(Resume resume, Object index);
+    protected abstract Resume get(Object key);
 
-    protected abstract void save(Resume resume, Object index);
-
-    protected abstract Resume get(Object index);
-
-    protected abstract void delete(Object index);
+    protected abstract void delete(Object key);
 }

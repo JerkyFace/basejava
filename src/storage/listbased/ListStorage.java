@@ -1,6 +1,5 @@
 package storage.listbased;
 
-import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
 
@@ -13,11 +12,11 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected boolean isPresent(Object object) {
-        return (int) object >= 0;
+        return (Integer) object >= 0;
     }
 
     @Override
-    protected Object indexOf(String uuid) {
+    protected Integer getKey(String uuid) {
         return storage.indexOf(new Resume(uuid));
     }
 
@@ -28,20 +27,17 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void update(Resume resume, Object index) {
-        storage.set((int) index, resume);
+        storage.set((Integer) index, resume);
     }
 
     @Override
     public void save(Resume resume, Object index) {
-        if (resume == null) {
-            throw new StorageException("Cannot save empty resume", null);
-        }
         storage.add(resume);
     }
 
     @Override
     public Resume get(Object index) {
-        return storage.get((int) index);
+        return storage.get((Integer) index);
     }
 
     @Override

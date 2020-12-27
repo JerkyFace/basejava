@@ -18,19 +18,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public void update(Resume resume, Object index) {
-        storage[castObjectToInt(index)] = resume;
+        storage[(int) index] = resume;
         System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
     }
 
     public void save(Resume resume, Object index) {
-        if (resume == null) {
-            throw new StorageException("Cannot save empty resume", null);
-        } else if (size >= STORAGE_LIMIT) {
+        if (size >= STORAGE_LIMIT) {
             throw new StorageException("Unable to add resume with uuid '"
                     .concat(resume.getUuid())
                     .concat("'. The storage is full."), resume.getUuid());
         }
-        addResume(resume, castObjectToInt(index));
+        addResume(resume, (int) index);
         size++;
     }
 
@@ -39,11 +37,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public Resume get(Object index) {
-        return storage[castObjectToInt(index)];
+        return storage[(int) index];
     }
 
     public void delete(Object index) {
-        shiftResume(castObjectToInt(index));
+        shiftResume((int) index);
         storage[size - 1] = null;
         size--;
     }
@@ -53,8 +51,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isPresent(Object object) {
-        return (int) object >= 0;
+    protected boolean isPresent(Object resume) {
+        return (int) resume >= 0;
     }
 
     protected abstract void addResume(Resume resume, int index);

@@ -6,6 +6,8 @@ import model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
@@ -91,7 +93,9 @@ public abstract class AbstractStorageTest {
     @Test
     void getAll() {
         assertEquals(2, storage.getAll().length);
-        Resume[] resumes = {new Resume(UUID1), new Resume(UUID2)};
-        assertArrayEquals(resumes, storage.getAll());
+        Resume[] expected = {new Resume(UUID1), new Resume(UUID2)};
+        Resume[] actual = storage.getAll();
+        Arrays.sort(actual);
+        assertArrayEquals(expected, actual);
     }
 }
