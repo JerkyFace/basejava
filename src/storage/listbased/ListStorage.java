@@ -11,13 +11,13 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean isPresent(Object object) {
-        return (Integer) object >= 0;
+    protected boolean isPresent(Object index) {
+        return (int) index >= 0;
     }
 
     @Override
     protected Integer getKey(String uuid) {
-        return storage.indexOf(new Resume(uuid));
+        return storage.indexOf(new Resume(uuid, null));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void update(Resume resume, Object index) {
-        storage.set((Integer) index, resume);
+        storage.set((int) index, resume);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume get(Object index) {
-        return storage.get((Integer) index);
+        return storage.get((int) index);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[size()]);
+    public List<Resume> getAll() {
+        return new ArrayList<>(storage);
     }
 
     @Override

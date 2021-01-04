@@ -5,6 +5,8 @@ import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     @Override
@@ -37,6 +39,13 @@ public abstract class AbstractStorage implements Storage {
         delete(getIfPresent(uuid));
     }
 
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> result = getAll();
+        result.sort(Resume::compareTo);
+        return result;
+    }
+
     private Object getIfPresent(String uuid) {
         Object key = getKey(uuid);
         if (!isPresent(key)) {
@@ -56,4 +65,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume get(Object key);
 
     protected abstract void delete(Object key);
+
+    protected abstract List<Resume> getAll();
 }

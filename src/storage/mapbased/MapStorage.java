@@ -3,8 +3,7 @@ package storage.mapbased;
 import model.Resume;
 import storage.AbstractStorage;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MapStorage extends AbstractStorage {
 
@@ -12,7 +11,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isPresent(Object resume) {
-        return storage.get(resume) != null;
+        return storage.containsKey(resume);
     }
 
     @Override
@@ -46,8 +45,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[size()]);
+    public List<Resume> getAll() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
