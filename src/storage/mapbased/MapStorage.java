@@ -5,12 +5,12 @@ import storage.AbstractStorage;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage<String> {
 
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected boolean isPresent(Object resume) {
+    protected boolean isPresent(String resume) {
         return storage.containsKey(resume);
     }
 
@@ -20,22 +20,22 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void update(Resume resume, Object key) {
-        save(resume, key);
+    protected void doUpdate(Resume resume, String key) {
+        doSave(resume, key);
     }
 
     @Override
-    protected void save(Resume resume, Object key) {
-        storage.put((String) key, resume);
+    protected void doSave(Resume resume, String key) {
+        storage.put(key, resume);
     }
 
     @Override
-    protected Resume get(Object key) {
+    protected Resume doGet(String key) {
         return storage.get(key);
     }
 
     @Override
-    protected void delete(Object key) {
+    protected void doDelete(String key) {
         storage.remove(key);
     }
 

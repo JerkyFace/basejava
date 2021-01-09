@@ -5,16 +5,21 @@ import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
 
     @Override
     public void update(Resume resume) {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
         }
-        update(resume, getIfPresent(resume.getUuid()));
+        doUpdate(resume, getIfPresent(resume.getUuid()));
+        LOGGER.info("Update: " + resume);
     }
 
     @Override
@@ -22,49 +27,55 @@ public abstract class AbstractStorage implements Storage {
         if (resume == null) {
             throw new StorageException("Cannot save empty resume", null);
         }
-        Object key = getKey(resume.getUuid());
+        SK key = getKey(resume.getUuid());
+        LOGGER.info("Save: got key " + key);
         if (isPresent(key)) {
             throw new ExistStorageException(resume.getUuid());
         }
-        save(resume, getKey(resume.getUuid()));
+        doSave(resume, key);
+        LOGGER.info("saved on " + key);
     }
 
     @Override
     public Resume get(String uuid) {
-        return get(getIfPresent(uuid));
+        return doGet(getIfPresent(uuid));
     }
 
     @Override
     public void delete(String uuid) {
-        delete(getIfPresent(uuid));
+        doDelete(getIfPresent(uuid));
+        LOGGER.info("Delete: deleted by " + uuid);
     }
 
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> result = getAll();
-        result.sort(Resume::compareTo);
+        result.sort(Comparator.comparing(Resume::getUuid).thenComparing(Resume::getFullName));
+        LOGGER.info("GetAllSorted(): successful");
         return result;
     }
 
-    private Object getIfPresent(String uuid) {
-        Object key = getKey(uuid);
+    private SK getIfPresent(String uuid) {
+        SK key = getKey(uuid);
         if (!isPresent(key)) {
+            LOGGER.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
+        LOGGER.info("getIfPreset(): gotten by " + uuid);
         return key;
     }
 
-    protected abstract boolean isPresent(Object resume);
+    protected abstract boolean isPresent(SK resume);
 
-    protected abstract Object getKey(String uuid);
+    protected abstract SK getKey(String uuid);
 
-    protected abstract void update(Resume resume, Object key);
+    protected abstract void doUpdate(Resume resume, SK key);
 
-    protected abstract void save(Resume resume, Object key);
+    protected abstract void doSave(Resume resume, SK key);
 
-    protected abstract Resume get(Object key);
+    protected abstract Resume doGet(SK key);
 
-    protected abstract void delete(Object key);
+    protected abstract void doDelete(SK key);
 
     protected abstract List<Resume> getAll();
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     public static final int STORAGE_LIMIT = 100;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -19,18 +19,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public void update(Resume resume, Object index) {
-        storage[(int) index] = resume;
+    public void doUpdate(Resume resume, Integer index) {
+        storage[index] = resume;
         System.out.println("Resume with uuid '" + resume.getUuid() + "' successfully updated.");
     }
 
-    public void save(Resume resume, Object index) {
+    public void doSave(Resume resume, Integer index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Unable to add resume with uuid '"
                     .concat(resume.getUuid())
                     .concat("'. The storage is full."), resume.getUuid());
         }
-        addResume(resume, (int) index);
+        addResume(resume, index);
         size++;
     }
 
@@ -38,12 +38,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public Resume get(Object index) {
-        return storage[(int) index];
+    public Resume doGet(Integer index) {
+        return storage[index];
     }
 
-    public void delete(Object index) {
-        shiftResume((int) index);
+    public void doDelete(Integer index) {
+        shiftResume(index);
         storage[size - 1] = null;
         size--;
     }
@@ -54,8 +54,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isPresent(Object resume) {
-        return (int) resume >= 0;
+    protected boolean isPresent(Integer resume) {
+        return resume >= 0;
     }
 
     protected abstract void addResume(Resume resume, int index);

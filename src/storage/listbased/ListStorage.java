@@ -6,13 +6,13 @@ import storage.AbstractStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean isPresent(Object index) {
-        return (int) index >= 0;
+    protected boolean isPresent(Integer index) {
+        return index >= 0;
     }
 
     @Override
@@ -31,23 +31,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void update(Resume resume, Object index) {
-        storage.set((int) index, resume);
+    public void doUpdate(Resume resume, Integer index) {
+        storage.set(index, resume);
     }
 
     @Override
-    public void save(Resume resume, Object index) {
+    public void doSave(Resume resume, Integer index) {
         storage.add(resume);
     }
 
     @Override
-    public Resume get(Object index) {
-        return storage.get((int) index);
+    public Resume doGet(Integer index) {
+        return storage.get(index);
     }
 
     @Override
-    protected void delete(Object index) {
-        storage.remove(get(index));
+    protected void doDelete(Integer index) {
+        storage.remove(doGet(index));
     }
 
     @Override
