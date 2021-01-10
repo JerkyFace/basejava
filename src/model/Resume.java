@@ -7,6 +7,7 @@ public class Resume implements Comparable<Resume> {
 
     private final String uuid;
     private final String fullName;
+    private ResumeContent resumeContent;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -27,9 +28,21 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public ResumeContent getResumeContent() {
+        return resumeContent;
+    }
+
+    public void setResumeContent(ResumeContent resumeContent) {
+        this.resumeContent = resumeContent;
+    }
+
     @Override
     public String toString() {
-        return uuid.concat(": ").concat(fullName);
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", resumeContent=" + resumeContent +
+                '}';
     }
 
     @Override
