@@ -83,4 +83,16 @@ public class Activity {
     public void setActivityDescription(String activityDescription) {
         this.activityDescription = activityDescription;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "organizationName='" + organizationName + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", url='" + url + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", activityDescription='" + activityDescription + '\'' +
+                "}\n\n";
+    }
 }

@@ -3,22 +3,22 @@ package model;
 import java.util.Map;
 
 public class ResumeContent {
-    private Contacts contacts;
     private Map<SectionType, ResumeSection> sections;
+    private Map<ContactType, String> contacts;
 
     public ResumeContent() {
     }
 
-    public ResumeContent(Contacts contacts, Map<SectionType, ResumeSection> sections) {
+    public ResumeContent(Map<ContactType, String> contacts, Map<SectionType, ResumeSection> sections) {
         this.contacts = contacts;
         this.sections = sections;
     }
 
-    public Contacts getContacts() {
+    public Map<ContactType, String> getContacts() {
         return contacts;
     }
 
-    public void setContacts(Contacts contacts) {
+    public void setContacts(Map<ContactType, String> contacts) {
         this.contacts = contacts;
     }
 
@@ -35,6 +35,6 @@ public class ResumeContent {
         return "ResumeContent{" +
                 "contacts=" + contacts +
                 ", sections=" + sections +
-                '}';
+                "\n\n";
     }
 }

@@ -21,6 +21,6 @@ public class ListSection<T> extends ResumeSection {
     public String toString() {
         return "ListSection{" +
                 "list=" + list +
-                '}';
+                "}\n\n";
     }
 }

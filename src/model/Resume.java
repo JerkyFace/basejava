@@ -42,7 +42,7 @@ public class Resume implements Comparable<Resume> {
                 "uuid='" + uuid + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", resumeContent=" + resumeContent +
-                '}';
+                "\n\n";
     }
 
     @Override

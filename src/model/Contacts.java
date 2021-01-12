@@ -17,7 +17,7 @@ public class Contacts {
     public String toString() {
         return "Contacts{" +
                 "contacts=" + contacts +
-                '}';
+                "\n\n";
     }
 
     public void setContacts(Map<ContactType, String> contacts) {

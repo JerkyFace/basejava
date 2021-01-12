@@ -19,6 +19,6 @@ public class PlainTextSection extends ResumeSection {
     public String toString() {
         return "PlainTextSection{" +
                 "content='" + content + '\'' +
-                '}';
+                "}\n\n";
     }
 }

@@ -7,18 +7,18 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class hw7Test {
+public class ResumeTestData {
 
     public static void main(String[] args) {
-        Resume resume = new Resume("Volodya Pupkin");
+        Resume resume = new Resume("Vasya Pupkin");
         ResumeContent resumeContent = new ResumeContent();
 
-        Contacts contacts = new Contacts(new EnumMap<ContactType, String>(Map.of(
+        Map<ContactType, String> contacts = new EnumMap<>(Map.of(
                 ContactType.PHONE, "8-800-555-3535",
                 ContactType.EMAIL, "vasyapppp@gmail.com",
                 ContactType.SKYPE, "vasyappp777",
                 ContactType.GITHUB, "vasya777"
-        )));
+        ));
 
         Map<SectionType, ResumeSection> section = new EnumMap<SectionType, ResumeSection>(SectionType.class);
 
@@ -95,6 +95,7 @@ public class hw7Test {
         section.put(SectionType.PERSONAL,
                 new PlainTextSection("Аналитический склад ума, сильная логика, креативность, инициативность." +
                         " Пурист кода и архитектуры."));
+
         section.put(SectionType.ACHIEVEMENT, new ListSection<>(achievements));
         section.put(SectionType.QUALIFICATIONS, new ListSection<>(qualifications));
         section.put(SectionType.EXPERIENCE, new ListSection<>(workExp));
