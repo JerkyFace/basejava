@@ -1,6 +1,6 @@
 package model;
 
-public class PlainTextSection extends ResumeSection {
+public class PlainTextSection extends AbstractSection {
     private String content;
 
     public PlainTextSection(String content) {
@@ -17,8 +17,6 @@ public class PlainTextSection extends ResumeSection {
 
     @Override
     public String toString() {
-        return "PlainTextSection{" +
-                "content='" + content + '\'' +
-                '}';
+        return content;
     }
 }

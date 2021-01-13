@@ -86,13 +86,11 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "Activity{" +
-                "organizationName='" + organizationName + '\'' +
-                ", positionName='" + positionName + '\'' +
-                ", url='" + url + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", activityDescription='" + activityDescription + '\'' +
-                '}';
+        return organizationName + ":\n" +
+                positionName + ", \n" +
+                url + ", \n" +
+                startDate + ", \n" +
+                endDate + ", \n" +
+                activityDescription + "\n";
     }
 }

@@ -9,7 +9,7 @@ public enum ContactType {
     STACKOVERFLOW("stackoverflow"),
     WEBSITE("website");
 
-    private String title;
+    private final String title;
 
     ContactType(String title) {
         this.title = title;
@@ -21,8 +21,6 @@ public enum ContactType {
 
     @Override
     public String toString() {
-        return "ContactType{" +
-                "title='" + title + '\'' +
-                '}';
+        return title;
     }
 }

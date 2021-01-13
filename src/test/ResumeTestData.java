@@ -17,18 +17,18 @@ public class ResumeTestData {
                 ContactType.GITHUB, "vasya777"
         ));
 
-        Map<SectionType, ResumeSection> section = new EnumMap<SectionType, ResumeSection>(SectionType.class);
+        Map<SectionType, AbstractSection> section = new EnumMap<SectionType, AbstractSection>(SectionType.class);
 
         List<String> achievements = List.of("С 2013 года: разработка проектов \"Разработка Web приложения\"," +
                         "\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы " +
                         "(JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение" +
-                        " проектов. Более 1000 выпускников.",
+                        "проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike." +
-                        " Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
+                        "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
                 "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM." +
-                        " Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления" +
-                        " окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации" +
-                        " и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.");
+                        "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления" +
+                        "окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации" +
+                        "и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.");
         List<String> qualifications = List.of("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
@@ -101,6 +101,13 @@ public class ResumeTestData {
         resume.setContacts(contacts);
         resume.setSections(section);
 
-        System.out.println(resume);
+
+        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+
+        for (Map.Entry<SectionType, AbstractSection> entry : section.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
     }
 }

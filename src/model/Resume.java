@@ -9,7 +9,7 @@ public class Resume implements Comparable<Resume> {
 
     private final String uuid;
     private final String fullName;
-    private Map<SectionType, ResumeSection> sections;
+    private Map<SectionType, AbstractSection> sections;
     private Map<ContactType, String> contacts;
 
     public Resume(String fullName) {
@@ -34,11 +34,11 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public Map<SectionType, ResumeSection> getSections() {
+    public Map<SectionType, AbstractSection> getSections() {
         return sections;
     }
 
-    public void setSections(Map<SectionType, ResumeSection> sections) {
+    public void setSections(Map<SectionType, AbstractSection> sections) {
         this.sections = sections;
     }
 
@@ -48,14 +48,6 @@ public class Resume implements Comparable<Resume> {
 
     public void setContacts(Map<ContactType, String> contacts) {
         this.contacts = contacts;
-    }
-
-    @Override
-    public String toString() {
-        return uuid + '\n' +
-                fullName + '\n' +
-                sections + '\n' +
-                contacts + '\n';
     }
 
     @Override
@@ -76,5 +68,13 @@ public class Resume implements Comparable<Resume> {
     @Override
     public int compareTo(Resume o) {
         return uuid.compareTo(o.uuid);
+    }
+
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
     }
 }
