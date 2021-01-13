@@ -93,6 +93,6 @@ public class Activity {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", activityDescription='" + activityDescription + '\'' +
-                "}\n\n";
+                '}';
     }
 }

@@ -16,11 +16,4 @@ public class ListSection<T> extends ResumeSection {
     public void setList(List<T> list) {
         this.list = list;
     }
-
-    @Override
-    public String toString() {
-        return "ListSection{" +
-                "list=" + list +
-                "}\n\n";
-    }
 }

@@ -3,15 +3,12 @@ package test;
 import model.*;
 
 import java.time.LocalDate;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ResumeTestData {
 
     public static void main(String[] args) {
         Resume resume = new Resume("Vasya Pupkin");
-        ResumeContent resumeContent = new ResumeContent();
 
         Map<ContactType, String> contacts = new EnumMap<>(Map.of(
                 ContactType.PHONE, "8-800-555-3535",
@@ -101,12 +98,9 @@ public class ResumeTestData {
         section.put(SectionType.EXPERIENCE, new ListSection<>(workExp));
         section.put(SectionType.EDUCATION, new ListSection<>(eduExp));
 
-        resumeContent.setContacts(contacts);
-        resumeContent.setSections(section);
-
-        resume.setResumeContent(resumeContent);
+        resume.setContacts(contacts);
+        resume.setSections(section);
 
         System.out.println(resume);
-
     }
 }

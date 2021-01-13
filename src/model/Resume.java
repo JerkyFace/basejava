@@ -1,5 +1,7 @@
 package model;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -7,7 +9,8 @@ public class Resume implements Comparable<Resume> {
 
     private final String uuid;
     private final String fullName;
-    private ResumeContent resumeContent;
+    private Map<SectionType, ResumeSection> sections;
+    private Map<ContactType, String> contacts;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -18,6 +21,9 @@ public class Resume implements Comparable<Resume> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
+        sections = new EnumMap<>(SectionType.class);
+        contacts = new EnumMap<>(ContactType.class);
+        ;
     }
 
     public String getFullName() {
@@ -28,21 +34,28 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public ResumeContent getResumeContent() {
-        return resumeContent;
+    public Map<SectionType, ResumeSection> getSections() {
+        return sections;
     }
 
-    public void setResumeContent(ResumeContent resumeContent) {
-        this.resumeContent = resumeContent;
+    public void setSections(Map<SectionType, ResumeSection> sections) {
+        this.sections = sections;
+    }
+
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Map<ContactType, String> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", resumeContent=" + resumeContent +
-                "\n\n";
+        return uuid + '\n' +
+                fullName + '\n' +
+                sections + '\n' +
+                contacts + '\n';
     }
 
     @Override
