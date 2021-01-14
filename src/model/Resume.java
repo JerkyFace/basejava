@@ -23,7 +23,6 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
         sections = new EnumMap<>(SectionType.class);
         contacts = new EnumMap<>(ContactType.class);
-        ;
     }
 
     public String getFullName() {
@@ -57,12 +56,19 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName);
+        if (!uuid.equals(resume.uuid)) return false;
+        if (!fullName.equals(resume.fullName)) return false;
+        if (!sections.equals(resume.sections)) return false;
+        return contacts.equals(resume.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        int result = uuid.hashCode();
+        result = 31 * result + fullName.hashCode();
+        result = 31 * result + sections.hashCode();
+        result = 31 * result + contacts.hashCode();
+        return result;
     }
 
     @Override

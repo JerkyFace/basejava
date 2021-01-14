@@ -68,7 +68,6 @@ public class ResumeTestData {
                         " Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM.");
         List<Activity> workExp = List.of(w1, w2, w3, w4);
 
-
         Activity edu1 = new Activity("Coursera",
                 "https://www.coursera.org/learn/progfun1", LocalDate.of(2013, 3, 1),
                 LocalDate.of(2013, 5, 1),
@@ -100,7 +99,6 @@ public class ResumeTestData {
 
         resume.setContacts(contacts);
         resume.setSections(section);
-
 
         for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
