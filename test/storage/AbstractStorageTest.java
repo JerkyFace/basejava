@@ -5,6 +5,7 @@ import exception.NotExistStorageException;
 import model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import test.ResumeTestData;
 
 import java.util.List;
 
@@ -27,9 +28,8 @@ public abstract class AbstractStorageTest {
     @BeforeEach
     public void setUp() {
         storage.clear();
-        for (int i = 1; i <= INITIAL_AMOUNT_OF_RESUMES; i++) {
-            storage.save(new Resume("uuid" + i, "fullName" + i));
-        }
+        storage.save(ResumeTestData.initResume(UUID1, "fullName1"));
+        storage.save(ResumeTestData.initResume(UUID2, "fullName2"));
     }
 
     @Test
@@ -40,19 +40,20 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume updatedResume = new Resume(UUID2, "Updated FullName");
+        Resume updatedResume = ResumeTestData.initResume(UUID2, "Updated FullName");
         storage.update(updatedResume);
         assertSame(updatedResume, storage.get(UUID2));
     }
 
     @Test
     void updateThrowsNotExistStorageException() {
-        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("non existent resume", "fullName")));
+        assertThrows(NotExistStorageException.class, () ->
+                storage.update(ResumeTestData.initResume("non existent resume", "fullName")));
     }
 
     @Test
     void save() {
-        Resume resume = new Resume(UUID3, "fullName3");
+        Resume resume = ResumeTestData.initResume(UUID3, "fullName3");
         storage.save(resume);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES + 1, storage.size());
         assertSame(resume, storage.get(UUID3));
@@ -60,7 +61,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     void saveThrowsExistStorageException() {
-        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(UUID2, "fullName2")));
+        assertThrows(ExistStorageException.class, () ->
+                storage.save(ResumeTestData.initResume(UUID2, "fullName2")));
     }
 
     @Test
@@ -70,7 +72,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void get() {
-        assertEquals(new Resume(UUID1, "fullName1"), storage.get(UUID1));
+        assertEquals(ResumeTestData.initResume(UUID1, "fullName1"), storage.get(UUID1));
     }
 
     @Test
@@ -93,7 +95,8 @@ public abstract class AbstractStorageTest {
     @Test
     void getAll() {
         assertEquals(2, storage.size());
-        List<Resume> expected = List.of(new Resume(UUID1, "fullName1"), new Resume(UUID2, "fullName2"));
+        List<Resume> expected = List.of(ResumeTestData.initResume(UUID1, "fullName1"),
+                ResumeTestData.initResume(UUID2, "fullName2"));
         List<Resume> actual = storage.getAllSorted();
         assertEquals(expected, actual);
     }

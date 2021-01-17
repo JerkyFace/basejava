@@ -13,6 +13,20 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     private static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
 
+    protected abstract boolean isPresent(SK resume);
+
+    protected abstract SK getKey(String uuid);
+
+    protected abstract void doUpdate(Resume resume, SK key);
+
+    protected abstract void doSave(Resume resume, SK key);
+
+    protected abstract Resume doGet(SK key);
+
+    protected abstract void doDelete(SK key);
+
+    protected abstract List<Resume> getAll();
+
     @Override
     public void update(Resume resume) {
         if (resume == null) {
@@ -64,18 +78,4 @@ public abstract class AbstractStorage<SK> implements Storage {
         LOGGER.info("getIfPreset(): gotten by " + uuid);
         return key;
     }
-
-    protected abstract boolean isPresent(SK resume);
-
-    protected abstract SK getKey(String uuid);
-
-    protected abstract void doUpdate(Resume resume, SK key);
-
-    protected abstract void doSave(Resume resume, SK key);
-
-    protected abstract Resume doGet(SK key);
-
-    protected abstract void doDelete(SK key);
-
-    protected abstract List<Resume> getAll();
 }
