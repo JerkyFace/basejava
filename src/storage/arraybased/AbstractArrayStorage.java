@@ -14,6 +14,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    @Override
+    protected boolean isPresent(Integer resume) {
+        return resume >= 0;
+    }
+
+    protected abstract void addResume(Resume resume, int index);
+
+    protected abstract void shiftResume(int index);
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -52,13 +61,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     public List<Resume> getAll() {
         return new ArrayList<>(Arrays.asList(Arrays.copyOfRange(storage, 0, size)));
     }
-
-    @Override
-    protected boolean isPresent(Integer resume) {
-        return resume >= 0;
-    }
-
-    protected abstract void addResume(Resume resume, int index);
-
-    protected abstract void shiftResume(int index);
 }

@@ -1,17 +1,19 @@
 package test;
 
 import model.*;
+import util.DateUtil;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 public class ResumeTestData {
 
-    public static void main(String[] args) {
-        Resume resume = new Resume("Vasya Pupkin");
+    public static Resume initResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         Map<ContactType, String> contacts = new EnumMap<>(Map.of(
-                ContactType.PHONE, "8-800-555-3535",
+                ContactType.PHONE, "8-800-555-3434",
                 ContactType.EMAIL, "vasyapppp@gmail.com",
                 ContactType.SKYPE, "vasyappp777",
                 ContactType.GITHUB, "vasya777"
@@ -36,53 +38,74 @@ public class ResumeTestData {
                 "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js");
 
 
-        Activity w1 = new Activity("Java Online Projects", "Автор проекта",
-                "http://javaops.ru", LocalDate.of(2013, 10, 1),
-                LocalDate.of(2021, 1, 10),
-                "Создание, организация и проведение Java онлайн проектов и стажировок.");
+        Activity w1 = new Activity("Java Online Projects", "https://javaops.ru/",
+                new Activity.Position(
+                        DateUtil.of(2013, Month.JANUARY),
+                        LocalDate.now(),
+                        "Автор Проекта",
+                        "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
-        Activity w2 = new Activity("Wrike", "Старший разработчик (backend)",
-                "http://https://www.wrike.com/", LocalDate.of(2014, 10, 1),
-                LocalDate.of(2016, 1, 10),
-                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
-                        " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        Activity w2 = new Activity("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
+                new Activity.Position(
+                        DateUtil.of(2010, Month.DECEMBER),
+                        DateUtil.of(2012, Month.APRIL),
+                        "Ведущий программист",
+                        "Участие в проекте Deutsche Bank CRM " +
+                                "(WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle)." +
+                                " Реализация клиентской и серверной части CRM." +
+                                " Реализация RIA-приложения для администрирования," +
+                                " мониторинга и анализа результатов в области алгоритмического трейдинга." +
+                                " JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."
+                ));
 
-        Activity w3 = new Activity("RIT Center", "Java архитектор",
-                LocalDate.of(2012, 4, 1),
-                LocalDate.of(2014, 10, 1),
-                "Организация процесса разработки системы ERP для разных окружений:" +
-                        " релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway)," +
-                        " конфигурирование системы (pgBoucer, Nginx), AAA via SSO. " +
-                        "Архитектура БД и серверной части системы. Разработка интергационных сервисов:" +
-                        " CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html)." +
-                        " Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office." +
-                        " Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, " +
-                        "Tomcat,WSO2, xcmis, OpenCmis, Bonita," +
-                        " Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
+        Activity w3 = new Activity("Yota", "http://www.yota.ru/",
+                new Activity.Position(
+                        DateUtil.of(2008, Month.JUNE),
+                        DateUtil.of(2010, Month.DECEMBER),
+                        "Ведущий специалист",
+                        "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\"" +
+                                " (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2)." +
+                                " Реализация администрирования, статистики и мониторинга фреймворка." +
+                                " Разработка online JMX клиента (Python/ Jython, Django, ExtJS)"
+                ));
 
-        Activity w4 = new Activity("Luxoft (Deutsche Bank)", "Ведущий программист",
-                "http://luxoft.com", LocalDate.of(2008, 6, 1),
-                LocalDate.of(2010, 12, 1),
-                "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring," +
-                        " Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM.");
+        Activity w4 = new Activity("Enkata", "http://www.enkata.ru/",
+                new Activity.Position(
+                        DateUtil.of(2007, Month.MARCH),
+                        DateUtil.of(2008, Month.JUNE),
+                        "Разработчик ПО",
+                        "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS)" +
+                                " частей кластерного J2EE приложения (OLAP, Data mining)."
+                ));
+
+
         List<Activity> workExp = List.of(w1, w2, w3, w4);
 
+        Activity edu1 = new Activity("Coursera", "http://www.coursera.com/",
+                new Activity.Position(
+                        DateUtil.of(2013, Month.MARCH),
+                        DateUtil.of(2013, Month.MAY),
+                        null,
+                        "\"Functional Programming Principles in Scala\" by Martin Odersky"
+                ));
 
-        Activity edu1 = new Activity("Coursera",
-                "https://www.coursera.org/learn/progfun1", LocalDate.of(2013, 3, 1),
-                LocalDate.of(2013, 5, 1),
-                "\"Functional Programming Principles in Scala\" by Martin Odersky");
+        Activity edu2 = new Activity("Luxoft", "http://www.luxoft.com/",
+                new Activity.Position(
+                        DateUtil.of(2011, Month.MARCH),
+                        DateUtil.of(2011, Month.APRIL),
+                        null,
+                        "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""
+                ));
 
-        Activity edu2 = new Activity("Luxoft",
-                "http://luxoft.com", LocalDate.of(2011, 3, 1),
-                LocalDate.of(2013, 4, 1),
-                "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
-
-        Activity edu3 = new Activity("Siemens AG",
-                "http://luxoft.com", LocalDate.of(2005, 1, 1),
-                LocalDate.of(2005, 4, 1),
-                "\t3 месяца обучения мобильным IN сетям (Берлин)");
+        Activity edu3 = new Activity("Санкт-Петербургский национальный исследовательский университет" +
+                " информационных технологий, механики и оптики", "http://www.ifmo.com/",
+                Arrays.asList(
+                        new Activity.Position(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY),
+                                "Аспирант", "Аспирантура (программист С, С++)"),
+                        new Activity.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY),
+                                "Инженер", "Курс \"Объектно-ориентированный анализ ИС. " +
+                                "Концептуальное моделирование на UML.\""))
+        );
 
         List<Activity> eduExp = List.of(edu1, edu2, edu3);
 
@@ -101,13 +124,6 @@ public class ResumeTestData {
         resume.setContacts(contacts);
         resume.setSections(section);
 
-
-        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-
-        for (Map.Entry<SectionType, AbstractSection> entry : section.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
+        return resume;
     }
 }
