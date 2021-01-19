@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
-    private int size;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "Directory must not be null");
@@ -22,7 +21,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         } else if (!(directory.canRead() || directory.canWrite())) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " in inaccessible");
         } else {
-            size = 0;
             this.directory = directory;
         }
     }
@@ -55,7 +53,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             if (file.createNewFile()) {
                 doWrite(resume, file);
-                size++;
             } else {
                 throw new StorageException("Could not create file ", file.getName());
             }
@@ -79,8 +76,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new StorageException(file.getPath() + " is not a file", null);
         } else if (!file.delete()) {
             throw new StorageException("Could not delete file", file.getName());
-        } else {
-            size--;
         }
     }
 
@@ -100,14 +95,13 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
+        for (File file : Objects.requireNonNull(directory.listFiles(), "Could not clear directory")) {
             doDelete(file);
         }
-        size = 0;
     }
 
     @Override
     public int size() {
-        return size;
+        return Objects.requireNonNull(directory.list(), "Directory is empty").length;
     }
 }
