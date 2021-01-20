@@ -10,9 +10,17 @@ import java.util.Objects;
 public class MainFile {
     // print all files recursively task
     public static void printCatalogContent(File catalog) {
+        String dash = "--";
+        String spaces = "  ";
+        String dirs = "";
+        String filez = "";
+        boolean flag = false;
+
         File[] files = catalog.listFiles();
         for (File file : Objects.requireNonNull(files)) {
             if (file.isDirectory()) {
+                flag = true;
+                System.out.println(file);
                 printCatalogContent(file);
             } else {
                 System.out.println(file.getName());
@@ -34,6 +42,8 @@ public class MainFile {
                     .toString()
                     .getBytes());
         }
+
+
         try {
             System.out.println(Files.readAllLines(file.toPath()));
         } catch (IOException e) {
