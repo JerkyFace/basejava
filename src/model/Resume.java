@@ -33,16 +33,8 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public Map<SectionType, AbstractSection> getSections() {
-        return sections;
-    }
-
     public void setSections(Map<SectionType, AbstractSection> sections) {
         this.sections = sections;
-    }
-
-    public Map<ContactType, String> getContacts() {
-        return contacts;
     }
 
     public void setContacts(Map<ContactType, String> contacts) {

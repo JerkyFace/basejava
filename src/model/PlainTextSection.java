@@ -3,17 +3,9 @@ package model;
 import java.util.Objects;
 
 public class PlainTextSection extends AbstractSection {
-    private String content;
+    private final String content;
 
     public PlainTextSection(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
         this.content = content;
     }
 

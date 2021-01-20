@@ -5,103 +5,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Activity {
-    private String organizationName;
-    private String url;
+public class Organization {
+    private final String name;
+    private final String url;
     private List<Position> positions = new ArrayList<>();
 
-    public Activity(String organizationName, String url, List<Position> positions) {
-        this.organizationName = organizationName;
+    public Organization(String name, String url, List<Position> positions) {
+        this.name = name;
         this.url = url;
         this.positions = positions;
     }
 
-    public Activity(String organizationName, String url, Position position) {
-        this.organizationName = organizationName;
+    public Organization(String name, String url, Position position) {
+        this.name = name;
         this.url = url;
         positions.add(position);
-    }
-
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Activity activity = (Activity) o;
-        return Objects.equals(organizationName, activity.organizationName) &&
-                Objects.equals(url, activity.url) &&
-                Objects.equals(positions, activity.positions);
+        Organization organization = (Organization) o;
+        return Objects.equals(name, organization.name) &&
+                Objects.equals(url, organization.url) &&
+                Objects.equals(positions, organization.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizationName, url, positions);
+        return Objects.hash(name, url, positions);
     }
 
     @Override
     public String toString() {
-        return organizationName + ":\n" +
+        return name + ":\n" +
                 url + "\n" +
                 positions + "\n";
     }
 
     public static class Position {
-        private LocalDate startDate;
-        private LocalDate endDate;
-        private String positionName;
-        private String description;
+        private final LocalDate startDate;
+        private final LocalDate endDate;
+        private final String positionName;
+        private final String description;
 
         public Position(LocalDate startDate, LocalDate endDate, String positionName, String description) {
             this.startDate = startDate;
             this.endDate = endDate;
             this.positionName = positionName;
-            this.description = description;
-        }
-
-        public LocalDate getStartDate() {
-            return startDate;
-        }
-
-        public void setStartDate(LocalDate startDate) {
-            this.startDate = startDate;
-        }
-
-        public LocalDate getEndDate() {
-            return endDate;
-        }
-
-        public void setEndDate(LocalDate endDate) {
-            this.endDate = endDate;
-        }
-
-        public String getPositionName() {
-            return positionName;
-        }
-
-        public void setPositionName(String positionName) {
-            this.positionName = positionName;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
             this.description = description;
         }
 

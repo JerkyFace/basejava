@@ -21,8 +21,8 @@ public class MainFile {
     }
 
     public static void main(String[] args) throws IOException {
-        File file = new File("C:\\Users\\JerkFace\\Desktop\\baseJavaHW1\\basejava\\", "test.txt");
-        File directory = new File("C:\\Users\\JerkFace\\Desktop\\baseJavaHW1\\basejava\\");
+        File file = new File("./", "test.txt");
+        File directory = new File("./");
 
         printCatalogContent(directory);
 
@@ -39,6 +39,5 @@ public class MainFile {
         } catch (IOException e) {
             throw new StorageException("Could not read the file", null, e);
         }
-
     }
 }

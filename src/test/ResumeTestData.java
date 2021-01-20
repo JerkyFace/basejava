@@ -38,15 +38,15 @@ public class ResumeTestData {
                 "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js");
 
 
-        Activity w1 = new Activity("Java Online Projects", "https://javaops.ru/",
-                new Activity.Position(
+        Organization w1 = new Organization("Java Online Projects", "https://javaops.ru/",
+                new Organization.Position(
                         DateUtil.of(2013, Month.JANUARY),
                         LocalDate.now(),
                         "Автор Проекта",
                         "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
-        Activity w2 = new Activity("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
-                new Activity.Position(
+        Organization w2 = new Organization("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
+                new Organization.Position(
                         DateUtil.of(2010, Month.DECEMBER),
                         DateUtil.of(2012, Month.APRIL),
                         "Ведущий программист",
@@ -58,8 +58,8 @@ public class ResumeTestData {
                                 " JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."
                 ));
 
-        Activity w3 = new Activity("Yota", "http://www.yota.ru/",
-                new Activity.Position(
+        Organization w3 = new Organization("Yota", "http://www.yota.ru/",
+                new Organization.Position(
                         DateUtil.of(2008, Month.JUNE),
                         DateUtil.of(2010, Month.DECEMBER),
                         "Ведущий специалист",
@@ -69,8 +69,8 @@ public class ResumeTestData {
                                 " Разработка online JMX клиента (Python/ Jython, Django, ExtJS)"
                 ));
 
-        Activity w4 = new Activity("Enkata", "http://www.enkata.ru/",
-                new Activity.Position(
+        Organization w4 = new Organization("Enkata", "http://www.enkata.ru/",
+                new Organization.Position(
                         DateUtil.of(2007, Month.MARCH),
                         DateUtil.of(2008, Month.JUNE),
                         "Разработчик ПО",
@@ -79,35 +79,35 @@ public class ResumeTestData {
                 ));
 
 
-        List<Activity> workExp = List.of(w1, w2, w3, w4);
+        List<Organization> workExp = List.of(w1, w2, w3, w4);
 
-        Activity edu1 = new Activity("Coursera", "http://www.coursera.com/",
-                new Activity.Position(
+        Organization edu1 = new Organization("Coursera", "http://www.coursera.com/",
+                new Organization.Position(
                         DateUtil.of(2013, Month.MARCH),
                         DateUtil.of(2013, Month.MAY),
                         null,
                         "\"Functional Programming Principles in Scala\" by Martin Odersky"
                 ));
 
-        Activity edu2 = new Activity("Luxoft", "http://www.luxoft.com/",
-                new Activity.Position(
+        Organization edu2 = new Organization("Luxoft", "http://www.luxoft.com/",
+                new Organization.Position(
                         DateUtil.of(2011, Month.MARCH),
                         DateUtil.of(2011, Month.APRIL),
                         null,
                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""
                 ));
 
-        Activity edu3 = new Activity("Санкт-Петербургский национальный исследовательский университет" +
+        Organization edu3 = new Organization("Санкт-Петербургский национальный исследовательский университет" +
                 " информационных технологий, механики и оптики", "http://www.ifmo.com/",
                 Arrays.asList(
-                        new Activity.Position(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY),
+                        new Organization.Position(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY),
                                 "Аспирант", "Аспирантура (программист С, С++)"),
-                        new Activity.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY),
+                        new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY),
                                 "Инженер", "Курс \"Объектно-ориентированный анализ ИС. " +
                                 "Концептуальное моделирование на UML.\""))
         );
 
-        List<Activity> eduExp = List.of(edu1, edu2, edu3);
+        List<Organization> eduExp = List.of(edu1, edu2, edu3);
 
         section.put(SectionType.OBJECTIVE,
                 new PlainTextSection("Ведущий стажировок и корпоративного обучения по Java Web" +
