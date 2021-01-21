@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PlainTextSection extends AbstractSection {
+public class PlainTextSection extends AbstractSection implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final String content;
 
     public PlainTextSection(String content) {
