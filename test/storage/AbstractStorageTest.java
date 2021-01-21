@@ -7,12 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import test.ResumeTestData;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
 
+    protected static final File STORAGE_DIRECTORY = new File("./filestorage");
     private static final int INITIAL_AMOUNT_OF_RESUMES = 2;
 
     private static final String UUID1 = "uuid1";
