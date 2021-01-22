@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import test.ResumeTestData;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIRECTORY = new File("./filestorage");
+    protected static final String STORAGE_PATH = "./filestorage";
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
     private static final String UUID1 = "uuid1";
@@ -57,7 +60,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void save() {
-        Resume resume = ResumeTestData.initResume(UUID4, "fullName3");
+        Resume resume = ResumeTestData.initResume(UUID4, "fullName4");
         storage.save(resume);
         assertEquals(INITIAL_AMOUNT_OF_RESUMES + 1, storage.size());
         assertEquals(resume, storage.get(UUID4));
