@@ -3,6 +3,7 @@ package storage.filebased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
+import storage.Serialization;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,10 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
+    private final Serialization strategy;
 
-    protected AbstractFileStorage(File directory) {
+    protected FileStorage(File directory, Serialization strategy) {
+        this.strategy = strategy;
         Objects.requireNonNull(directory, "Directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not a directory");
@@ -23,10 +26,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             this.directory = directory;
         }
     }
-
-    protected abstract boolean doWrite(Resume resume, OutputStream file) throws IOException;
-
-    protected abstract Resume doRead(InputStream file) throws IOException;
 
     @Override
     protected boolean isPresent(File resume) {
@@ -41,7 +40,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume resume, File file) {
         try {
-            doWrite(resume, new FileOutputStream(file));
+            strategy.serialize(resume, new FileOutputStream(file));
         } catch (IOException e) {
             throw new StorageException("Could not update file ", file.getName());
         }
@@ -51,7 +50,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(Resume resume, File file) {
         try {
             if (file.createNewFile()) {
-                doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+                strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(file)));
             } else {
                 throw new StorageException("Could not create file ", file.getName());
             }
@@ -63,7 +62,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGet(File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            return strategy.deserialize(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Could not get file ", file.getName(), e);
         }

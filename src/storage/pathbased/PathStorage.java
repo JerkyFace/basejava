@@ -3,6 +3,7 @@ package storage.pathbased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
+import storage.Serialization;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,20 +13,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path path;
+    private final Serialization strategy;
 
-    protected AbstractPathStorage(String path) {
+    protected PathStorage(String path, Serialization strategy) {
         this.path = Paths.get(path);
+        this.strategy = strategy;
         Objects.requireNonNull(path, "Path must not be null");
         if (!Files.isDirectory(this.path)) {
             throw new IllegalArgumentException(this.path + " is not a directory");
         }
     }
-
-    protected abstract boolean doWrite(Resume resume, OutputStream file) throws IOException;
-
-    protected abstract Resume doRead(InputStream file) throws IOException;
 
     @Override
     protected boolean isPresent(Path resume) {
@@ -41,7 +40,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected void doUpdate(Resume resume, Path path) {
         File file = path.toFile();
         try {
-            doWrite(resume, new FileOutputStream(file));
+            strategy.serialize(resume, new FileOutputStream(file));
         } catch (IOException e) {
             throw new StorageException("Could not update file ", file.getName());
         }
@@ -51,7 +50,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(path.toFile())));
+            strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(path.toFile())));
         } catch (IOException e) {
             throw new StorageException("Could not save file ", resume.getUuid(), e);
         }
@@ -60,7 +59,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return strategy.deserialize(new BufferedInputStream(new FileInputStream(path.toFile())));
         } catch (IOException e) {
             throw new StorageException("Could not get file ", path.toString(), e);
         }
