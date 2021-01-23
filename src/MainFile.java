@@ -5,17 +5,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Objects;
 
 public class MainFile {
     // print all files recursively task
-    public static void printCatalogContent(File catalog) {
+    public static void printCatalogContent(File catalog, int level) {
         File[] files = catalog.listFiles();
-        for (File file : Objects.requireNonNull(files)) {
-            if (file.isDirectory()) {
-                printCatalogContent(file);
-            } else {
-                System.out.println(file.getName());
+        if (files != null) {
+            for (File file : files) {
+                for (int i = 0; i < level; i++) {
+                    System.out.print("__");
+                }
+                if (file.isDirectory()) {
+                    System.out.println(file.getName() + "▼");
+                    printCatalogContent(file, level + 1);
+                } else {
+                    System.out.println(file.getName());
+                }
             }
         }
     }
@@ -24,7 +29,7 @@ public class MainFile {
         File file = new File("./", "test.txt");
         File directory = new File("./");
 
-        printCatalogContent(directory);
+        printCatalogContent(directory, 0);
 
         System.out.println(file.getCanonicalPath());
         if (file.createNewFile()) {
