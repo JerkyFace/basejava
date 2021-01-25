@@ -7,7 +7,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,18 +17,13 @@ public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Link homePage;
-    private ListSection<Position> positions = new ListSection<>();
+    private List<Position> positions = new ArrayList<>();
 
     public Organization() {
     }
 
     public Organization(String name, String url, Position... positions) {
-        this(new Link(name, url), new ListSection<>(Arrays.asList(positions)));
-    }
-
-    public Organization(Link homePage, ListSection<Position> positions) {
-        this.homePage = homePage;
-        this.positions = positions;
+        this(new Link(name, url), Arrays.asList(positions));
     }
 
     @Override
@@ -41,6 +38,11 @@ public class Organization implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(homePage, positions);
+    }
+
+    public Organization(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
+        this.positions = positions;
     }
 
     @Override

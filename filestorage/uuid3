@@ -18,175 +18,135 @@
         <entry>
             <key>ACHIEVEMENT</key>
             <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <list xsi:type="plainTextSection">
-                    <content>С 2013 года: разработка проектов "Разработка Web приложения","Java Enterprise","Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP).Удаленное взаимодействие (JMS/AKKA)". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Реализация двухфакторной аутентификации для онлайн платформы управленияпроектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM.Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios.Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).</content>
-                </list>
+                <list>С 2013 года: разработка проектов "Разработка Web приложения","Java Enterprise","Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP).Удаленное взаимодействие (JMS/AKKA)". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.</list>
+                <list>Реализация двухфакторной аутентификации для онлайн платформы управленияпроектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.</list>
+                <list>Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM.Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.</list>
+                <list>Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.</list>
+                <list>Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios.Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).</list>
             </value>
         </entry>
         <entry>
             <key>QUALIFICATIONS</key>
             <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <list xsi:type="plainTextSection">
-                    <content>JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Version control: Subversion, Git, Mercury, ClearCase, Perforce</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>MySQL, SQLite, MS SQL, HSQLDB</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>XML/XSD/XSLT, SQL, C/C++, Unix shell scripts</content>
-                </list>
-                <list xsi:type="plainTextSection">
-                    <content>Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring (MVC, Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements).</content>
-                </list>
+                <list>JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2</list>
+                <list>Version control: Subversion, Git, Mercury, ClearCase, Perforce</list>
+                <list>DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle</list>
+                <list>MySQL, SQLite, MS SQL, HSQLDB</list>
+                <list>Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy</list>
+                <list>XML/XSD/XSLT, SQL, C/C++, Unix shell scripts</list>
+                <list>Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring (MVC, Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements).</list>
             </value>
         </entry>
         <entry>
             <key>EXPERIENCE</key>
-            <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <list xsi:type="organization">
+            <value xsi:type="organizationSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <organizations>
                     <homePage>
                         <name>Java Online Projects</name>
                         <homePageUrl>http://javaops.ru/</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2013-10-01</startDate>
-                            <endDate>2021-01-25</endDate>
-                            <positionName>Автор проекта.</positionName>
-                            <description>Создание, организация и проведение Java онлайн проектов и стажировок.</description>
-                        </list>
+                        <startDate>2013-10-01</startDate>
+                        <endDate>2021-01-25</endDate>
+                        <positionName>Автор проекта.</positionName>
+                        <description>Создание, организация и проведение Java онлайн проектов и стажировок.</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>Wrike</name>
                         <homePageUrl>http://wrike.com/</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2014-10-01</startDate>
-                            <endDate>2016-01-01</endDate>
-                            <positionName>Старший разработчик (backend)</positionName>
-                            <description>Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.</description>
-                        </list>
+                        <startDate>2014-10-01</startDate>
+                        <endDate>2016-01-01</endDate>
+                        <positionName>Старший разработчик (backend)</positionName>
+                        <description>Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>RIT Center</name>
                         <homePageUrl></homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2012-04-01</startDate>
-                            <endDate>2014-10-01</endDate>
-                            <positionName>Java архитектор</positionName>
-                            <description>Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python</description>
-                        </list>
+                        <startDate>2012-04-01</startDate>
+                        <endDate>2014-10-01</endDate>
+                        <positionName>Java архитектор</positionName>
+                        <description>Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>Luxoft (Deutsche Bank)</name>
                         <homePageUrl>http://www.luxoft.ru/</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2010-12-01</startDate>
-                            <endDate>2012-04-01</endDate>
-                            <positionName>Ведущий программист</positionName>
-                            <description>Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.</description>
-                        </list>
+                        <startDate>2010-12-01</startDate>
+                        <endDate>2012-04-01</endDate>
+                        <positionName>Ведущий программист</positionName>
+                        <description>Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.</description>
                     </positions>
-                </list>
+                </organizations>
             </value>
         </entry>
         <entry>
             <key>EDUCATION</key>
-            <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <list xsi:type="organization">
+            <value xsi:type="organizationSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <organizations>
                     <homePage>
                         <name>Coursera</name>
                         <homePageUrl>https://www.coursera.org/course/progfun</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2013-03-01</startDate>
-                            <endDate>2013-05-01</endDate>
-                            <positionName></positionName>
-                            <description>"Functional Programming Principles in Scala" by Martin Odersky</description>
-                        </list>
+                        <startDate>2013-03-01</startDate>
+                        <endDate>2013-05-01</endDate>
+                        <positionName></positionName>
+                        <description>"Functional Programming Principles in Scala" by Martin Odersky</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>Luxoft</name>
                         <homePageUrl>http://www.luxoft-training.ru/training/catalog/course.html?ID=22366</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>2011-03-01</startDate>
-                            <endDate>2011-04-01</endDate>
-                            <positionName></positionName>
-                            <description>Курс "Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML."</description>
-                        </list>
+                        <startDate>2011-03-01</startDate>
+                        <endDate>2011-04-01</endDate>
+                        <positionName></positionName>
+                        <description>Курс "Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML."</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>Alcatel</name>
                         <homePageUrl>http://www.alcatel.ru/</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>1997-09-01</startDate>
-                            <endDate>1998-03-01</endDate>
-                            <positionName></positionName>
-                            <description>6 месяцев обучения цифровым телефонным сетям (Москва)</description>
-                        </list>
+                        <startDate>1997-09-01</startDate>
+                        <endDate>1998-03-01</endDate>
+                        <positionName></positionName>
+                        <description>6 месяцев обучения цифровым телефонным сетям (Москва)</description>
                     </positions>
-                </list>
-                <list xsi:type="organization">
+                </organizations>
+                <organizations>
                     <homePage>
                         <name>Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики</name>
                         <homePageUrl>http://www.ifmo.ru/</homePageUrl>
                     </homePage>
                     <positions>
-                        <list xsi:type="position">
-                            <startDate>1993-09-01</startDate>
-                            <endDate>1996-07-01</endDate>
-                            <positionName>Аспирант</positionName>
-                            <description>Аспирантура (программист С, С++)</description>
-                        </list>
-                        <list xsi:type="position">
-                            <startDate>1987-09-01</startDate>
-                            <endDate>1993-07-01</endDate>
-                            <positionName>Инженер</positionName>
-                            <description>Инженер (программист Fortran, C)</description>
-                        </list>
+                        <startDate>1993-09-01</startDate>
+                        <endDate>1996-07-01</endDate>
+                        <positionName>Аспирант</positionName>
+                        <description>Аспирантура (программист С, С++)</description>
                     </positions>
-                </list>
+                    <positions>
+                        <startDate>1987-09-01</startDate>
+                        <endDate>1993-07-01</endDate>
+                        <positionName>Инженер</positionName>
+                        <description>Инженер (программист Fortran, C)</description>
+                    </positions>
+                </organizations>
             </value>
         </entry>
     </sections>

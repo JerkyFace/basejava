@@ -15,7 +15,8 @@ public class XmlStreamSerialization implements Serialization {
                 Organization.class,
                 Organization.Position.class,
                 PlainTextSection.class,
-                ListSection.class);
+                ListSection.class,
+                OrganizationSection.class);
     }
 
     @Override
