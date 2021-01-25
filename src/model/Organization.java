@@ -72,23 +72,16 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
             Position position = (Position) o;
-
-            if (!Objects.equals(startDate, position.startDate)) return false;
-            if (!Objects.equals(endDate, position.endDate)) return false;
-            if (!Objects.equals(positionName, position.positionName))
-                return false;
-            return Objects.equals(description, position.description);
+            return Objects.equals(startDate, position.startDate) &&
+                    Objects.equals(endDate, position.endDate) &&
+                    Objects.equals(positionName, position.positionName) &&
+                    Objects.equals(description, position.description);
         }
 
         @Override
         public int hashCode() {
-            int result = startDate != null ? startDate.hashCode() : 0;
-            result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-            result = 31 * result + (positionName != null ? positionName.hashCode() : 0);
-            result = 31 * result + (description != null ? description.hashCode() : 0);
-            return result;
+            return Objects.hash(startDate, endDate, positionName, description);
         }
     }
 }

@@ -32,14 +32,12 @@ public class ListSection<T> extends AbstractSection implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ListSection<?> that = (ListSection<?>) o;
-
         return Objects.equals(list, that.list);
     }
 
     @Override
     public int hashCode() {
-        return list != null ? list.hashCode() : 0;
+        return Objects.hash(list);
     }
 }
