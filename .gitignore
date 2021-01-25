@@ -6,5 +6,5 @@ log
 
 /src/test/sandbox/
 /test.txt
-
+/filestorage/uuid*
 
