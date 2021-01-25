@@ -15,7 +15,7 @@ public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Link homePage;
-    private ListSection<Position> positions;
+    private ListSection<Position> positions = new ListSection<>();
 
     public Organization() {
     }
@@ -32,7 +32,7 @@ public class Organization implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Organization)) return false;
         Organization that = (Organization) o;
         return Objects.equals(homePage, that.homePage) &&
                 Objects.equals(positions, that.positions);
@@ -81,10 +81,10 @@ public class Organization implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
-            return Objects.equals(startDate, position.startDate) &&
-                    Objects.equals(endDate, position.endDate) &&
-                    Objects.equals(positionName, position.positionName) &&
-                    Objects.equals(description, position.description);
+            return startDate.equals(position.startDate) &&
+                    endDate.equals(position.endDate) &&
+                    positionName.equals(position.positionName) &&
+                    description.equals(position.description);
         }
 
         @Override

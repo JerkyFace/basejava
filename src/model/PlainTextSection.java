@@ -1,11 +1,8 @@
 package model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class PlainTextSection extends AbstractSection implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,6 +13,10 @@ public class PlainTextSection extends AbstractSection implements Serializable {
 
     public PlainTextSection(String content) {
         this.content = content;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     @Override

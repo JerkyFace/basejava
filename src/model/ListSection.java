@@ -25,10 +25,6 @@ public class ListSection<T> extends AbstractSection implements Serializable {
         return list;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
     @Override
     public String toString() {
         return list.toString();
