@@ -2,50 +2,43 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final String name;
-    private final String url;
-    private List<Position> positions = new ArrayList<>();
+    private final Link homePage;
+    private final List<Position> positions;
 
-    public Organization(String name, String url, List<Position> positions) {
-        this.name = name;
-        this.url = url;
-        this.positions = positions;
+    public Organization(String name, String url, Position... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
     }
 
-    public Organization(String name, String url, Position position) {
-        this.name = name;
-        this.url = url;
-        positions.add(position);
+    public Organization(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
+        this.positions = positions;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Organization organization = (Organization) o;
-        return Objects.equals(name, organization.name) &&
-                Objects.equals(url, organization.url) &&
-                Objects.equals(positions, organization.positions);
+        Organization that = (Organization) o;
+        return Objects.equals(homePage, that.homePage) &&
+                Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, url, positions);
+        return Objects.hash(homePage, positions);
     }
 
     @Override
     public String toString() {
-        return "Organization(" + name + "," +
-                url + "," +
-                positions + ")";
-
+        return "Organization(" + homePage + ", "
+                + positions + ")";
     }
 
     public static class Position implements Serializable {

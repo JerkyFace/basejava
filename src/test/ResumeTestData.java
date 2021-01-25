@@ -99,13 +99,11 @@ public class ResumeTestData {
 
         Organization edu3 = new Organization("Санкт-Петербургский национальный исследовательский университет" +
                 " информационных технологий, механики и оптики", "http://www.ifmo.com/",
-                Arrays.asList(
-                        new Organization.Position(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY),
-                                "Аспирант", "Аспирантура (программист С, С++)"),
-                        new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY),
-                                "Инженер", "Курс \"Объектно-ориентированный анализ ИС. " +
-                                "Концептуальное моделирование на UML.\""))
-        );
+                new Organization.Position(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY),
+                        "Аспирант", "Аспирантура (программист С, С++)"),
+                new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY),
+                        "Инженер", "Курс \"Объектно-ориентированный анализ ИС. " +
+                        "Концептуальное моделирование на UML.\""));
 
         List<Organization> eduExp = List.of(edu1, edu2, edu3);
 
@@ -123,7 +121,7 @@ public class ResumeTestData {
 
         resume.setContacts(contacts);
         resume.setSections(section);
-
+        System.out.println(resume);
         return resume;
     }
 }
