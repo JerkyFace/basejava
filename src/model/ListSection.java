@@ -23,9 +23,7 @@ public class ListSection<T> extends AbstractSection implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        list.forEach(v -> result.append(v).append(","));
-        return result.toString();
+        return list.toString();
     }
 
     @Override

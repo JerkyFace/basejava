@@ -42,9 +42,10 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        return name + ":\n" +
-                url + "\n" +
-                positions + "\n";
+        return "Organization(" + name + "," +
+                url + "," +
+                positions + ")";
+
     }
 
     public static class Position implements Serializable {
@@ -62,10 +63,10 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            return startDate + "/" +
-                    endDate + "\n" +
-                    positionName + '\n' +
-                    description + "\n";
+            return "Position(" + startDate + "," +
+                    endDate + "," +
+                    positionName + "," +
+                    description + ")";
         }
 
         @Override
