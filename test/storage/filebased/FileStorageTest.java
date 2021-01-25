@@ -1,7 +1,7 @@
 package storage.filebased;
 
 import storage.AbstractStorageTest;
-import storage.ObjectStreamSerialization;
+import storage.serializer.ObjectStreamSerialization;
 
 class FileStorageTest extends AbstractStorageTest {
 

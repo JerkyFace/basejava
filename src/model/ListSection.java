@@ -1,16 +1,24 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection<T> extends AbstractSection implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<T> list;
+    private List<T> list = new ArrayList<>();
+
+    public ListSection() {
+    }
 
     public ListSection(List<T> list) {
         this.list = list;
+    }
+
+    public void add(T value) {
+        list.add(value);
     }
 
     public List<T> getList() {

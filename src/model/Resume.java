@@ -1,18 +1,26 @@
 package model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final String uuid;
-    private final String fullName;
-    private Map<SectionType, AbstractSection> sections;
-    private Map<ContactType, String> contacts;
+    private String uuid;
+    private String fullName;
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+
+    public Resume() {
+    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -23,8 +31,6 @@ public class Resume implements Comparable<Resume>, Serializable {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
-        sections = new EnumMap<>(SectionType.class);
-        contacts = new EnumMap<>(ContactType.class);
     }
 
     public String getFullName() {
@@ -35,12 +41,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         return uuid;
     }
 
-    public void setSections(Map<SectionType, AbstractSection> sections) {
-        this.sections = sections;
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
     }
 
-    public void setContacts(Map<ContactType, String> contacts) {
-        this.contacts = contacts;
+    public void addSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
     }
 
     @Override

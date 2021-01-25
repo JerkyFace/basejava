@@ -1,7 +1,7 @@
 package storage.pathbased;
 
 import storage.AbstractStorageTest;
-import storage.ObjectStreamSerialization;
+import storage.serializer.ObjectStreamSerialization;
 
 class PathStorageTest extends AbstractStorageTest {
 
