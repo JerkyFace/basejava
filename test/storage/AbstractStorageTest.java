@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import test.ResumeTestData;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,7 +101,7 @@ public abstract class AbstractStorageTest {
     @Test
     void getAll() {
         assertEquals(3, storage.size());
-        List<Resume> expected = List.of(ResumeTestData.initResume(UUID1, "fullName1"),
+        List<Resume> expected = Arrays.asList(ResumeTestData.initResume(UUID1, "fullName1"),
                 ResumeTestData.initResume(UUID2, "fullName2"),
                 ResumeTestData.initResume(UUID3, "fullName3"));
         List<Resume> actual = storage.getAllSorted();
