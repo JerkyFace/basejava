@@ -1,11 +1,11 @@
-package storage;
+package storage.serializer;
 
 import exception.StorageException;
 import model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamSerialization implements Serialization {
+public class ObjectStreamSerializer implements Serialization {
     @Override
     public boolean serialize(Resume resume, OutputStream os) throws IOException {
         try (final ObjectOutputStream oos = new ObjectOutputStream(os)) {

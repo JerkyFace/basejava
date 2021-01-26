@@ -3,7 +3,7 @@ package storage.pathbased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
-import storage.Serialization;
+import storage.serializer.Serialization;
 
 import java.io.*;
 import java.nio.file.Files;
