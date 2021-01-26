@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface Serialization {
+public interface StreamSerializer {
 
-    boolean serialize(Resume resume, OutputStream os) throws IOException;
+    void serialize(Resume resume, OutputStream os) throws IOException;
 
     Resume deserialize(InputStream is) throws IOException;
 }

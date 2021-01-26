@@ -19,14 +19,6 @@ public class Link implements Serializable {
         this.homePageUrl = homePageUrl;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getHomePageUrl() {
-        return homePageUrl;
-    }
-
     @Override
     public String toString() {
         return "Link(" + name + ", " + homePageUrl + ")";

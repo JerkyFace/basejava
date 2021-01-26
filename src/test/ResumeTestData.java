@@ -23,7 +23,8 @@ public class ResumeTestData {
         resume.addSection(SectionType.PERSONAL,
                 new PlainTextSection("Аналитический склад ума, сильная логика, креативность," +
                         " инициативность. Пурист кода и архитектуры."));
-        ListSection achievements = new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
+
+        resume.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
                 "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP)." +
                 "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления" +
@@ -37,9 +38,7 @@ public class ResumeTestData {
                         " сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). " +
                         "Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios." +
                         "Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django)."
-        );
-
-        resume.addSection(SectionType.ACHIEVEMENT, achievements);
+        ));
 
         resume.addSection(SectionType.QUALIFICATIONS, new ListSection(
                 "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",

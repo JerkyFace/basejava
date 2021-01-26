@@ -6,10 +6,10 @@ import util.XmlParser;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class XmlStreamSerialization implements Serialization {
+public class XmlStreamSerializer implements StreamSerializer {
     private final XmlParser xmlParser;
 
-    public XmlStreamSerialization() {
+    public XmlStreamSerializer() {
         xmlParser = new XmlParser(Resume.class,
                 Link.class,
                 Organization.class,
@@ -20,10 +20,9 @@ public class XmlStreamSerialization implements Serialization {
     }
 
     @Override
-    public boolean serialize(Resume resume, OutputStream os) throws IOException {
+    public void serialize(Resume resume, OutputStream os) throws IOException {
         try (Writer writer = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
             xmlParser.marshall(resume, writer);
-            return true;
         }
     }
 

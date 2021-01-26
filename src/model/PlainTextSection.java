@@ -1,9 +1,8 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class PlainTextSection extends AbstractSection implements Serializable {
+public class PlainTextSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
 
     private String content;
@@ -13,10 +12,6 @@ public class PlainTextSection extends AbstractSection implements Serializable {
 
     public PlainTextSection(String content) {
         this.content = content;
-    }
-
-    public String getContent() {
-        return content;
     }
 
     @Override

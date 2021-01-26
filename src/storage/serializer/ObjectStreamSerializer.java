@@ -2,16 +2,14 @@ package storage.serializer;
 
 import exception.StorageException;
 import model.Resume;
-import storage.serializer.Serialization;
 
 import java.io.*;
 
-public class ObjectStreamSerialization implements Serialization {
+public class ObjectStreamSerializer implements StreamSerializer {
     @Override
-    public boolean serialize(Resume resume, OutputStream os) throws IOException {
+    public void serialize(Resume resume, OutputStream os) throws IOException {
         try (final ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(resume);
-            return true;
         }
     }
 

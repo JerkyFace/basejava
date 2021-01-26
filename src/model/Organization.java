@@ -1,5 +1,6 @@
 package model;
 
+import util.DateUtil;
 import util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,11 @@ public class Organization implements Serializable {
         this(new Link(name, url), Arrays.asList(positions));
     }
 
+    public Organization(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
+        this.positions = positions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,11 +45,6 @@ public class Organization implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(homePage, positions);
-    }
-
-    public Organization(Link homePage, List<Position> positions) {
-        this.homePage = homePage;
-        this.positions = positions;
     }
 
     @Override
@@ -61,6 +63,14 @@ public class Organization implements Serializable {
         private String description;
 
         public Position() {
+        }
+
+        public Position(int startYear, Month startMonth, String positionName, String description) {
+            this(DateUtil.of(startYear, startMonth), LocalDate.now(), positionName, description);
+        }
+
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String positionName, String description) {
+            this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), positionName, description);
         }
 
         public Position(LocalDate startDate, LocalDate endDate, String positionName, String description) {

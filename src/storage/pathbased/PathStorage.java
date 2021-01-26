@@ -3,7 +3,7 @@ package storage.pathbased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
-import storage.serializer.Serialization;
+import storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path path;
-    private final Serialization strategy;
+    private final StreamSerializer strategy;
 
-    protected PathStorage(String path, Serialization strategy) {
+    protected PathStorage(String path, StreamSerializer strategy) {
         this.path = Paths.get(path);
         this.strategy = strategy;
         Objects.requireNonNull(path, "Path must not be null");
@@ -38,11 +38,10 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected void doUpdate(Resume resume, Path path) {
-        File file = path.toFile();
         try {
-            strategy.serialize(resume, new FileOutputStream(file));
+            strategy.serialize(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Could not update file ", file.getName());
+            throw new StorageException("Could not update file ", path.toFile().getName());
         }
     }
 
@@ -50,7 +49,7 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(path.toFile())));
+            strategy.serialize(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Could not save file ", resume.getUuid(), e);
         }
@@ -59,7 +58,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return strategy.deserialize(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return strategy.deserialize(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Could not get file ", path.toString(), e);
         }
