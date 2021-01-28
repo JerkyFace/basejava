@@ -38,11 +38,10 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected void doUpdate(Resume resume, Path path) {
-        File file = path.toFile();
         try {
-            strategy.serialize(resume, new FileOutputStream(file));
+            strategy.serialize(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Could not update file ", file.getName());
+            throw new StorageException("Could not update file ", resume.getUuid());
         }
     }
 
@@ -50,7 +49,7 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(path.toFile())));
+            doUpdate(resume, path);
         } catch (IOException e) {
             throw new StorageException("Could not save file ", resume.getUuid(), e);
         }
@@ -59,7 +58,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return strategy.deserialize(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return strategy.deserialize(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Could not get file ", path.toString(), e);
         }

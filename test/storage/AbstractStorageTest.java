@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIRECTORY = new File("./filestorage");
-    protected static final String STORAGE_PATH = "./filestorage";
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
     private static final String UUID1 = "uuid1";
@@ -31,7 +30,7 @@ public abstract class AbstractStorageTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setup() {
         storage.clear();
         storage.save(ResumeTestData.initResume(UUID1, "fullName1"));
         storage.save(ResumeTestData.initResume(UUID2, "fullName2"));

@@ -18,10 +18,10 @@ public class ResumeTestData {
         resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
 
         resume.addSection(SectionType.OBJECTIVE,
-                new PlainTextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
+                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
                         " Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL,
-                new PlainTextSection("Аналитический склад ума, сильная логика, креативность," +
+                new TextSection("Аналитический склад ума, сильная логика, креативность," +
                         " инициативность. Пурист кода и архитектуры."));
 
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +

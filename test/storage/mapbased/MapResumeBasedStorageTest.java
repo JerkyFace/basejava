@@ -2,9 +2,9 @@ package storage.mapbased;
 
 import storage.AbstractStorageTest;
 
-class MapResumeBasedStorageTest extends AbstractStorageTest {
+public class MapResumeBasedStorageTest extends AbstractStorageTest {
 
-    protected MapResumeBasedStorageTest() {
+    public MapResumeBasedStorageTest() {
         super(new MapResumeBasedStorage());
     }
 }

@@ -40,7 +40,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume resume, File file) {
         try {
-            strategy.serialize(resume, new FileOutputStream(file));
+            strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Could not update file ", file.getName());
         }
@@ -70,9 +70,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        if (!file.isFile()) {
-            throw new StorageException(file.getPath() + " is not a file", null);
-        } else if (!file.delete()) {
+        if (!file.delete()) {
             throw new StorageException("Could not delete file", file.getName());
         }
     }
@@ -81,13 +79,12 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> getAll() {
         List<Resume> results = new ArrayList<>();
         File[] files = directory.listFiles();
-        if (files != null) {
-            Arrays.stream(files).forEach(file -> {
-                results.add(doGet(file));
-            });
-        } else {
+        if (files == null) {
             throw new StorageException("Could not get files from " + directory, null);
         }
+        Arrays.stream(files).forEach(file -> {
+            results.add(doGet(file));
+        });
         return results;
     }
 
