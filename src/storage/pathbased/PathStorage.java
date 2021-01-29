@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path path;
@@ -75,28 +76,24 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAll() {
-        try {
-            return Files.list(path)
-                    .map(this::doGet)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException("Could not get list of files by " + path.toFile().getName(), null, e);
-        }
+        return getList(path)
+                .map(this::doGet)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void clear() {
-        try {
-            Files.list(path).forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Could not clear the directory", null, e);
-        }
+        getList(path).forEach(this::doDelete);
     }
 
     @Override
     public int size() {
+        return (int) getList(path).count();
+    }
+
+    private Stream<Path> getList(Path path) {
         try {
-            return (int) Files.list(path).count();
+            return Files.list(path);
         } catch (IOException e) {
             throw new StorageException("Could not reach the directory", null, e);
         }

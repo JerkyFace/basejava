@@ -78,11 +78,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> results = new ArrayList<>();
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Could not get files from " + directory, null);
-        }
-        Arrays.stream(files).forEach(file -> {
+        Arrays.stream(getListOfFiles(directory)).forEach(file -> {
             results.add(doGet(file));
         });
         return results;
@@ -90,7 +86,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles(), "Could not clear directory")) {
+        for (File file : getListOfFiles(directory)) {
             doDelete(file);
         }
     }
@@ -98,5 +94,13 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     public int size() {
         return Objects.requireNonNull(directory.list(), "Directory is empty").length;
+    }
+
+    private File[] getListOfFiles(File directory) {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Could not get files from " + directory, null);
+        }
+        return files;
     }
 }
