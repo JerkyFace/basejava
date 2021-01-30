@@ -6,6 +6,6 @@ import storage.serializer.XmlStreamSerializer;
 class XmlPathStorageTest extends AbstractStorageTest {
 
     protected XmlPathStorageTest() {
-        super(new PathStorage(STORAGE_PATH, new XmlStreamSerializer()));
+        super(new PathStorage(STORAGE_DIRECTORY.getName(), new XmlStreamSerializer()));
     }
 }

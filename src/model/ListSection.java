@@ -10,6 +10,9 @@ public class ListSection extends AbstractSection implements Serializable {
 
     private List<String> list;
 
+    public ListSection() {
+    }
+
     public ListSection(String... items) {
         this(Arrays.asList(items));
     }
