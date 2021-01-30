@@ -49,11 +49,10 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doSave(Resume resume, File file) {
         try {
-            if (file.createNewFile()) {
-                strategy.serialize(resume, new BufferedOutputStream(new FileOutputStream(file)));
-            } else {
+            if (!file.createNewFile()) {
                 throw new StorageException("Could not create file ", file.getName());
             }
+            doUpdate(resume, file);
         } catch (IOException e) {
             throw new StorageException("Could not save file ", resume.getUuid(), e);
         }

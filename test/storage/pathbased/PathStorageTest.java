@@ -6,6 +6,6 @@ import storage.serializer.ObjectStreamSerializer;
 public class PathStorageTest extends AbstractStorageTest {
 
     protected PathStorageTest() {
-        super(new PathStorage(STORAGE_DIRECTORY.toString(), new ObjectStreamSerializer()));
+        super(new PathStorage(STORAGE_DIRECTORY.getName(), new ObjectStreamSerializer()));
     }
 }
