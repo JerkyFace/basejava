@@ -3,7 +3,7 @@ package storage.filebased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
-import storage.serializer.Serialization;
+import storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private final Serialization strategy;
+    private final StreamSerializer strategy;
 
-    protected FileStorage(File directory, Serialization strategy) {
+    protected FileStorage(File directory, StreamSerializer strategy) {
         this.strategy = strategy;
         Objects.requireNonNull(directory, "Directory must not be null");
         if (!directory.isDirectory()) {

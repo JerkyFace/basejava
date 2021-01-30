@@ -1,16 +1,28 @@
 package model;
 
+import util.DateUtil;
+import util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final Link homePage;
-    private final List<Position> positions;
+    private Link homePage;
+    private List<Position> positions = new ArrayList<>();
+
+    public Organization() {
+    }
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -24,7 +36,7 @@ public class Organization implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Organization)) return false;
         Organization that = (Organization) o;
         return Objects.equals(homePage, that.homePage) &&
                 Objects.equals(positions, that.positions);
@@ -41,11 +53,25 @@ public class Organization implements Serializable {
                 + positions + ")";
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        private final LocalDate startDate;
-        private final LocalDate endDate;
-        private final String positionName;
-        private final String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+        private String positionName;
+        private String description;
+
+        public Position() {
+        }
+
+        public Position(int startYear, Month startMonth, String positionName, String description) {
+            this(DateUtil.of(startYear, startMonth), LocalDate.now(), positionName, description);
+        }
+
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String positionName, String description) {
+            this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), positionName, description);
+        }
 
         public Position(LocalDate startDate, LocalDate endDate, String positionName, String description) {
             this.startDate = startDate;
@@ -67,10 +93,10 @@ public class Organization implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
-            return Objects.equals(startDate, position.startDate) &&
-                    Objects.equals(endDate, position.endDate) &&
-                    Objects.equals(positionName, position.positionName) &&
-                    Objects.equals(description, position.description);
+            return startDate.equals(position.startDate) &&
+                    endDate.equals(position.endDate) &&
+                    positionName.equals(position.positionName) &&
+                    description.equals(position.description);
         }
 
         @Override

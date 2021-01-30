@@ -3,9 +3,11 @@ package storage.pathbased;
 import exception.StorageException;
 import model.Resume;
 import storage.AbstractStorage;
-import storage.serializer.Serialization;
+import storage.serializer.StreamSerializer;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,9 +18,9 @@ import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path path;
-    private final Serialization strategy;
+    private final StreamSerializer strategy;
 
-    protected PathStorage(String path, Serialization strategy) {
+    protected PathStorage(String path, StreamSerializer strategy) {
         this.path = Paths.get(path);
         this.strategy = strategy;
         Objects.requireNonNull(path, "Path must not be null");
