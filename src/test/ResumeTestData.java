@@ -78,7 +78,7 @@ public class ResumeTestData {
                                         " Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices)," +
                                         " сервисов общего назначения (почта, экспорт в pdf, doc, html)." +
                                         " Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. " +
-                                        "Maven + plugin development, Ant, Apache Commons, Spring security," +
+                                        " Maven + plugin development, Ant, Apache Commons, Spring security," +
                                         " Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting," +
                                         " Unix shell remote scripting via ssh tunnels, PL/Python")),
 

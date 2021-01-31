@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 public class ListSection extends AbstractSection implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<String> list;
+    private List<String> list = new ArrayList<>();
 
     public ListSection() {
     }
