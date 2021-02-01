@@ -3,7 +3,6 @@ package test;
 import model.*;
 import util.DateUtil;
 
-import java.time.LocalDate;
 import java.time.Month;
 
 public class ResumeTestData {
@@ -55,7 +54,7 @@ public class ResumeTestData {
         OrganizationSection work = new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
                         new Organization.Position(DateUtil.of(2013, Month.OCTOBER),
-                                LocalDate.now(),
+                                DateUtil.NOW,
                                 "Автор проекта.",
                                 "Создание, организация и проведение Java онлайн проектов и стажировок.")),
 
