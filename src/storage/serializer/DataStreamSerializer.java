@@ -7,6 +7,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -29,29 +30,22 @@ public class DataStreamSerializer implements StreamSerializer {
             Map<SectionType, AbstractSection> sections = resume.getSections();
             sections.forEach((key, value) -> {
                 try {
+                    dos.writeUTF(String.valueOf(key));
                     switch (key) {
                         case PERSONAL:
                         case OBJECTIVE:
-                            dos.writeUTF(String.valueOf(key));
                             dos.writeUTF(((TextSection) value).getContent());
                             break;
                         case ACHIEVEMENT:
                         case QUALIFICATIONS:
-                            int achievementListSize = ((ListSection) value).getList().size();
-                            dos.writeInt(achievementListSize);
-                            dos.writeUTF(String.valueOf(key));
-                            for (String s : ((ListSection) value).getList()) {
-                                dos.writeUTF(s);
-                            }
+                            writeCollection(((ListSection) value).getList(), dos, dos::writeUTF);
                             break;
                         case EXPERIENCE:
                         case EDUCATION:
                             int organizationListSize = ((OrganizationSection) value).getOrganizations().size();
                             dos.writeInt(organizationListSize);
-                            dos.writeUTF(String.valueOf(key));
                             for (Organization organization : ((OrganizationSection) value).getOrganizations()) {
-                                dos.writeUTF(organization.getHomePage().getName());
-                                dos.writeUTF(organization.getHomePage().getHomePageUrl());
+                                writeLink(dos, organization.getHomePage());
                                 dos.writeInt(organization.getPositions().size());
                                 for (Organization.Position position : organization.getPositions()) {
                                     writeLocalDate(dos, position.getStartDate());
@@ -96,8 +90,8 @@ public class DataStreamSerializer implements StreamSerializer {
     }
 
     private void read(DataInputStream dis, Resume resume) throws IOException {
-        int sectionSize = dis.readInt();
         SectionType sectionType = SectionType.valueOf(dis.readUTF());
+        int sectionSize = dis.readInt();
         List<String> sectionList = new ArrayList<>();
         switch (sectionType) {
             case PERSONAL:
@@ -137,5 +131,22 @@ public class DataStreamSerializer implements StreamSerializer {
     private void writeLocalDate(DataOutputStream dos, LocalDate localDate) throws IOException {
         dos.writeInt(localDate.getYear());
         dos.writeInt(localDate.getMonth().getValue());
+    }
+
+    private void writeLink(DataOutputStream dos, Link link) throws IOException {
+        dos.writeUTF(link.getName());
+        dos.writeUTF(link.getHomePageUrl());
+    }
+
+    interface Writer<T> {
+        void write(T t) throws IOException;
+    }
+
+    private <T> void writeCollection(Collection<T> collection, DataOutputStream dos, Writer<T> writer)
+            throws IOException {
+        dos.writeInt(collection.size());
+        for (T element : collection) {
+            writer.write(element);
+        }
     }
 }
