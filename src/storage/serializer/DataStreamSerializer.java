@@ -38,23 +38,20 @@ public class DataStreamSerializer implements StreamSerializer {
                             break;
                         case ACHIEVEMENT:
                         case QUALIFICATIONS:
-                            writeCollection(((ListSection) value).getList(), dos, dos::writeUTF);
+                            writeWithException(dos, ((ListSection) value).getList(), dos::writeUTF);
                             break;
                         case EXPERIENCE:
                         case EDUCATION:
-                            int organizationListSize = ((OrganizationSection) value).getOrganizations().size();
-                            dos.writeInt(organizationListSize);
-                            for (Organization organization : ((OrganizationSection) value).getOrganizations()) {
+                            writeWithException(dos, ((OrganizationSection) value).getOrganizations(), organization -> {
                                 writeLink(dos, organization.getHomePage());
-                                dos.writeInt(organization.getPositions().size());
-                                for (Organization.Position position : organization.getPositions()) {
+                                writeWithException(dos, organization.getPositions(), position -> {
                                     writeLocalDate(dos, position.getStartDate());
                                     writeLocalDate(dos, position.getEndDate());
 
                                     dos.writeUTF(position.getPositionName());
                                     dos.writeUTF(position.getDescription());
-                                }
-                            }
+                                });
+                            });
                             break;
                     }
                 } catch (IOException e) {
@@ -138,11 +135,12 @@ public class DataStreamSerializer implements StreamSerializer {
         dos.writeUTF(link.getHomePageUrl());
     }
 
+    @FunctionalInterface
     interface Writer<T> {
         void write(T t) throws IOException;
     }
 
-    private <T> void writeCollection(Collection<T> collection, DataOutputStream dos, Writer<T> writer)
+    private <T> void writeWithException(DataOutputStream dos, Collection<T> collection, Writer<T> writer)
             throws IOException {
         dos.writeInt(collection.size());
         for (T element : collection) {
