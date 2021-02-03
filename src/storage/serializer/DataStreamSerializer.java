@@ -6,10 +6,7 @@ import util.DateUtil;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataStreamSerializer implements StreamSerializer {
     @Override
@@ -18,14 +15,9 @@ public class DataStreamSerializer implements StreamSerializer {
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
             Map<ContactType, String> contacts = resume.getContacts();
-            dos.writeInt(contacts.size());
-            contacts.forEach((key, value) -> {
-                try {
-                    dos.writeUTF(String.valueOf(key));
-                    dos.writeUTF(value);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            writeWithException(dos, contacts.entrySet(), entry -> {
+                dos.writeUTF(String.valueOf(entry.getKey()));
+                dos.writeUTF(entry.getValue());
             });
             Map<SectionType, AbstractSection> sections = resume.getSections();
             sections.forEach((key, value) -> {
