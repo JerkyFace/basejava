@@ -78,8 +78,6 @@ public class DataStreamSerializer implements StreamSerializer {
 
     private void read(DataInputStream dis, Resume resume) throws IOException {
         SectionType sectionType = SectionType.valueOf(dis.readUTF());
-        int sectionSize = dis.readInt();
-        List<String> sectionList = new ArrayList<>();
         switch (sectionType) {
             case PERSONAL:
             case OBJECTIVE:
@@ -87,32 +85,23 @@ public class DataStreamSerializer implements StreamSerializer {
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                for (int i = 0; i < sectionSize; i++) {
-                    sectionList.add(dis.readUTF());
-                }
-                resume.addSection(sectionType, new ListSection(sectionList));
+                resume.addSection(sectionType, new ListSection(readWithException(dis, dis::readUTF)));
                 break;
             case EXPERIENCE:
             case EDUCATION:
-                List<Organization> organizationList = new ArrayList<>();
-                for (int i = 0; i < sectionSize; i++) {
-                    String organizationName = dis.readUTF();
-                    String homepageUrl = dis.readUTF();
-                    int positionsSize = dis.readInt();
-                    List<Organization.Position> positions = new ArrayList<>();
-                    for (int j = 0; j < positionsSize; j++) {
-                        LocalDate startDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
-                        LocalDate endDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
-                        String positionName = dis.readUTF();
-                        String positionDescription = dis.readUTF();
-                        positions.add(new Organization.Position(startDate, endDate, positionName, positionDescription));
-                    }
-                    organizationList.add(new Organization(new Link(organizationName, homepageUrl), positions));
-                }
-
-                resume.addSection(sectionType, new OrganizationSection(organizationList));
+                resume.addSection(sectionType, new OrganizationSection(readWithException(dis, () ->
+                        new Organization(new Link(dis.readUTF(), dis.readUTF()),
+                                new ArrayList<>(readWithException(dis, () ->
+                                        new Organization.Position(readLocalDate(dis),
+                                                readLocalDate(dis),
+                                                dis.readUTF(),
+                                                dis.readUTF())))))));
                 break;
         }
+    }
+
+    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
+        return DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
     }
 
     private void writeLocalDate(DataOutputStream dos, LocalDate localDate) throws IOException {
@@ -130,11 +119,25 @@ public class DataStreamSerializer implements StreamSerializer {
         void write(T t) throws IOException;
     }
 
+    @FunctionalInterface
+    interface Reader<T> {
+        T read() throws IOException;
+    }
+
     private <T> void writeWithException(DataOutputStream dos, Collection<T> collection, Writer<T> writer)
             throws IOException {
         dos.writeInt(collection.size());
         for (T element : collection) {
             writer.write(element);
         }
+    }
+
+    private <T> List<T> readWithException(DataInputStream dis, Reader<T> reader) throws IOException {
+        int sectionSize = dis.readInt();
+        List<T> sectionList = new ArrayList<>();
+        for (int i = 0; i < sectionSize; i++) {
+            sectionList.add(reader.read());
+        }
+        return sectionList;
     }
 }
