@@ -19,35 +19,32 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(String.valueOf(entry.getKey()));
                 dos.writeUTF(entry.getValue());
             });
-            Map<SectionType, AbstractSection> sections = resume.getSections();
-            sections.forEach((key, value) -> {
-                try {
-                    dos.writeUTF(String.valueOf(key));
-                    switch (key) {
-                        case PERSONAL:
-                        case OBJECTIVE:
-                            dos.writeUTF(((TextSection) value).getContent());
-                            break;
-                        case ACHIEVEMENT:
-                        case QUALIFICATIONS:
-                            writeWithException(dos, ((ListSection) value).getList(), dos::writeUTF);
-                            break;
-                        case EXPERIENCE:
-                        case EDUCATION:
-                            writeWithException(dos, ((OrganizationSection) value).getOrganizations(), organization -> {
-                                writeLink(dos, organization.getHomePage());
-                                writeWithException(dos, organization.getPositions(), position -> {
-                                    writeLocalDate(dos, position.getStartDate());
-                                    writeLocalDate(dos, position.getEndDate());
 
-                                    dos.writeUTF(position.getPositionName());
-                                    dos.writeUTF(position.getDescription());
-                                });
+            writeWithException(dos, resume.getSections().entrySet(), entry -> {
+                SectionType sectionType = entry.getKey();
+                dos.writeUTF(String.valueOf(sectionType));
+                switch (sectionType) {
+                    case PERSONAL:
+                    case OBJECTIVE:
+                        dos.writeUTF(((TextSection) entry.getValue()).getContent());
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        writeWithException(dos, ((ListSection) entry.getValue()).getList(), dos::writeUTF);
+                        break;
+                    case EXPERIENCE:
+                    case EDUCATION:
+                        writeWithException(dos, ((OrganizationSection) entry.getValue()).getOrganizations(), organization -> {
+                            writeLink(dos, organization.getHomePage());
+                            writeWithException(dos, organization.getPositions(), position -> {
+                                writeLocalDate(dos, position.getStartDate());
+                                writeLocalDate(dos, position.getEndDate());
+
+                                dos.writeUTF(position.getPositionName());
+                                dos.writeUTF(position.getDescription());
                             });
-                            break;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        });
+                        break;
                 }
             });
         }
@@ -65,6 +62,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
+            int sectionSize = dis.readInt();
             SectionType personal = SectionType.valueOf(dis.readUTF());
             resume.addSection(personal, new TextSection(dis.readUTF()));
             SectionType objective = SectionType.valueOf(dis.readUTF());
