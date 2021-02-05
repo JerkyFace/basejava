@@ -66,11 +66,11 @@ public class ResumeTestData {
                                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
                                         " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")),
 
-                new Organization("RIT Center", "",
+                new Organization("RIT Center", null,
                         new Organization.Position(DateUtil.of(2012, Month.APRIL),
                                 DateUtil.of(2014, Month.OCTOBER),
                                 "Java архитектор",
-                                "Организация процесса разработки системы ERP для разных окружений: релизная политика," +
+                                " Организация процесса разработки системы ERP для разных окружений: релизная политика," +
                                         " версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway)," +
                                         " конфигурирование системы (pgBoucer, Nginx), AAA via SSO." +
                                         " Архитектура БД и серверной части системы." +
@@ -113,7 +113,7 @@ public class ResumeTestData {
                         new Organization.Position(DateUtil.of(1993, Month.SEPTEMBER),
                                 DateUtil.of(1996, Month.JULY),
                                 "Аспирант",
-                                "Аспирантура (программист С, С++)"),
+                                null),
                         new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER),
                                 DateUtil.of(1993, Month.JULY),
                                 "Инженер",

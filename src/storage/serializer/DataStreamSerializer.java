@@ -62,7 +62,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-            int sectionSize = dis.readInt();
+            dis.skipBytes(4);
             SectionType personal = SectionType.valueOf(dis.readUTF());
             resume.addSection(personal, new TextSection(dis.readUTF()));
             SectionType objective = SectionType.valueOf(dis.readUTF());

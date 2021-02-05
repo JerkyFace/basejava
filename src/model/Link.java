@@ -15,8 +15,9 @@ public class Link implements Serializable {
     }
 
     public Link(String name, String homePageUrl) {
+        Objects.requireNonNull(name, "Name must not be empty");
         this.name = name;
-        this.homePageUrl = homePageUrl;
+        this.homePageUrl = homePageUrl == null ? "" : homePageUrl;
     }
 
     public String getName() {
