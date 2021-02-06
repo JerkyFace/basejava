@@ -57,20 +57,8 @@ public class DataStreamSerializer implements StreamSerializer {
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
 
-            int contactsSize = dis.readInt();
-            for (int i = 0; i < contactsSize; i++) {
-                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
-
-            dis.skipBytes(4);
-            SectionType personal = SectionType.valueOf(dis.readUTF());
-            resume.addSection(personal, new TextSection(dis.readUTF()));
-            SectionType objective = SectionType.valueOf(dis.readUTF());
-            resume.addSection(objective, new TextSection(dis.readUTF()));
-
-            for (int i = 0; i < 4; i++) {
-                read(dis, resume);
-            }
+            readWithException(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readWithException(dis, () -> read(dis, resume));
 
             return resume;
         }
@@ -85,13 +73,13 @@ public class DataStreamSerializer implements StreamSerializer {
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                resume.addSection(sectionType, new ListSection(readWithException(dis, dis::readUTF)));
+                resume.addSection(sectionType, new ListSection(readListWithException(dis, dis::readUTF)));
                 break;
             case EXPERIENCE:
             case EDUCATION:
-                resume.addSection(sectionType, new OrganizationSection(readWithException(dis, () ->
+                resume.addSection(sectionType, new OrganizationSection(readListWithException(dis, () ->
                         new Organization(new Link(dis.readUTF(), dis.readUTF()),
-                                new ArrayList<>(readWithException(dis, () ->
+                                new ArrayList<>(readListWithException(dis, () ->
                                         new Organization.Position(readLocalDate(dis),
                                                 readLocalDate(dis),
                                                 dis.readUTF(),
@@ -114,16 +102,6 @@ public class DataStreamSerializer implements StreamSerializer {
         dos.writeUTF(link.getHomePageUrl());
     }
 
-    @FunctionalInterface
-    interface Writer<T> {
-        void write(T t) throws IOException;
-    }
-
-    @FunctionalInterface
-    interface Reader<T> {
-        T read() throws IOException;
-    }
-
     private <T> void writeWithException(DataOutputStream dos, Collection<T> collection, Writer<T> writer)
             throws IOException {
         dos.writeInt(collection.size());
@@ -132,12 +110,34 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private <T> List<T> readWithException(DataInputStream dis, Reader<T> reader) throws IOException {
+    private void readWithException(DataInputStream dis, Reader reader) throws IOException {
+        int sectionSize = dis.readInt();
+        for (int i = 0; i < sectionSize; i++) {
+            reader.read();
+        }
+    }
+
+    private <T> List<T> readListWithException(DataInputStream dis, TypedReader<T> reader) throws IOException {
         int sectionSize = dis.readInt();
         List<T> sectionList = new ArrayList<>();
         for (int i = 0; i < sectionSize; i++) {
             sectionList.add(reader.read());
         }
         return sectionList;
+    }
+
+    @FunctionalInterface
+    interface Writer<T> {
+        void write(T t) throws IOException;
+    }
+
+    @FunctionalInterface
+    interface Reader {
+        void read() throws IOException;
+    }
+
+    @FunctionalInterface
+    interface TypedReader<T> {
+        T read() throws IOException;
     }
 }
