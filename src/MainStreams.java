@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class MainStreams {
 
     public static void main(String[] args) {
-        List<Integer> integers = Arrays.asList(1, 2, 1, 4, 1, 2, 1); //1111
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
         oddOrEven(integers).forEach(System.out::print);
 
         System.out.println();
@@ -15,9 +15,14 @@ public class MainStreams {
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
-        return integers.stream().reduce(0, Integer::sum) % 2 == 0 ?
-                integers.stream().filter(v -> v % 2 != 0).collect(Collectors.toList()) :
-                integers.stream().filter(v -> v % 2 == 0).collect(Collectors.toList());
+        boolean isEven = integers.stream().reduce(0, Integer::sum) % 2 == 0;
+        return integers.stream().filter(v -> {
+            if (isEven) {
+                return v % 2 != 0;
+            }
+            return v % 2 == 0;
+        }).collect(Collectors.toList());
+
     }
 
     private static int minValue(int[] values) {
