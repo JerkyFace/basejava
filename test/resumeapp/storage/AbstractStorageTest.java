@@ -18,6 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIRECTORY = Config.get().getStorageDir();
+    protected static final String DB_URL = Config.get().getDbUrl();
+    protected static final String DB_USER = Config.get().getDbUser();
+    protected static final String DB_PASSWORD = Config.get().getDbPassword();
+
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
     private static final String UUID_1 = "uuid1";
@@ -57,6 +61,7 @@ public abstract class AbstractStorageTest {
         assertEquals(updatedResume, storage.get(UUID_2));
     }
 
+    //TODO: need fix for database storage
     @Test
     void updateThrowsNotExistStorageException() {
         assertThrows(NotExistStorageException.class, () ->
@@ -70,6 +75,8 @@ public abstract class AbstractStorageTest {
         assertEquals(RESUME_4, storage.get(UUID_4));
     }
 
+
+    //todo: fix for database storage
     @Test
     void saveThrowsExistStorageException() {
         assertThrows(ExistStorageException.class, () ->

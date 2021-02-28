@@ -30,7 +30,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public void update(Resume resume) {
         if (resume == null) {
-            throw new StorageException("Cannot save empty resume", null);
+            throw new StorageException("Cannot save empty resume");
         }
         doUpdate(resume, getIfPresent(resume.getUuid()));
         LOGGER.info("Update: " + resume);
@@ -39,7 +39,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public void save(Resume resume) {
         if (resume == null) {
-            throw new StorageException("Cannot save empty resume", null);
+            throw new StorageException("Cannot save empty resume");
         }
         SK key = getKey(resume.getUuid());
         LOGGER.info("Save: got key " + key);
