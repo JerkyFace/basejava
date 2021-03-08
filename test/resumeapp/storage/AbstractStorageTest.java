@@ -61,7 +61,6 @@ public abstract class AbstractStorageTest {
         assertEquals(updatedResume, storage.get(UUID_2));
     }
 
-    //TODO: need fix for database storage
     @Test
     void updateThrowsNotExistStorageException() {
         assertThrows(NotExistStorageException.class, () ->
@@ -75,8 +74,6 @@ public abstract class AbstractStorageTest {
         assertEquals(RESUME_4, storage.get(UUID_4));
     }
 
-
-    //todo: fix for database storage
     @Test
     void saveThrowsExistStorageException() {
         assertThrows(ExistStorageException.class, () ->

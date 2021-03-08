@@ -80,6 +80,7 @@ public class FileStorage extends AbstractStorage<File> {
         Arrays.stream(getListOfFiles(directory)).forEach(file -> {
             results.add(doGet(file));
         });
+        results.forEach(System.out::println);
         return results;
     }
 
