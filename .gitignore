@@ -4,7 +4,6 @@ out
 log
 .vscode
 
-/src/test/sandbox/
 /test.txt
 
 /filestorage
