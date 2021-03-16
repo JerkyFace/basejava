@@ -18,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIRECTORY = Config.get().getStorageDir();
-    protected static final String DB_URL = Config.get().getDbUrl();
-    protected static final String DB_USER = Config.get().getDbUser();
-    protected static final String DB_PASSWORD = Config.get().getDbPassword();
 
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
@@ -104,7 +101,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void deleteThrowsNotExistStorageException() {
-        assertThrows(NotExistStorageException.class, () -> storage.get("non existent resume"));
+        assertThrows(NotExistStorageException.class, () -> storage.delete("non existent resume"));
     }
 
     @Test

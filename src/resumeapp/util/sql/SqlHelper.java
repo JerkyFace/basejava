@@ -18,7 +18,7 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public <T> T execute(String query, String exceptionMessage, QueryExecutor<T> executor) {
+    public <T> T execute(String query, QueryExecutor<T> executor) {
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             return executor.execute(statement);
@@ -26,7 +26,7 @@ public class SqlHelper {
             if (e instanceof PSQLException && (e).getSQLState().equals("23505")) {
                 throw new ExistStorageException();
             }
-            throw new StorageException(exceptionMessage, e);
+            throw new StorageException(e.getMessage());
         }
     }
 }
