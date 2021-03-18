@@ -1,11 +1,11 @@
 package resumeapp.storage;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import resumeapp.Config;
 import resumeapp.exception.ExistStorageException;
 import resumeapp.exception.NotExistStorageException;
 import resumeapp.model.Resume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import resumeapp.test.ResumeTestData;
 
 import java.io.File;

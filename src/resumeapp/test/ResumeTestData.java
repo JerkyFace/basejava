@@ -1,5 +1,6 @@
 package resumeapp.test;
 
+import resumeapp.model.ContactType;
 import resumeapp.model.Resume;
 
 public class ResumeTestData {
@@ -7,11 +8,11 @@ public class ResumeTestData {
     public static Resume initResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-//        resume.addContact(ContactType.PHONE, "+7(921) 855-0482");
-//        resume.addContact(ContactType.SKYPE, "grigory.kislin");
-//        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
-//        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-//        resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
+        resume.addContact(ContactType.PHONE, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
 //
 //        resume.addSection(SectionType.OBJECTIVE,
 //                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
