@@ -13,7 +13,7 @@ public class ResumeTestData {
         resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
         resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
         resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
-//
+
 //        resume.addSection(SectionType.OBJECTIVE,
 //                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
 //                        " Enterprise технологиям"));

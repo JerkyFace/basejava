@@ -9,9 +9,7 @@ import resumeapp.util.sql.SqlHelper;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -42,23 +40,26 @@ public class SqlStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        sqlHelper.execute("INSERT INTO resume (uuid, full_name) VALUES (?, ?)",
-                statement -> {
+        sqlHelper.transactionalExecute(connection -> {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO resume (uuid, full_name) VALUES (?, ?)")) {
+                statement.setString(1, resume.getUuid());
+                statement.setString(2, resume.getFullName());
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?)")) {
+                for (Map.Entry<ContactType, String> e : resume.getContacts().entrySet()) {
                     statement.setString(1, resume.getUuid());
-                    statement.setString(2, resume.getFullName());
-                    statement.execute();
-                    return null;
-                });
-        for (Map.Entry<ContactType, String> e : resume.getContacts().entrySet()) {
-            sqlHelper.execute("INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?)",
-                    statement -> {
-                        statement.setString(1, resume.getUuid());
-                        statement.setString(2, e.getKey().name());
-                        statement.setString(3, e.getValue());
-                        statement.execute();
-                        return null;
-                    });
-        }
+                    statement.setString(2, e.getKey().name());
+                    statement.setString(3, e.getValue());
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+            }
+
+            return null;
+        });
     }
 
     @Override
@@ -97,20 +98,20 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        //todo
-        return sqlHelper.execute(" SELECT uuid, full_name FROM resume r" +
+        return sqlHelper.execute(" SELECT * FROM resume r" +
                         " LEFT JOIN contact c" +
                         " ON r.uuid = c.resume_uuid " +
                         " ORDER BY full_name, uuid",
                 statement -> {
                     ResultSet rs = statement.executeQuery();
-                    List<Resume> list = new ArrayList<>();
+                    Map<String, Resume> resumes = new LinkedHashMap<>();
                     while (rs.next()) {
-                        Resume resume = new Resume(rs.getString("uuid"), rs.getString("full_name"));
-                        resume.addContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
-                        list.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
+                        String uuid = rs.getString("uuid");
+                        Resume resume = new Resume(uuid, rs.getString("full_name"));
+                        resumes.putIfAbsent(uuid, resume);
+                        resumes.get(uuid).addContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
                     }
-                    return list;
+                    return new ArrayList<>(resumes.values());
                 });
     }
 
