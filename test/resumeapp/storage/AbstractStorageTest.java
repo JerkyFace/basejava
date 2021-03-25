@@ -11,6 +11,7 @@ import resumeapp.test.ResumeTestData;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -115,6 +116,8 @@ public abstract class AbstractStorageTest {
     void getAll() {
         assertEquals(3, storage.size());
         List<Resume> expected = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        expected.sort(Comparator.comparing(Resume::getUuid).thenComparing(Resume::getFullName));
+
         List<Resume> actual = storage.getAllSorted();
         assertEquals(expected, actual);
     }
