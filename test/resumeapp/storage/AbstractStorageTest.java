@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import resumeapp.Config;
 import resumeapp.exception.ExistStorageException;
 import resumeapp.exception.NotExistStorageException;
+import resumeapp.model.ContactType;
 import resumeapp.model.Resume;
 import resumeapp.test.ResumeTestData;
 
@@ -55,6 +56,11 @@ public abstract class AbstractStorageTest {
     @Test
     void update() {
         Resume updatedResume = ResumeTestData.initResume(UUID_2, "Updated FullName");
+        updatedResume.addContact(ContactType.PHONE, "UPDATED PHONE");
+        updatedResume.addContact(ContactType.SKYPE, "UPDATED SKYPE");
+        updatedResume.addContact(ContactType.EMAIL, "UPDATED EMAIL");
+        updatedResume.addContact(ContactType.LINKEDIN, "UPDATED LINKEDIN");
+        updatedResume.addContact(ContactType.GITHUB, "UPDATED GITHUB");
         storage.update(updatedResume);
         assertEquals(updatedResume, storage.get(UUID_2));
     }

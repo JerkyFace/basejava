@@ -26,14 +26,31 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
+        String uuid = resume.getUuid();
         sqlHelper.execute("UPDATE resume SET full_name = ? WHERE uuid = ?",
                 statement -> {
-                    String uuid = resume.getUuid();
                     statement.setString(1, resume.getFullName());
                     statement.setString(2, uuid);
                     if (statement.executeUpdate() == 0) {
                         throw new NotExistStorageException(uuid);
                     }
+                    return null;
+                });
+        sqlHelper.execute("DELETE FROM contact WHERE resume_uuid = ?",
+                statement -> {
+                    statement.setString(1, uuid);
+                    statement.execute();
+                    return null;
+                });
+        sqlHelper.execute("INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?);",
+                statement -> {
+                    for (Map.Entry<ContactType, String> e : resume.getContacts().entrySet()) {
+                        statement.setString(2, e.getKey().name());
+                        statement.setString(3, e.getValue());
+                        statement.setString(1, uuid);
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
                     return null;
                 });
     }
