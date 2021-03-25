@@ -11,6 +11,7 @@ import resumeapp.test.ResumeTestData;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,12 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIRECTORY = Config.get().getStorageDir();
+
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
 
     private static final Resume RESUME_1 = ResumeTestData.initResume(UUID_1, "fullName1");
     private static final Resume RESUME_2 = ResumeTestData.initResume(UUID_2, "fullName2");
@@ -100,7 +102,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void deleteThrowsNotExistStorageException() {
-        assertThrows(NotExistStorageException.class, () -> storage.get("non existent resume"));
+        assertThrows(NotExistStorageException.class, () -> storage.delete("non existent resume"));
     }
 
     @Test

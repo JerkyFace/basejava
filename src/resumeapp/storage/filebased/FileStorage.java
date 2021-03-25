@@ -80,6 +80,7 @@ public class FileStorage extends AbstractStorage<File> {
         Arrays.stream(getListOfFiles(directory)).forEach(file -> {
             results.add(doGet(file));
         });
+        results.forEach(System.out::println);
         return results;
     }
 
@@ -98,7 +99,7 @@ public class FileStorage extends AbstractStorage<File> {
     private File[] getListOfFiles(File directory) {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Could not get files from " + directory, null);
+            throw new StorageException("Could not get files from " + directory);
         }
         return files;
     }
