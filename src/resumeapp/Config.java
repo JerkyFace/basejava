@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
-    private static final File PROPS = new File("config/resume_app.properties");
+    private static final File PROPS = new File(getHomeDir(), "config/resume_app.properties");
     private static final Config INSTANCE = new Config();
     private final File storageDir;
     private final Storage sqlStorage;
@@ -27,6 +27,15 @@ public class Config {
         } catch (IOException e) {
             throw new IllegalStateException("Invalid properties file " + PROPS.getAbsolutePath(), e);
         }
+    }
+
+    private static File getHomeDir(){
+        String homeDir = System.getProperty("homeDir");
+        File file = new File(homeDir == null ? "." : homeDir);
+        if(!file.isDirectory()){
+            throw new IllegalStateException(homeDir + " is not directory");
+        }
+        return file;
     }
 
     public static Config get() {
