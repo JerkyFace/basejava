@@ -1,7 +1,10 @@
 package resumeapp.test;
 
 import resumeapp.model.ContactType;
+import resumeapp.model.ListSection;
 import resumeapp.model.Resume;
+import resumeapp.model.SectionType;
+import resumeapp.model.TextSection;
 
 public class ResumeTestData {
 
@@ -14,39 +17,39 @@ public class ResumeTestData {
         resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
         resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
 
-//        resume.addSection(SectionType.OBJECTIVE,
-//                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
-//                        " Enterprise технологиям"));
-//        resume.addSection(SectionType.PERSONAL,
-//                new TextSection("Аналитический склад ума, сильная логика, креативность," +
-//                        " инициативность. Пурист кода и архитектуры."));
-//
-//        resume.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
-//                "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP)." +
-//                "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
-//                "Реализация двухфакторной аутентификации для онлайн платформы управления" +
-//                        "проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
-//                "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM." +
-//                        "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке:" +
-//                        " Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.",
-//                "Реализация c нуля Rich Internet Application приложения на стеке технологий JPA," +
-//                        " Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.",
-//                "Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных" +
-//                        " сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). " +
-//                        "Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios." +
-//                        "Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django)."
-//        ));
-//
-//        resume.addSection(SectionType.QUALIFICATIONS, new ListSection(
-//                "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
-//                "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
-//                "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
-//                "MySQL, SQLite, MS SQL, HSQLDB",
-//                "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy",
-//                "XML/XSD/XSLT, SQL, C/C++, Unix shell scripts",
-//                "Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor," +
-//                        " MyBatis, Spring (MVC, Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), " +
-//                        "Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements)."));
+        resume.addSection(SectionType.OBJECTIVE,
+                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и" +
+                        " Enterprise технологиям"));
+        resume.addSection(SectionType.PERSONAL,
+                new TextSection("Аналитический склад ума, сильная логика, креативность," +
+                        " инициативность. Пурист кода и архитектуры."));
+
+        resume.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
+                "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP)." +
+                "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
+                "Реализация двухфакторной аутентификации для онлайн платформы управления" +
+                        "проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
+                "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM." +
+                        "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке:" +
+                        " Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.",
+                "Реализация c нуля Rich Internet Application приложения на стеке технологий JPA," +
+                        " Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.",
+                "Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных" +
+                        " сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). " +
+                        "Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios." +
+                        "Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django)."
+        ));
+
+        resume.addSection(SectionType.QUALIFICATIONS, new ListSection(
+                "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
+                "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
+                "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
+                "MySQL, SQLite, MS SQL, HSQLDB",
+                "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy",
+                "XML/XSD/XSLT, SQL, C/C++, Unix shell scripts",
+                "Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor," +
+                        " MyBatis, Spring (MVC, Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), " +
+                        "Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements)."));
 //
 //
 //        OrganizationSection work = new OrganizationSection(
