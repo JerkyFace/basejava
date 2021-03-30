@@ -11,10 +11,7 @@ import resumeapp.storage.Storage;
 import resumeapp.util.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -52,6 +49,13 @@ public class SqlStorage implements Storage {
                 statement.execute();
             }
             insertContacts(connection, resume);
+            try (PreparedStatement statement =
+                         connection.prepareStatement("DELETE FROM section WHERE resume_uuid = ?")) {
+                statement.setString(1, uuid);
+                statement.execute();
+            }
+            insertSections(connection, resume);
+
             return null;
         });
     }
@@ -102,26 +106,6 @@ public class SqlStorage implements Storage {
             }
             return resume;
         });
-//        return sqlHelper.execute(" SELECT * FROM resume r" +
-//                        " LEFT JOIN contact c" +
-//                        " ON r.uuid = c.resume_uuid" +
-//                        " LEFT JOIN section s" +
-//                        " ON r.uuid = s.resume_uuid" +
-//                        " WHERE r.uuid = ?",
-//                statement -> {
-//                    statement.setString(1, uuid);
-//                    ResultSet rs = statement.executeQuery();
-//                    if (!rs.next()) {
-//                        throw new NotExistStorageException(uuid);
-//                    }
-//                    Resume resume = new Resume(uuid, rs.getString("full_name"));
-//                    do {
-//                        addContact(rs, resume);
-//                        addSection(rs, resume);
-//                    }
-//                    while (rs.next());
-//                    return resume;
-//                });
     }
 
     @Override
@@ -196,7 +180,7 @@ public class SqlStorage implements Storage {
                     break;
                 case ACHIEVEMENT:
                 case QUALIFICATIONS:
-                    resume.addSection(sectionType, new ListSection(rs.getString("value")));
+                    resume.addSection(sectionType, new ListSection(Collections.singletonList(rs.getString("value"))));
                     break;
             }
         }
