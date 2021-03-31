@@ -12,6 +12,7 @@ import resumeapp.util.sql.SqlHelper;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -180,7 +181,7 @@ public class SqlStorage implements Storage {
                     break;
                 case ACHIEVEMENT:
                 case QUALIFICATIONS:
-                    resume.addSection(sectionType, new ListSection(Collections.singletonList(rs.getString("value"))));
+                    resume.addSection(sectionType, new ListSection(rs.getString("value").split("\n")));
                     break;
             }
         }
@@ -205,11 +206,28 @@ public class SqlStorage implements Storage {
             for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
                 statement.setString(1, resume.getUuid());
                 statement.setString(2, e.getKey().name());
-                //TODO: fix value
-                statement.setString(3, String.valueOf(e.getValue()));
+                if (e.getKey() == SectionType.QUALIFICATIONS || e.getKey() == SectionType.ACHIEVEMENT) {
+                    ListSection section = new ListSection((
+                            (ListSection) e.getValue())
+                            .getList()
+                            .stream()
+                            .map(p -> p + "\n")
+                            .collect(Collectors.toList()));
+
+                    statement.setString(3, (getWithoutBraces(section.toString()))
+                            .replace("\n, ", "\n"));
+                } else {
+                    statement.setString(3, getWithoutBraces(e.getValue().toString()));
+                }
                 statement.addBatch();
             }
             statement.executeBatch();
         }
+    }
+
+    private String getWithoutBraces(String value) {
+        return value != null ? value
+                .replace("[", "")
+                .replace("]", "") : null;
     }
 }
