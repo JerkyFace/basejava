@@ -18,7 +18,16 @@ CREATE TABLE IF NOT EXISTS contact
     value TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS section
+(
+  id SERIAL,
+  resume_uuid CHAR(36) NOT NULL REFERENCES resume (uuid) ON DELETE CASCADE,
+  type TEXT NOT NULL,
+  value TEXT NOT NULL
+);
+
 CREATE UNIQUE INDEX contact_uuid_type_index ON public.contact (resume_uuid, type);
+CREATE UNIQUE INDEX section_uuid_type_index ON public.section (resume_uuid, type);
 
 
 INSERT INTO resume (uuid, full_name) VALUES ('f4c7ce75-95de-42b7-a707-f07d6e81254f', 'vasya pupkin');
