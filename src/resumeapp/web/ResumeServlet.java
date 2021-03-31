@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
     Storage storage;
@@ -23,28 +22,8 @@ public class ResumeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html");
-
-        StringBuilder responseTable = new StringBuilder();
-        responseTable
-                .append("<table border=\"2px\">")
-                .append("<tr>")
-                .append("<th> UUID </th>")
-                .append("<th> Full name </th>")
-                .append("</tr>");
-
-        List<Resume> resumes = storage.getAllSorted();
-        resumes.forEach(resume -> {
-            responseTable
-                    .append("<tr>")
-                    .append("<td>").append(resume.getUuid()).append("</td>")
-                    .append("<td>").append(resume.getFullName()).append("</td>")
-                    .append("</tr>");
-
-        });
-        responseTable.append("</table>");
-
-        response.getWriter().write(responseTable.toString());
+        request.setAttribute("resumes", storage.getAllSorted());
+        System.out.println(storage.getAllSorted().size());
+        request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
     }
 }
