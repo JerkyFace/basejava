@@ -44,17 +44,10 @@ public class SqlStorage implements Storage {
                     throw new NotExistStorageException(uuid);
                 }
             }
-            try (PreparedStatement statement =
-                         connection.prepareStatement("DELETE FROM contact WHERE resume_uuid = ?")) {
-                statement.setString(1, uuid);
-                statement.execute();
-            }
+            deleteSectionByResumeUuid(connection, "DELETE FROM contact WHERE resume_uuid = ?", uuid);
             insertContacts(connection, resume);
-            try (PreparedStatement statement =
-                         connection.prepareStatement("DELETE FROM section WHERE resume_uuid = ?")) {
-                statement.setString(1, uuid);
-                statement.execute();
-            }
+
+            deleteSectionByResumeUuid(connection, "DELETE FROM section WHERE resume_uuid = ?", uuid);
             insertSections(connection, resume);
 
             return null;
@@ -222,6 +215,14 @@ public class SqlStorage implements Storage {
                 statement.addBatch();
             }
             statement.executeBatch();
+        }
+    }
+
+    private void deleteSectionByResumeUuid(Connection connection, String query, String uuid) throws SQLException {
+        try (PreparedStatement statement =
+                     connection.prepareStatement(query)) {
+            statement.setString(1, uuid);
+            statement.execute();
         }
     }
 
