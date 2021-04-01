@@ -7,4 +7,5 @@ import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractSection implements Serializable {
+    public abstract String getAsString();
 }

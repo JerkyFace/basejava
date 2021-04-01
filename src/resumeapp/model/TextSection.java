@@ -15,7 +15,8 @@ public class TextSection extends AbstractSection implements Serializable {
         this.content = content;
     }
 
-    public String getContent() {
+    @Override
+    public String getAsString() {
         return content;
     }
 
