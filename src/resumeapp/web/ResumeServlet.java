@@ -1,7 +1,5 @@
 package resumeapp.web;
-
 import resumeapp.Config;
-import resumeapp.model.Resume;
 import resumeapp.storage.Storage;
 
 import javax.servlet.ServletConfig;
@@ -23,7 +21,6 @@ public class ResumeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("resumes", storage.getAllSorted());
-        System.out.println(storage.getAllSorted().size());
         request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
     }
 }
