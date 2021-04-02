@@ -197,20 +197,20 @@ public class SqlStorage implements Storage {
         try (PreparedStatement statement =
                      connection.prepareStatement("INSERT INTO section (resume_uuid, type, value) VALUES (?, ?, ?)")) {
             for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
-                statement.setString(1, resume.getUuid());
-                statement.setString(2, e.getKey().name());
-                if (e.getKey() == SectionType.QUALIFICATIONS || e.getKey() == SectionType.ACHIEVEMENT) {
-                    ListSection section = new ListSection((
-                            (ListSection) e.getValue())
-                            .getList()
-                            .stream()
-                            .map(p -> p + "\n")
-                            .collect(Collectors.toList()));
+                SectionType sectionType = e.getKey();
+                AbstractSection sectionContent = e.getValue();
 
-                    statement.setString(3, (getWithoutBraces(section.toString()))
-                            .replace("\n, ", "\n"));
-                } else {
-                    statement.setString(3, getWithoutBraces(e.getValue().toString()));
+                statement.setString(1, resume.getUuid());
+                statement.setString(2, sectionType.name());
+
+                switch (sectionType) {
+                    case QUALIFICATIONS:
+                    case ACHIEVEMENT:
+                        statement.setString(3, String.join("\n", ((ListSection)sectionContent).getList()));
+                        break;
+                    default:
+                        statement.setString(3, ((TextSection)sectionContent).getContent());
+                        break;
                 }
                 statement.addBatch();
             }
@@ -224,11 +224,5 @@ public class SqlStorage implements Storage {
             statement.setString(1, uuid);
             statement.execute();
         }
-    }
-
-    private String getWithoutBraces(String value) {
-        return value != null ? value
-                .replace("[", "")
-                .replace("]", "") : null;
     }
 }
