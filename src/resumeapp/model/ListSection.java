@@ -26,11 +26,6 @@ public class ListSection extends AbstractSection implements Serializable {
         return list;
     }
 
-    @Override
-    public String getAsString(){
-        return String.join("\n", list);
-    }
-
     public void setList(List<String> list) {
         this.list = list;
     }

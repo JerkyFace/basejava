@@ -26,7 +26,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 switch (sectionType) {
                     case PERSONAL:
                     case OBJECTIVE:
-                        dos.writeUTF(entry.getValue().getAsString());
+                        dos.writeUTF(((TextSection) entry.getValue()).getContent());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:

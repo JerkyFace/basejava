@@ -12,6 +12,7 @@ import resumeapp.util.sql.SqlHelper;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -196,11 +197,21 @@ public class SqlStorage implements Storage {
         try (PreparedStatement statement =
                      connection.prepareStatement("INSERT INTO section (resume_uuid, type, value) VALUES (?, ?, ?)")) {
             for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
+                SectionType sectionType = e.getKey();
+                AbstractSection sectionContent = e.getValue();
 
                 statement.setString(1, resume.getUuid());
-                statement.setString(2, e.getKey().name());
-                statement.setString(3, e.getValue().getAsString());
+                statement.setString(2, sectionType.name());
 
+                switch (sectionType) {
+                    case QUALIFICATIONS:
+                    case ACHIEVEMENT:
+                        statement.setString(3, String.join("\n", ((ListSection)sectionContent).getList()));
+                        break;
+                    default:
+                        statement.setString(3, ((TextSection)sectionContent).getContent());
+                        break;
+                }
                 statement.addBatch();
             }
             statement.executeBatch();
