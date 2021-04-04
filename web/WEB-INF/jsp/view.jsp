@@ -17,6 +17,16 @@
                          type="java.util.Map.Entry<resumeapp.model.ContactType, java.lang.String>"/>
                 <%=contactEntry.getKey().toHtml(contactEntry.getValue())%><br/>
         </c:forEach>
+
+    <p>
+    <p>
+    <!-- TODO-->
+        <c:forEach var="sectionEntry" items="${resume.sections}">
+            <jsp:useBean id="sectionEntry"
+                         type="java.util.Map.Entry<resumeapp.model.SectionType, resumeapp.model.AbstractSection>"/>
+                <h4>${sectionEntry.key.title}}</h4>
+                <h4>${sectionEntry.value}</h4>
+        </c:forEach>
     <p>
 </section>
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

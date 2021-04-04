@@ -9,7 +9,7 @@
     <title>Резюме ${resume.fullName}</title>
 </head>
 <body>
-<jsp:include page="/WEB-INF/fragments/footer.jsp"/>
+<jsp:include page="/WEB-INF/fragments/header.jsp"/>
 <section>
     <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
