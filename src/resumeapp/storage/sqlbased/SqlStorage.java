@@ -8,6 +8,7 @@ import resumeapp.model.Resume;
 import resumeapp.model.SectionType;
 import resumeapp.model.TextSection;
 import resumeapp.storage.Storage;
+import resumeapp.util.JsonParser;
 import resumeapp.util.sql.SqlHelper;
 
 import java.sql.*;
@@ -167,16 +168,7 @@ public class SqlStorage implements Storage {
         String type = rs.getString("type");
         if (type != null) {
             SectionType sectionType = SectionType.valueOf(type);
-            switch (sectionType) {
-                case PERSONAL:
-                case OBJECTIVE:
-                    resume.addSection(sectionType, new TextSection(rs.getString("value")));
-                    break;
-                case ACHIEVEMENT:
-                case QUALIFICATIONS:
-                    resume.addSection(sectionType, new ListSection(rs.getString("value").split("\n")));
-                    break;
-            }
+            resume.addSection(sectionType, JsonParser.read(rs.getString("value"), AbstractSection.class));
         }
     }
 
@@ -202,16 +194,7 @@ public class SqlStorage implements Storage {
 
                 statement.setString(1, resume.getUuid());
                 statement.setString(2, sectionType.name());
-
-                switch (sectionType) {
-                    case QUALIFICATIONS:
-                    case ACHIEVEMENT:
-                        statement.setString(3, String.join("\n", ((ListSection)sectionContent).getList()));
-                        break;
-                    default:
-                        statement.setString(3, ((TextSection)sectionContent).getContent());
-                        break;
-                }
+                statement.setString(3, JsonParser.write(sectionContent, AbstractSection.class));
                 statement.addBatch();
             }
             statement.executeBatch();
