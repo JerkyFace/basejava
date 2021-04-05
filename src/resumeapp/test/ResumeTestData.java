@@ -119,7 +119,6 @@ public class ResumeTestData {
                                 "Инженер",
                                 "Инженер (программист Fortran, C)")));
 
-
         resume.addSection(SectionType.EXPERIENCE, work);
         resume.addSection(SectionType.EDUCATION, education);
 

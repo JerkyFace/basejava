@@ -1,6 +1,5 @@
 package util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import resumeapp.model.AbstractSection;
 import resumeapp.model.Resume;
@@ -9,6 +8,8 @@ import resumeapp.test.ResumeTestData;
 import resumeapp.util.JsonParser;
 
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonParserTest {
     private static final String UUID_1 = UUID.randomUUID().toString();
@@ -19,7 +20,7 @@ public class JsonParserTest {
         String json = JsonParser.write(RESUME_1, Resume.class);
         System.out.println(json);
         Resume resume = JsonParser.read(json, Resume.class);
-        Assert.assertEquals(RESUME_1, resume);
+        assertEquals(RESUME_1, resume);
     }
 
     @Test
@@ -28,6 +29,6 @@ public class JsonParserTest {
         String json = JsonParser.write(section, AbstractSection.class);
         System.out.println(json);
         AbstractSection section2 = JsonParser.read(json, AbstractSection.class);
-        Assert.assertEquals(section, section2);
+        assertEquals(section, section2);
     }
 }

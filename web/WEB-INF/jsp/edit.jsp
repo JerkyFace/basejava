@@ -25,6 +25,7 @@
             </dl>
         </c:forEach>
         <h3>Секции:</h3>
+        <!-- todo -->
         <input type="text" name="section" size=30 value="1"><br/>
         <input type="text" name="section" size=30 value="2"><br/>
         <input type="text" name="section" size=30 value="3"><br/>
