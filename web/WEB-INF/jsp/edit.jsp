@@ -1,5 +1,6 @@
 <%@ page import="resumeapp.model.ContactType" %>
 <%@ page import="resumeapp.model.SectionType" %>
+<%@ page import="resumeapp.model.ListSection" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -28,6 +29,9 @@
         <h3>Секции:</h3>
         <c:forEach var="sectionType" items="<%=SectionType.values()%>">
             <c:set var="section" value="${resume.sections.get(sectionType)}"/>
+            <!--TODO: fix bug with bean scope -->
+            <jsp:useBean id="section" scope="request"
+                         type="resumeapp.model.AbstractSection" />
             <c:choose>
                 <c:when test="${sectionType == SectionType.PERSONAL || sectionType == SectionType.OBJECTIVE}">
                     <dl>
@@ -38,7 +42,11 @@
                 <c:when test="${sectionType == SectionType.ACHIEVEMENT || sectionType == SectionType.QUALIFICATIONS}">
                     <dl>
                         <dt>${sectionType.title}</dt>
-                        <dd><textarea rows="10" cols="45" name="${sectionType.name()}" placeholder="${section}"></textarea></dd>
+                        <dd>
+                            <textarea rows="18" cols="90" name="${sectionType.name()}">
+                                <%=String.join("\n", ((ListSection)section).getList()).trim()%>
+                            </textarea>
+                        </dd>
                     </dl>
                 </c:when>
             </c:choose>
