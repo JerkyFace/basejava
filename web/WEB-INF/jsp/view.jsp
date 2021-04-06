@@ -1,3 +1,4 @@
+<%@ page import="resumeapp.model.SectionType" %>
 <%@ page import="resumeapp.model.TextSection" %>
 <%@ page import="resumeapp.model.ListSection" %>
 <%@ page import="resumeapp.model.OrganizationSection" %>
@@ -11,7 +12,7 @@
     <title>Резюме ${resume.fullName}</title>
 </head>
 <body>
-<jsp:include page="/WEB-INF/fragments/footer.jsp"/>
+<jsp:include page="/WEB-INF/fragments/header.jsp"/>
 <section>
     <h2>${resume.fullName}&nbsp;<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></h2>
     <p>
@@ -28,17 +29,17 @@
         <jsp:useBean id="sectionEntry"
                          type="java.util.Map.Entry<resumeapp.model.SectionType, resumeapp.model.AbstractSection>" />
         <c:choose>
-            <c:when test="${type=='PERSONAL' || type=='OBJECTIVE'}">
+            <c:when test="${type==SectionType.PERSONAL || type==SectionType.OBJECTIVE}">
                 <h3 class="section-header">${type.title}</h3>
                 <div class="section-content"><%=((TextSection) sectionEntry.getValue()).getContent()%></div>
             </c:when>
-            <c:when test="${type=='ACHIEVEMENT' || type=='QUALIFICATIONS'}">
+            <c:when test="${type==SectionType.ACHIEVEMENT || type==SectionType.QUALIFICATIONS}">
                 <h3 class="section-header">${type.title}</h3>
                 <c:forEach var="listSectionContent" items="<%=((ListSection)sectionEntry.getValue()).getList()%>">
                     <div class="section-content">${listSectionContent}</div>
                 </c:forEach>
             </c:when>
-            <c:when test="${type=='EDUCATION' || type=='EXPERIENCE'}">
+            <c:when test="${type==SectionType.EDUCATION || type==SectionType.EXPERIENCE}">
                 <h3 class="section-header">${type.title}</h3>
                 <c:forEach var="organizationSection" items="<%=((OrganizationSection)sectionEntry.getValue()).getOrganizations()%>">
                     <span class="organization-name">${organizationSection.homePage.name}:&nbsp;</span>

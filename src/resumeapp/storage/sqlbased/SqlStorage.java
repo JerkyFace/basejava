@@ -3,17 +3,14 @@ package resumeapp.storage.sqlbased;
 import resumeapp.exception.NotExistStorageException;
 import resumeapp.model.AbstractSection;
 import resumeapp.model.ContactType;
-import resumeapp.model.ListSection;
 import resumeapp.model.Resume;
 import resumeapp.model.SectionType;
-import resumeapp.model.TextSection;
 import resumeapp.storage.Storage;
 import resumeapp.util.JsonParser;
 import resumeapp.util.sql.SqlHelper;
 
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
