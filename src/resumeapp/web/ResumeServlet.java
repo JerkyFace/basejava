@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Month;
 
 public class ResumeServlet extends HttpServlet {
     Storage storage;
@@ -76,8 +77,35 @@ public class ResumeServlet extends HttpServlet {
                 response.sendRedirect("resume");
                 return;
             case "view":
+                resume = storage.get(uuid);
+                break;
             case "edit":
                 resume = storage.get(uuid);
+                for (SectionType type : SectionType.values()) {
+                    switch (type) {
+                        case PERSONAL:
+                        case OBJECTIVE:
+                            if (resume.getSection(type) == null) {
+                                resume.getSections().putIfAbsent(type, new TextSection(""));
+                            }
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            if (resume.getSection(type) == null) {
+                                resume.getSections().putIfAbsent(type, new ListSection(""));
+                            }
+                            break;
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            if (resume.getSection(type) == null) {
+                                resume.getSections().putIfAbsent(type, new OrganizationSection(
+                                        new Organization("", "",
+                                                new Organization.Position(2021, Month.JANUARY, "", ""))));
+                            }
+                            break;
+                    }
+                }
+
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");

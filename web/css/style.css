@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 section {
     width: 900px;
     margin: auto;
@@ -69,9 +73,39 @@ a[href*="github."] {
     padding-left: 20px !important;
     background: url(../img/gh.png) no-repeat center left;
 }
-/*todo*/
-.organization-name{}
-.date{}
-.position-name{}
-.section-header{}
-.section-content{}
+
+.position-name {
+    font-size: 0.9em;
+}
+
+.section-header {
+}
+
+.organization-name {
+    font-weight: bold;
+}
+
+.date {
+    font-size: 0.85em;
+    font-style: italic;
+    color: dimgrey;
+}
+
+.section-content {
+    font-size: 0.95em;
+}
+
+.section-content-container {
+    margin-left: 20px;
+}
+
+.resume-table {
+    margin: 18px auto;
+}
+
+.list-section-hr {
+    background-color: #fff;
+    border-top: 2px dashed #6D6D6D;
+    width: 80px;
+    margin-left: 0;
+}

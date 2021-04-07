@@ -7,12 +7,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
     <jsp:useBean id="resume" type="resumeapp.model.Resume" scope="request"/>
     <title>Резюме ${resume.fullName}</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/fragments/header.jsp"/>
-<section>
+<section class="section">
     <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
@@ -29,9 +31,8 @@
         <h3>Секции:</h3>
         <c:forEach var="sectionType" items="<%=SectionType.values()%>">
             <c:set var="section" value="${resume.sections.get(sectionType)}"/>
+            <jsp:useBean id="section" type="resumeapp.model.AbstractSection" />
             <!--TODO: fix bug with bean scope -->
-            <jsp:useBean id="section" scope="request"
-                         type="resumeapp.model.AbstractSection" />
             <c:choose>
                 <c:when test="${sectionType == SectionType.PERSONAL || sectionType == SectionType.OBJECTIVE}">
                     <dl>
@@ -43,9 +44,7 @@
                     <dl>
                         <dt>${sectionType.title}</dt>
                         <dd>
-                            <textarea rows="18" cols="90" name="${sectionType.name()}">
-                                <%=String.join("\n", ((ListSection)section).getList()).trim()%>
-                            </textarea>
+                            <textarea rows="18" cols="90" name="${sectionType.name()}"><%=String.join("\n", ((ListSection)section).getList()).trim()%></textarea>
                         </dd>
                     </dl>
                 </c:when>
