@@ -3,6 +3,7 @@ package resumeapp.web;
 import resumeapp.Config;
 import resumeapp.model.*;
 import resumeapp.storage.Storage;
+import resumeapp.util.ResumeUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Month;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ResumeServlet extends HttpServlet {
     Storage storage;
@@ -26,8 +29,14 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume resume = storage.get(uuid);
-        resume.setFullName(fullName);
+        boolean isNew = (uuid == null || uuid.length() == 0);
+        Resume resume;
+        if (isNew) {
+            resume = new Resume(fullName);
+        } else {
+            resume = storage.get(uuid);
+            resume.setFullName(fullName);
+        }
 
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
@@ -49,15 +58,21 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        resume.getSections().putIfAbsent(type, new ListSection(value.trim().split("\n")));
+                        ListSection listSection = new ListSection(Stream.of(value.split("\n"))
+                                .filter(v -> v.trim().length() != 0)
+                                .collect(Collectors.toList()));
+                        resume.getSections().putIfAbsent(type, listSection);
                         break;
                 }
             } else {
                 resume.getSections().remove(type);
             }
         }
-
-        storage.update(resume);
+        if (isNew) {
+            storage.save(resume);
+        } else {
+            storage.update(resume);
+        }
         response.sendRedirect("resume");
     }
 
@@ -78,6 +93,9 @@ public class ResumeServlet extends HttpServlet {
                 return;
             case "view":
                 resume = storage.get(uuid);
+                break;
+            case "create":
+                resume = ResumeUtil.initResumeBoilerplate();
                 break;
             case "edit":
                 resume = storage.get(uuid);

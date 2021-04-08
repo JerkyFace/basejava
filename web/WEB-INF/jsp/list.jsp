@@ -1,4 +1,5 @@
 <%@ page import="resumeapp.model.ContactType" %>
+<%@ page import="java.util.UUID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -15,8 +16,7 @@
         <tr>
             <th>Имя</th>
             <th>Email</th>
-            <th></th>
-            <th></th>
+            <th colspan="2"></th>
         </tr>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="resumeapp.model.Resume"/>
@@ -27,6 +27,9 @@
                 <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
             </tr>
         </c:forEach>
+        <tr>
+            <td colspan="4"><span id="create"><a href="resume?action=create">Создать новое</a></span></td>
+        </tr>
     </table>
 </section>
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

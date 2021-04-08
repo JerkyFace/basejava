@@ -19,7 +19,7 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Имя:</dt>
-            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}"></dd>
+            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}" required></dd>
         </dl>
         <h3>Контакты:</h3>
         <c:forEach var="type" items="<%=ContactType.values()%>">
@@ -32,7 +32,6 @@
         <c:forEach var="sectionType" items="<%=SectionType.values()%>">
             <c:set var="section" value="${resume.sections.get(sectionType)}"/>
             <jsp:useBean id="section" type="resumeapp.model.AbstractSection" />
-            <!--TODO: fix bug with bean scope -->
             <c:choose>
                 <c:when test="${sectionType == SectionType.PERSONAL || sectionType == SectionType.OBJECTIVE}">
                     <dl>
@@ -52,7 +51,7 @@
         </c:forEach>
         <hr>
         <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отменить</button>
+        <button type="reset" onclick="window.history.back()">Отменить</button>
     </form>
 </section>
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>
