@@ -58,38 +58,38 @@
                                    varStatus="count">
                             <div class="section-content-container">
                                 <dd>
-                                    <div class="organization-name"> Название организации</div>
+                                    <div class="organization-name">Название организации</div>
                                     <input type="text" name="${sectionType.name()}" size="80"
                                            value="${organization.homePage.name}" required min="1"
-                                           pattern="[a-zA-z] [a-zA-Z ]+">
+                                           pattern="[a-zA-Zа-яА-Я0-9]+[a-zA-Zа-яА-Я0-9\s]+">
                                     <div class="organization-name">Сайт организации</div>
                                     <input type="text" name="${sectionType.name().concat("organization_url")}" size="80"
-                                           value="${organization.homePage.homePageUrl}"
-                                           pattern="[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+">
+                                           value="${organization.homePage.homePageUrl}">
                                 </dd>
                             </div>
                             <br>
-                            <c:forEach var="position" items="#{organization.positions}">
-                                <div class="section-content-container">
+
+                                <c:forEach var="position" items="#{organization.positions}">
+                                    <div id="position-container">
                                     <input type="text"
                                            name="${sectionType.name().concat("position_name").concat(count.index)}"
                                            size="80"
                                            value="${position.positionName}">
                                     <textarea rows="4" cols="80"
                                               name="${sectionType.name().concat("position_description").concat(count.index)}">${position.description}</textarea>
-                                    <div class="section-content-container">
-                                        <input type="date"
-                                               name="${sectionType.name().concat("start").concat(count.index)}"
-                                               value=${position.startDate}>
-                                        <input type="date"
-                                               name="${sectionType.name().concat("end").concat(count.index)}"
-                                               value="${position.endDate}">
+                                    <br>
+                                    <input type="date"
+                                           name="${sectionType.name().concat("start").concat(count.index)}"
+                                           value=${position.startDate}>
+                                    <input type="date"
+                                           name="${sectionType.name().concat("end").concat(count.index)}"
+                                           value="${position.endDate}">
                                     </div>
-                                    <button type="button">Добавить должность</button>
-                                </div>
-                            </c:forEach>
-                            <button type="button">Добавить организацию</button>
-                            <br>
+                                </c:forEach>
+                                <button type="button" id="position-button"
+                                        onclick="createPositionForm('${count.index}', '${sectionType.name()}')">
+                                    Добавить должность
+                                </button>
                             <br>
                         </c:forEach>
                     </dl>
@@ -102,5 +102,6 @@
     </form>
 </section>
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>
+<script src="scripts/script.js"></script>
 </body>
 </html>

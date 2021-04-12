@@ -85,7 +85,9 @@ public class ResumeServlet extends HttpServlet {
                                 String[] endDates = request.getParameterValues(type.name().concat("end").concat(String.valueOf(i)));
                                 Organization organization = new Organization();
                                 organization.setHomePage(new Link(names[i], urls[i]));
+
                                 if (positionNames != null && positionNames.length != 0) {
+                                    System.out.println(positionNames.length);
                                     for (int j = 0; j < positionNames.length; j++) {
                                         if (positionNames[j] == null) {
                                             positionNames[j] = "";
