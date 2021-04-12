@@ -3,7 +3,9 @@ package resumeapp.web;
 import resumeapp.Config;
 import resumeapp.model.*;
 import resumeapp.storage.Storage;
+import resumeapp.util.DateUtil;
 import resumeapp.util.ResumeUtil;
+import sun.security.pkcs.ParsingException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,12 +13,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Month;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ResumeServlet extends HttpServlet {
     Storage storage;
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -62,6 +71,41 @@ public class ResumeServlet extends HttpServlet {
                                 .filter(v -> v.trim().length() != 0)
                                 .collect(Collectors.toList()));
                         resume.getSections().putIfAbsent(type, listSection);
+                        break;
+                    case EDUCATION:
+                    case EXPERIENCE:
+                        String[] names = request.getParameterValues(type.name());
+                        String[] urls = request.getParameterValues(type.name().concat("organization_url"));
+                        List<Organization> organizations = new ArrayList<>();
+                        for (int i = 0; i < names.length; i++) {
+                            if (names[i] != null && names[i].trim().length() != 0) {
+                                String[] positionNames = request.getParameterValues(type.name().concat("position_name").concat(String.valueOf(i)));
+                                String[] descriptions = request.getParameterValues(type.name().concat("position_description").concat(String.valueOf(i)));
+                                String[] startDates = request.getParameterValues(type.name().concat("start").concat(String.valueOf(i)));
+                                String[] endDates = request.getParameterValues(type.name().concat("end").concat(String.valueOf(i)));
+                                Organization organization = new Organization();
+                                organization.setHomePage(new Link(names[i], urls[i]));
+                                if (positionNames != null && positionNames.length != 0) {
+                                    for (int j = 0; j < positionNames.length; j++) {
+                                        if (positionNames[j] == null) {
+                                            positionNames[j] = "";
+                                        }
+                                        try {
+                                            organization.addPosition(
+                                                    new Organization.Position(
+                                                            DateUtil.convertToLocalDate(startDates[j]),
+                                                            DateUtil.convertToLocalDate(endDates[j]),
+                                                            positionNames[j],
+                                                            descriptions[j]));
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    organizations.add(organization);
+                                }
+                            }
+                        }
+                        resume.getSections().putIfAbsent(type, new OrganizationSection(organizations));
                         break;
                 }
             } else {

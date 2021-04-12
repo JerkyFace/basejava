@@ -33,12 +33,20 @@ public class Organization implements Serializable {
         this.positions = positions;
     }
 
+    public void addPosition(Position position) {
+        positions.add(position);
+    }
+
     public Link getHomePage() {
         return homePage;
     }
 
     public List<Position> getPositions() {
         return positions;
+    }
+
+    public void setHomePage(Link homePage) {
+        this.homePage = homePage;
     }
 
     @Override

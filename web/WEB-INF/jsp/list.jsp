@@ -14,6 +14,9 @@
 <section>
     <table border="1" cellpadding="8" cellspacing="0" class="resume-table">
         <tr>
+            <td colspan="4"><span id="create"><a href="resume?action=create">Создать новое</a></span></td>
+        </tr>
+        <tr>
             <th>Имя</th>
             <th>Email</th>
             <th colspan="2"></th>
@@ -27,9 +30,6 @@
                 <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
             </tr>
         </c:forEach>
-        <tr>
-            <td colspan="4"><span id="create"><a href="resume?action=create">Создать новое</a></span></td>
-        </tr>
     </table>
 </section>
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>
