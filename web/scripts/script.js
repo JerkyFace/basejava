@@ -1,12 +1,7 @@
-let posCounter = 0;
-let orgCounter = 0;
 
-
-let posButton = document.getElementById('position-button');
-let orgButton = document.getElementById('organization-button');
-
+//todo: delete position
 function createPositionForm(index, sectionType) {
-    let positionContainer = document.getElementById('position-container');
+    let positionContainer = document.getElementById(sectionType);
 
     let posNameInput = document.createElement('input');
     let posDescInput = document.createElement('textarea');
@@ -23,9 +18,11 @@ function createPositionForm(index, sectionType) {
 
     posStartDateInput.type = 'date';
     posStartDateInput.name = sectionType + 'start' + index;
+    posStartDateInput.valueAsDate = new Date();
 
     posEndDateInput.type = 'date';
     posEndDateInput.name = sectionType + 'end' + index;
+    posEndDateInput.valueAsDate = new Date();
 
     positionContainer.appendChild(posNameInput);
     positionContainer.appendChild(posDescInput);

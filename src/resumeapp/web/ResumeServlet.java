@@ -74,6 +74,7 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
+                        //TODO: not save empty position
                         String[] names = request.getParameterValues(type.name());
                         String[] urls = request.getParameterValues(type.name().concat("organization_url"));
                         List<Organization> organizations = new ArrayList<>();

@@ -69,8 +69,8 @@
                             </div>
                             <br>
 
-                                <c:forEach var="position" items="#{organization.positions}">
-                                    <div id="position-container">
+                            <c:forEach var="position" items="${organization.positions}">
+                                <div id="${sectionType.name()}">
                                     <input type="text"
                                            name="${sectionType.name().concat("position_name").concat(count.index)}"
                                            size="80"
@@ -84,12 +84,12 @@
                                     <input type="date"
                                            name="${sectionType.name().concat("end").concat(count.index)}"
                                            value="${position.endDate}">
-                                    </div>
-                                </c:forEach>
-                                <button type="button" id="position-button"
-                                        onclick="createPositionForm('${count.index}', '${sectionType.name()}')">
-                                    Добавить должность
-                                </button>
+                                </div>
+                            </c:forEach>
+                            <button type="button" id="position-button"
+                                    onclick="createPositionForm('${count.index}', '${sectionType.name()}')">
+                                Добавить должность
+                            </button>
                             <br>
                         </c:forEach>
                     </dl>
