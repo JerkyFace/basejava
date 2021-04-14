@@ -74,7 +74,6 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        //TODO: not save empty position
                         String[] names = request.getParameterValues(type.name());
                         String[] urls = request.getParameterValues(type.name().concat("organization_url"));
                         List<Organization> organizations = new ArrayList<>();
@@ -90,18 +89,17 @@ public class ResumeServlet extends HttpServlet {
                                 if (positionNames != null && positionNames.length != 0) {
                                     System.out.println(positionNames.length);
                                     for (int j = 0; j < positionNames.length; j++) {
-                                        if (positionNames[j] == null) {
-                                            positionNames[j] = "";
-                                        }
-                                        try {
-                                            organization.addPosition(
-                                                    new Organization.Position(
-                                                            DateUtil.convertToLocalDate(startDates[j]),
-                                                            DateUtil.convertToLocalDate(endDates[j]),
-                                                            positionNames[j],
-                                                            descriptions[j]));
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
+                                        if (positionNames[j] != null) {
+                                            try {
+                                                organization.addPosition(
+                                                        new Organization.Position(
+                                                                DateUtil.convertToLocalDate(startDates[j]),
+                                                                DateUtil.convertToLocalDate(endDates[j]),
+                                                                positionNames[j],
+                                                                descriptions[j]));
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
                                     organizations.add(organization);

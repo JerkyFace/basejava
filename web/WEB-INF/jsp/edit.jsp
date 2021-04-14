@@ -70,11 +70,12 @@
                             <br>
 
                             <c:forEach var="position" items="${organization.positions}">
-                                <div id="${sectionType.name()}">
+                                <div id="${sectionType.name().concat(organization.homePage.name)}">
                                     <input type="text"
                                            name="${sectionType.name().concat("position_name").concat(count.index)}"
                                            size="80"
-                                           value="${position.positionName}">
+                                           value="${position.positionName}"
+                                           required minlength="1" pattern="[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+">
                                     <textarea rows="4" cols="80"
                                               name="${sectionType.name().concat("position_description").concat(count.index)}">${position.description}</textarea>
                                     <br>
@@ -86,8 +87,9 @@
                                            value="${position.endDate}">
                                 </div>
                             </c:forEach>
+                            <br>
                             <button type="button" id="position-button"
-                                    onclick="createPositionForm('${count.index}', '${sectionType.name()}')">
+                                    onclick="createPositionForm('${count.index}', '${sectionType.name().concat(organization.homePage.name)}', '${sectionType.name()}')">
                                 Добавить должность
                             </button>
                             <br>
