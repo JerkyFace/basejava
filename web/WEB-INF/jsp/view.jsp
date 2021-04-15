@@ -50,6 +50,7 @@
             </c:forEach>
         </div>
     </c:when>
+    <!-- TODO: fix new position descriptions -->
     <c:when test="${type==SectionType.EDUCATION || type==SectionType.EXPERIENCE}">
         <h3 class="section-header">${type.title}</h3>
         <div class="section-content-container">
@@ -61,6 +62,10 @@
                         <c:choose>
                             <c:when test="${position.positionName.length() != 0}">
                                 <div class="position-name">${position.positionName}:&nbsp;<span
+                                        class="date">${position.startDate} - ${position.endDate}</span></div>
+                            </c:when>
+                            <c:when test="${position.description.length() != 0}">
+                                <div class="position-description">${position.description}:&nbsp;<span
                                         class="date">${position.startDate} - ${position.endDate}</span></div>
                             </c:when>
                             <c:otherwise>
