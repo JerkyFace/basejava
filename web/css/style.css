@@ -74,21 +74,8 @@ a[href*="github."] {
     background: url(../img/gh.png) no-repeat center left;
 }
 
-.position-name {
-    font-size: 0.9em;
-}
-
-.section-header {
-}
-
 .organization-name {
     font-weight: bold;
-}
-
-.date {
-    font-size: 0.85em;
-    font-style: italic;
-    color: dimgrey;
 }
 
 .section-content {
@@ -106,8 +93,6 @@ a[href*="github."] {
 .list-section-hr {
     background-color: #fff;
     border-top: 2px dashed #6D6D6D;
-    width: 80px;
+    width: 6px;
     margin-left: 0;
 }
-
-/*TODO: restyle edit forms* /
