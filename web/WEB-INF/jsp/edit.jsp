@@ -13,14 +13,15 @@
         <dl style="margin-top: 16px;">
             <dt>Имя:</dt>
             <dd><input type="text" name="fullName" size=50 value="${resume.fullName}" class="form-control"
-                       required minlength="1" pattern="[a-zA-zа-яА-Я-]+[a-zA-Zа-яА-Я\-\s]+"></dd>
+                       required minlength="1" pattern="[a-zA-Zа-яА-Я0-9\-]+[a-zA-Zа-яА-Я0-9\-\s]+"></dd>
         </dl>
         <h3>Контакты:</h3>
         <div class="container">
             <c:forEach var="type" items="<%=ContactType.values()%>">
                 <dl>
                     <dt>${type.title}</dt>
-                    <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}" class="form-control"></dd>
+                    <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}"
+                               class="form-control"></dd>
                 </dl>
             </c:forEach>
         </div>
@@ -33,7 +34,8 @@
                     <c:when test="${sectionType == SectionType.PERSONAL || sectionType == SectionType.OBJECTIVE}">
                         <dl>
                             <dt>${sectionType.title}</dt>
-                            <dd><input type="text" name="${sectionType.name()}" size=80 value="${section}" class="form-control"></dd>
+                            <dd><input type="text" name="${sectionType.name()}" size=80 value="${section}"
+                                       class="form-control"></dd>
                         </dl>
                     </c:when>
                     <c:when test="${sectionType == SectionType.ACHIEVEMENT || sectionType == SectionType.QUALIFICATIONS}">
@@ -61,49 +63,51 @@
                                         <div class="organization-name">Название организации</div>
                                         <input type="text" name="${sectionType.name()}" size="80" class="form-control"
                                                value="${organization.homePage.name}" required min="1"
-                                               pattern="[a-zA-Zа-яА-Я0-9(),.\-]+[a-zA-Zа-яА-Я0-9(),.\-\s]+">
+                                               pattern="[a-zA-Zа-яА-Я0-9\(\),.\-]+[a-zA-Zа-яА-Я0-9\(\),.\-\s]+">
                                         <div class="organization-name">Сайт организации</div>
-                                        <input type="text" name="${sectionType.name().concat("organization_url")}" size="80"
+                                        <input type="text" name="${sectionType.name().concat("organization_url")}"
+                                               size="80"
                                                class="form-control"
                                                value="${organization.homePage.homePageUrl}">
                                     </dd>
-                                </div>
-                                <br>
+                                    <br>
 
-                                <c:forEach var="position" items="${organization.positions}">
-                                    <dd>
-                                        <div class="organization-name">Должность</div>
-                                        <div id="${sectionType.name().concat(organization.homePage.name)}">
-                                            <input type="text"
-                                                   name="${sectionType.name().concat("position_name").concat(count.index)}"
-                                                   class="form-control"
-                                                   size="80"
-                                                   value="${position.positionName}"
-                                                   required minlength="1" pattern="[a-zA-Zа-яА-Я0-9(),.\-]+[a-zA-Zа-яА-Я0-9(),.\-\s]+">
-                                            <div class="form-floating">
-                                                <div class="organization-name">Обязанности</div>
-                                                <textarea class="form-control"
-                                                          placeholder="Описание должности"
-                                                          name="${sectionType.name().concat("position_description").concat(count.index)}"
-                                                          id="floatingTextarea"
-                                                          cols="80"
-                                                          style="height: 100px">${position.description}</textarea>
+                                    <c:forEach var="position" items="${organization.positions}">
+                                        <dd>
+                                            <div class="organization-name">Должность</div>
+                                            <div id="${sectionType.name().concat(organization.homePage.name)}">
+                                                <input type="text"
+                                                       name="${sectionType.name().concat("position_name").concat(count.index)}"
+                                                       class="form-control"
+                                                       size="80"
+                                                       value="${position.positionName}"
+                                                       required minlength="1"
+                                                       pattern="[a-zA-Zа-яА-Я0-9\-\(\).,]+[a-zA-Zа-яА-Я0-9\-\s\(\).,]+">
+                                                <div class="form-floating">
+                                                    <div class="organization-name">Обязанности</div>
+                                                    <textarea class="form-control"
+                                                              placeholder="Описание должности"
+                                                              name="${sectionType.name().concat("position_description").concat(count.index)}"
+                                                              id="floatingTextarea"
+                                                              cols="80"
+                                                              style="height: 100px">${position.description}</textarea>
+                                                </div>
+                                                <br>
+                                                <input type="date"
+                                                       name="${sectionType.name().concat("start").concat(count.index)}"
+                                                       value=${position.startDate}>
+                                                <input type="date"
+                                                       name="${sectionType.name().concat("end").concat(count.index)}"
+                                                       value="${position.endDate}">
                                             </div>
-                                            <br>
-                                            <input type="date"
-                                                   name="${sectionType.name().concat("start").concat(count.index)}"
-                                                   value=${position.startDate}>
-                                            <input type="date"
-                                                   name="${sectionType.name().concat("end").concat(count.index)}"
-                                                   value="${position.endDate}">
-                                        </div>
-                                    </dd>
-                                </c:forEach>
-                                <br>
-                                <button type="button" id="position-button" class="btn btn-outline-dark"
-                                        onclick="createPositionForm('${count.index}', '${sectionType.name().concat(organization.homePage.name)}', '${sectionType.name()}')">
-                                    Добавить должность
-                                </button>
+                                        </dd>
+                                    </c:forEach>
+                                    <br>
+                                    <button type="button" id="position-button" class="btn btn-outline-dark"
+                                            onclick="createPositionForm('${count.index}', '${sectionType.name().concat(organization.homePage.name)}', '${sectionType.name()}')">
+                                        Добавить должность
+                                    </button>
+                                </div>
                                 <br>
                             </c:forEach>
                         </dl>

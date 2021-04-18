@@ -89,10 +89,3 @@ a[href*="github."] {
 .resume-table {
     margin: 18px auto;
 }
-
-.list-section-hr {
-    background-color: #fff;
-    border-top: 2px dashed #6D6D6D;
-    width: 6px;
-    margin-left: 0;
-}
