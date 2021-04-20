@@ -55,23 +55,23 @@
                     </c:when>
                     <c:when test="${sectionType == SectionType.EDUCATION || sectionType == SectionType.EXPERIENCE}">
                         <dl>
+                            <c:set var="orgCount" scope="page"/>
                             <dt><h3 class="section-header">${sectionType.title}</h3></dt>
-                            <c:forEach var="organization" items="<%=((OrganizationSection)section).getOrganizations()%>"
-                                       varStatus="count">
-                                <div class="section-content-container">
-                                    <dd>
-                                        <div class="organization-name">Название организации</div>
-                                        <input type="text" name="${sectionType.name()}" size="80" class="form-control"
-                                               value="${organization.homePage.name}" required min="1"
-                                               pattern="[a-zA-Zа-яА-Я0-9\(\),.\-]+[a-zA-Zа-яА-Я0-9\(\),.\-\s]+">
-                                        <div class="organization-name">Сайт организации</div>
-                                        <input type="text" name="${sectionType.name().concat("organization_url")}"
-                                               size="80"
-                                               class="form-control"
-                                               value="${organization.homePage.homePageUrl}">
+                            <div class="section-content-container">
+                                <c:forEach var="organization" items="<%=((OrganizationSection)section).getOrganizations()%>"
+                                           varStatus="count">
+                                    <c:set var="orgCount" value="${count.index}" scope="page"/>
+                                    <div class="organization-name">Название организации</div>
+                                    <input type="text" name="${sectionType.name()}" size="80" class="form-control"
+                                           value="${organization.homePage.name}" required min="1"
+                                           pattern="[a-zA-Zа-яА-Я0-9\(\),.\-]+[a-zA-Zа-яА-Я0-9\(\),.\-\s]+">
+                                    <div class="organization-name">Сайт организации</div>
+                                    <input type="text" name="${sectionType.name().concat("organization_url")}"
+                                           size="80"
+                                           class="form-control"
+                                           value="${organization.homePage.homePageUrl}">
                                     </dd>
                                     <br>
-
                                     <c:forEach var="position" items="${organization.positions}">
                                         <dd>
                                             <div class="organization-name">Должность</div>
@@ -103,13 +103,18 @@
                                         </dd>
                                     </c:forEach>
                                     <br>
-                                    <button type="button" id="position-button" class="btn btn-outline-dark"
-                                            onclick="createPositionForm('${count.index}', '${sectionType.name().concat(organization.homePage.name)}', '${sectionType.name()}')">
+                                    <button type="button" id="position-button" class="btn btn-outline-dark" style="margin-bottom: 10px;"
+                                            onclick="createPositionForm('${count.index}',
+                                                    '${sectionType.name().concat(organization.homePage.name)}',
+                                                    '${sectionType.name()}')">
                                         Добавить должность
                                     </button>
-                                </div>
-                                <br>
-                            </c:forEach>
+                                    <br>
+                                </c:forEach>
+                                <button type="button" id="org-button" class="btn btn-outline-dark" style="margin-top: 6px;"
+                                        onclick="createOrganization('${orgCount}', '${sectionType.name()}')"> Добавить Организацию
+                                </button>
+                            </div>
                         </dl>
                     </c:when>
                 </c:choose>

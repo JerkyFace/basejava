@@ -1,4 +1,5 @@
 function createPositionForm(index, className, sectionType) {
+    console.warn(index);
     let positionContainer = document.getElementById(className);
 
     let posNameInput = document.createElement('input');
@@ -10,7 +11,6 @@ function createPositionForm(index, className, sectionType) {
     let posLabelBlock = document.createElement('div');
     let posLabel = document.createTextNode('Должность');
     let descLabel = document.createTextNode('Обязанности');
-
 
     divForm.className = 'form-floating';
 
@@ -48,4 +48,38 @@ function createPositionForm(index, className, sectionType) {
     divForm.append(posEndDateInput)
     positionContainer.append(divForm);
     positionContainer.append(document.createElement('br'));
+}
+
+function createOrganization(index, sectionType) {
+    let orgContainer = document.querySelector('.section-content-container');
+    let orgNameLabel = document.createTextNode('Название организации');
+    let orgName = document.createElement('input');
+    let orgUrlLabel = document.createTextNode('Сайт оганизации');
+    let orgUrl = document.createElement('input');
+    let positionContainer = document.createElement('div');
+
+    orgName.type = 'text';
+    orgName.size = 80;
+    orgName.classList.add('form-control');
+    orgName.required = true;
+    orgName.pattern = '[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+';
+    orgName.name = sectionType;
+
+    orgUrl.type = 'text';
+    orgUrl.size = 80;
+    orgUrl.classList.add('form-control');
+    orgUrl.name = sectionType + 'organization_url';
+
+    positionContainer.id = 'pos' + index;
+
+    orgContainer.append(document.createElement('br'));
+    orgContainer.append(document.createElement('br'));
+    orgContainer.append(orgNameLabel);
+    orgContainer.append(orgName);
+    orgContainer.append(orgUrlLabel);
+    orgContainer.append(orgUrl);
+    orgContainer.append(positionContainer);
+    orgContainer.append(document.createElement('br'));
+
+    createPositionForm(Number(index) + 1, 'pos' + index, sectionType);
 }
