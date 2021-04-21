@@ -38,6 +38,7 @@ function createPositionForm(index, className, sectionType) {
     posEndDateInput.name = sectionType + 'end' + index;
     posEndDateInput.valueAsDate = new Date();
 
+    positionContainer.append(document.createElement('br'));
     posLabelBlock.appendChild(posLabel);
     descLabelBlock.appendChild(descLabel);
     divForm.append(posLabelBlock);
@@ -47,20 +48,27 @@ function createPositionForm(index, className, sectionType) {
     divForm.append(posStartDateInput);
     divForm.append(posEndDateInput)
     positionContainer.append(divForm);
+
     positionContainer.append(document.createElement('br'));
 }
 
 function createOrganization(index, sectionType) {
-    let orgContainer = document.querySelector('.section-content-container');
+    index = document.getElementsByClassName(sectionType).length;
+    let orgBlock = document.createElement('div');
+    let orgContainer = document.querySelector('.' + sectionType + 'content-container');
     let orgNameLabel = document.createTextNode('Название организации');
     let orgName = document.createElement('input');
-    let orgUrlLabel = document.createTextNode('Сайт оганизации');
+    let orgUrlLabel = document.createTextNode('Сайт организации');
     let orgUrl = document.createElement('input');
     let positionContainer = document.createElement('div');
+    let positionButton = document.createElement('button');
+
+    orgBlock.classList.add(sectionType);
 
     orgName.type = 'text';
     orgName.size = 80;
     orgName.classList.add('form-control');
+    orgName.classList.add(sectionType);
     orgName.required = true;
     orgName.pattern = '[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+';
     orgName.name = sectionType;
@@ -70,16 +78,26 @@ function createOrganization(index, sectionType) {
     orgUrl.classList.add('form-control');
     orgUrl.name = sectionType + 'organization_url';
 
-    positionContainer.id = 'pos' + index;
+    positionContainer.id = sectionType + index;
 
-    orgContainer.append(document.createElement('br'));
-    orgContainer.append(document.createElement('br'));
-    orgContainer.append(orgNameLabel);
-    orgContainer.append(orgName);
-    orgContainer.append(orgUrlLabel);
-    orgContainer.append(orgUrl);
-    orgContainer.append(positionContainer);
-    orgContainer.append(document.createElement('br'));
+    positionButton.classList.add('btn');
+    positionButton.classList.add('btn-outline-dark');
+    positionButton.type = 'button';
+    positionButton.style.marginBottom = '10px';
+    positionButton.innerHTML = 'Добавить должность'
 
-    createPositionForm(Number(index) + 1, 'pos' + index, sectionType);
+    positionButton.onclick = function () {
+        createPositionForm(Number(index), sectionType + index, sectionType);
+    }
+
+    orgBlock.appendChild(document.createElement('br'));
+    orgBlock.appendChild(orgNameLabel);
+    orgBlock.appendChild(orgName);
+    orgBlock.appendChild(orgUrlLabel);
+    orgBlock.appendChild(orgUrl);
+    orgBlock.appendChild(positionContainer);
+    orgBlock.appendChild(positionButton);
+    orgContainer.appendChild(orgBlock);
+
+    createPositionForm(Number(index), sectionType + index, sectionType);
 }

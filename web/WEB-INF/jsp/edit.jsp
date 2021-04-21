@@ -57,64 +57,70 @@
                         <dl>
                             <c:set var="orgCount" scope="page"/>
                             <dt><h3 class="section-header">${sectionType.title}</h3></dt>
-                            <div class="section-content-container">
-                                <c:forEach var="organization" items="<%=((OrganizationSection)section).getOrganizations()%>"
+                            <div class="${sectionType.name()}content-container">
+                                <c:forEach var="organization"
+                                           items="<%=((OrganizationSection)section).getOrganizations()%>"
                                            varStatus="count">
-                                    <c:set var="orgCount" value="${count.index}" scope="page"/>
-                                    <div class="organization-name">Название организации</div>
-                                    <input type="text" name="${sectionType.name()}" size="80" class="form-control"
-                                           value="${organization.homePage.name}" required min="1"
-                                           pattern="[a-zA-Zа-яА-Я0-9\(\),.\-]+[a-zA-Zа-яА-Я0-9\(\),.\-\s]+">
-                                    <div class="organization-name">Сайт организации</div>
-                                    <input type="text" name="${sectionType.name().concat("organization_url")}"
-                                           size="80"
-                                           class="form-control"
-                                           value="${organization.homePage.homePageUrl}">
-                                    </dd>
-                                    <br>
-                                    <c:forEach var="position" items="${organization.positions}">
-                                        <dd>
-                                            <div class="organization-name">Должность</div>
-                                            <div id="${sectionType.name().concat(organization.homePage.name)}">
-                                                <input type="text"
-                                                       name="${sectionType.name().concat("position_name").concat(count.index)}"
-                                                       class="form-control"
-                                                       size="80"
-                                                       value="${position.positionName}"
-                                                       required minlength="1"
-                                                       pattern="[a-zA-Zа-яА-Я0-9\-\(\).,]+[a-zA-Zа-яА-Я0-9\-\s\(\).,]+">
-                                                <div class="form-floating">
-                                                    <div class="organization-name">Обязанности</div>
-                                                    <textarea class="form-control"
-                                                              placeholder="Описание должности"
-                                                              name="${sectionType.name().concat("position_description").concat(count.index)}"
-                                                              id="floatingTextarea"
-                                                              cols="80"
-                                                              style="height: 100px">${position.description}</textarea>
-                                                </div>
-                                                <br>
-                                                <input type="date"
-                                                       name="${sectionType.name().concat("start").concat(count.index)}"
-                                                       value=${position.startDate}>
-                                                <input type="date"
-                                                       name="${sectionType.name().concat("end").concat(count.index)}"
-                                                       value="${position.endDate}">
-                                            </div>
+                                    <div class="${sectionType.name()}">
+                                        <c:set var="orgCount" value="${count.index}" scope="page"/>
+                                        <div class="organization-name">Название организации</div>
+                                        <input type="text" name="${sectionType.name()}" size="80" class="form-control"
+                                               value="${organization.homePage.name}" required min="1"
+                                               pattern="[a-zA-Zа-яА-Я0-9\-\(\)\,-:]+[a-zA-Zа-яА-Я0-9\-\s\(\)\,-:]+">
+                                        <div class="organization-name">Сайт организации</div>
+                                        <input type="text" name="${sectionType.name().concat("organization_url")}"
+                                               size="80"
+                                               class="form-control"
+                                               value="${organization.homePage.homePageUrl}">
                                         </dd>
-                                    </c:forEach>
-                                    <br>
-                                    <button type="button" id="position-button" class="btn btn-outline-dark" style="margin-bottom: 10px;"
-                                            onclick="createPositionForm('${count.index}',
-                                                    '${sectionType.name().concat(organization.homePage.name)}',
-                                                    '${sectionType.name()}')">
-                                        Добавить должность
-                                    </button>
-                                    <br>
+                                        <br>
+                                        <c:forEach var="position" items="${organization.positions}">
+                                            <dd>
+                                                <div class="organization-name">Должность</div>
+                                                <div id="${sectionType.name().concat(organization.homePage.name)}">
+                                                    <input type="text"
+                                                           name="${sectionType.name().concat("position_name").concat(count.index)}"
+                                                           class="form-control"
+                                                           size="80"
+                                                           value="${position.positionName}"
+                                                           required
+                                                           pattern="[a-zA-Zа-яА-Я0-9\-\(\)\,-:]+[a-zA-Zа-яА-Я0-9\-\s\(\)\,-:]+">
+                                                    <div class="form-floating">
+                                                        <div class="organization-name">Обязанности</div>
+                                                        <textarea class="form-control"
+                                                                  placeholder="Описание должности"
+                                                                  name="${sectionType.name().concat("position_description").concat(count.index)}"
+                                                                  id="floatingTextarea"
+                                                                  cols="80"
+                                                                  style="height: 100px">${position.description}</textarea>
+                                                    </div>
+                                                    <br>
+                                                    <input type="date"
+                                                           name="${sectionType.name().concat("start").concat(count.index)}"
+                                                           value=${position.startDate}>
+                                                    <input type="date"
+                                                           name="${sectionType.name().concat("end").concat(count.index)}"
+                                                           value="${position.endDate}">
+                                                </div>
+                                            </dd>
+                                        </c:forEach>
+                                        <br>
+                                        <button type="button" id="position-button" class="btn btn-outline-dark"
+                                                style="margin-bottom: 10px;"
+                                                onclick="createPositionForm('${count.index}',
+                                                        '${sectionType.name().concat(organization.homePage.name)}',
+                                                        '${sectionType.name()}')">
+                                            Добавить должность
+                                        </button>
+                                        <br>
+                                    </div>
                                 </c:forEach>
-                                <button type="button" id="org-button" class="btn btn-outline-dark" style="margin-top: 6px;"
-                                        onclick="createOrganization('${orgCount}', '${sectionType.name()}')"> Добавить Организацию
-                                </button>
                             </div>
+                            <button type="button" id="org-button" class="btn btn-outline-dark"
+                                    style="margin-top: 6px;"
+                                    onclick="createOrganization('${orgCount}', '${sectionType.name()}')"> Добавить
+                                Организацию
+                            </button>
                         </dl>
                     </c:when>
                 </c:choose>
