@@ -66,7 +66,7 @@
                                         <div class="organization-name">Название организации</div>
                                         <input type="text" name="${sectionType.name()}" size="80" class="form-control"
                                                value="${organization.homePage.name}" required min="1"
-                                               pattern="[a-zA-Zа-яА-Я0-9\-\(\)\,-:]+[a-zA-Zа-яА-Я0-9\-\s\(\)\,-:]+">
+                                               pattern="[a-zA-Zа-яА-Я0-9,-:(-)-]+[a-zA-Zа-яА-Я0-9\s,-:(-)-]+">
                                         <div class="organization-name">Сайт организации</div>
                                         <input type="text" name="${sectionType.name().concat("organization_url")}"
                                                size="80"
@@ -84,7 +84,7 @@
                                                            size="80"
                                                            value="${position.positionName}"
                                                            required
-                                                           pattern="[a-zA-Zа-яА-Я0-9\-\(\)\,-:]+[a-zA-Zа-яА-Я0-9\-\s\(\)\,-:]+">
+                                                           pattern="[a-zA-Zа-яА-Я0-9,-:(-)-]+[a-zA-Zа-яА-Я0-9\s,-:(-)-]+">
                                                     <div class="form-floating">
                                                         <div class="organization-name">Обязанности</div>
                                                         <textarea class="form-control"

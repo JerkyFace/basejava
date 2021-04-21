@@ -20,7 +20,7 @@ function createPositionForm(index, className, sectionType) {
     posNameInput.name = sectionType + 'position_name' + index;
     posNameInput.size = 80;
     posNameInput.classList.add('form-control');
-    posNameInput.pattern = "[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+";
+    posNameInput.pattern = "[a-zA-Zа-яА-Я0-9,-:(-)-]+[a-zA-Zа-яА-Я0-9\s,-:(-)-]+";
     posNameInput.required = true;
 
     descLabelBlock.classList.add('organization-name');
@@ -70,7 +70,7 @@ function createOrganization(index, sectionType) {
     orgName.classList.add('form-control');
     orgName.classList.add(sectionType);
     orgName.required = true;
-    orgName.pattern = '[a-zA-zа-яА-Я]+[a-zA-Zа-яА-Я\s]+';
+    orgName.pattern = "[a-zA-Zа-яА-Я0-9,-:(-)-]+[a-zA-Zа-яА-Я0-9\s,-:(-)-]+";
     orgName.name = sectionType;
 
     orgUrl.type = 'text';
