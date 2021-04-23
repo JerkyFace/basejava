@@ -5,7 +5,6 @@ import resumeapp.model.*;
 import resumeapp.storage.Storage;
 import resumeapp.util.DateUtil;
 import resumeapp.util.ResumeUtil;
-import sun.security.pkcs.ParsingException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,16 +15,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ResumeServlet extends HttpServlet {
     Storage storage;
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -86,7 +82,6 @@ public class ResumeServlet extends HttpServlet {
                                 Organization organization = new Organization();
                                 organization.setHomePage(new Link(names[i], urls[i]));
                                 if (positionNames != null && positionNames.length != 0) {
-                                    System.out.println(positionNames.length);
                                     for (int j = 0; j < positionNames.length; j++) {
                                         if (positionNames[j] != null) {
                                             try {
