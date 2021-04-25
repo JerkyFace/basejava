@@ -2,7 +2,6 @@ package resumeapp.storage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import resumeapp.Config;
 import resumeapp.exception.ExistStorageException;
 import resumeapp.exception.NotExistStorageException;
 import resumeapp.model.ContactType;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIRECTORY = Config.get().getStorageDir();
+    protected static final File STORAGE_DIRECTORY = new File("./filestorage");
 
     private static final int INITIAL_AMOUNT_OF_RESUMES = 3;
 
